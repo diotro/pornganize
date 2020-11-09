@@ -1,0 +1,26 @@
+# Editor configuration, see http://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_size = 4
+max_line_length = 100
+
+[*.md]
+insert_final_newline = false
+trim_trailing_whitespace = false
+
+[*.py]
+insert_final_newline = false
+quote_type = single
+
+[*.{yaml,js]
+indent_size = 2
+
+[*.ts]
+indent_size = 2
+quote_type = single

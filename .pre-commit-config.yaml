@@ -1,0 +1,62 @@
+default_language_version:
+  python: python3.8
+repos:
+  - repo: git@github.com:Yelp/detect-secrets
+    rev: v0.14.3
+    hooks:
+      - id: detect-secrets
+        args: [--baseline, .secrets.baseline]
+        exclude: .*/(?:tests|e2e)/.*
+  - repo: https://github.com/pre-commit/pre-commit-hooks.git
+    rev: v3.3.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-json
+        exclude: .*tsconfig\..*
+      - id: check-xml
+      - id: check-yaml
+      - id: debug-statements
+      - id: detect-private-key
+        exclude: .*/(?:tests|e2e)/.*
+      - id: double-quote-string-fixer
+        exclude: .*tsconfig\..*
+      - id: trailing-whitespace
+#  - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
+#    rev: 0.1.0
+#    hooks:
+#      - id: yamlfmt
+#        args: ['--preserve-quotes', '--implicit_start']
+#  - repo: https://github.com/myint/rstcheck
+#    rev: v3.3.1
+#    hooks:
+#      - id: rstcheck
+  - repo: https://github.com/codespell-project/codespell.git
+    rev: v1.17.1
+    hooks:
+      - id: codespell
+        exclude: .*docs.spelling_wordlist.txt
+        args: [-I, docs/spelling_wordlist.txt]
+  - repo: https://github.com/jumanjihouse/pre-commit-hooks.git
+    rev: 2.1.4
+    hooks:
+      - id: shellcheck
+  - repo: https://github.com/doublify/pre-commit-rust
+    rev: master
+    hooks:
+      - id: fmt
+        args: [--verbose, --]
+      - id: clippy
+        args: [--verbose]
+  - repo: https://github.com/prettier/pre-commit
+    rev: main
+    hooks:
+      - id: prettier
+        exclude: .*\.ya?ml$
+  - repo: https://github.com/Calinou/pre-commit-luacheck
+    rev: v1.0.0
+    hooks:
+      - id: luacheck
+
+# vi: shiftwidth=2
