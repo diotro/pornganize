@@ -36,7 +36,7 @@ repos:
     rev: v1.17.1
     hooks:
       - id: codespell
-        exclude: .*docs.spelling_wordlist.txt
+        exclude: .*(?:docs.spelling_wordlist\.txt|\.lock|Cargo.toml)
         args: [-I, docs/spelling_wordlist.txt]
   - repo: https://github.com/jumanjihouse/pre-commit-hooks.git
     rev: 2.1.4
