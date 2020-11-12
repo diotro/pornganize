@@ -1,10 +1,12 @@
 [workspace]
 
-members = ['backend']
+members = [
+    'backend',
+]
 exclude = [
     'ignore',
     'frontend',
 ]
 
 [workspace.metadata.frontend]
-root = "frontend"
+root = 'frontend'

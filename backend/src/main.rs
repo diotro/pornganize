@@ -1,21 +1,17 @@
-#![allow(unused_imports, unreachable_code, dead_code)]
+#![allow(unused_imports, unreachable_code, dead_code, unused_variables)]
+#[macro_use]
+extern crate clap;
 #[macro_use]
 extern crate debug_rs;
-use actix_web::{middleware, App as WebApp, HttpServer};
-mod app;
-mod config;
+pub mod cli;
+pub mod config;
 
-#[actix_web::main]
-async fn main() -> std::io::Result<()> {
-    //pornganize::run()
-    std::env::set_var("RUST_LOG", "actix_server=info,actix_web=info");
-    let cfg = config::Config::new().unwrap();
-    HttpServer::new(|| {
-        WebApp::new()
-            .configure(app::configure_web_app)
-            .wrap(middleware::Logger::default())
-    })
-    .bind(cfg.listen.to_string())?
-    .run()
-    .await
+use clap::{load_yaml, App as CliApp, Arg, ArgMatches};
+use cli::RuntimeContext;
+
+fn main() {
+    std::env::set_var("DEBUG", "*");
+    let ctx = RuntimeContext::new();
+    println!("{}", ctx.config.server.listen)
+    //ctx.run();
 }

@@ -1,0 +1,49 @@
+name: pornganize
+version: 0.1.0
+author: Brendan McGloin
+about: Organize your smut!
+
+args:
+  - config:
+      short: c
+      long: config
+      value_name: CONFIG_FILE
+      help: Configuration file for pornganize.
+      takes_value: true
+      default_value: config.yaml
+      global: true
+
+subcommands:
+  - server:
+      about: Items related to controlling the server.
+      subcommands:
+        - start:
+            about: Starts the server.
+            args:
+              - port:
+                  short: p
+                  long: port
+                  takes_value: true
+                  help: The port to use.
+              - foreground:
+                  short: g
+                  long: foreground
+                  takes_value: false
+                  help: Runs the server in the foreground in stead of daemonizing.
+        - stop:
+            about: Stops the server.
+  - clean:
+      about: Removes and files that no longer exist.
+      args:
+        - what:
+            help: What to clean.
+            multiple: true
+            possible_values:
+              - all
+              - games
+              - images
+              - mangas
+              - videos
+            default_value: all
+  - merge:
+      about: Merges one collection into the current collection.

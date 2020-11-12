@@ -1,9 +1,12 @@
 extern crate serde_yaml;
+use std::fmt::{Display, Formatter, Result as FmtResult};
 use std::fs::File;
 use std::net::{IpAddr, Ipv4Addr};
 
-use clap::{App as CliApp, Arg, ArgMatches};
+use clap::{load_yaml, App as CliApp, Arg, ArgMatches};
 use serde::{Deserialize, Serialize};
+
+use crate::cli;
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(default)]
@@ -21,14 +24,31 @@ impl Default for Listen {
     }
 }
 
-impl ToString for Listen {
-    fn to_string(&self) -> String {
+impl Display for Listen {
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         match self.address {
-            IpAddr::V4(address) => format!("{}:{}", address, self.port),
-            IpAddr::V6(address) => format!("[{}]:{}", address, self.port),
+            IpAddr::V4(address) => write!(f, "{}:{}", address, self.port),
+            IpAddr::V6(address) => write!(f, "[{}]:{}", address, self.port),
         }
     }
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(default)]
+pub struct ServerCfg {
+    pub listen: Listen,
+    pub workers: usize,
+}
+
+impl Default for ServerCfg {
+    fn default() -> Self {
+        Self {
+            listen: Default::default(),
+            workers: num_cpus::get() / 2,
+        }
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(default)]
 pub struct LibraryBackupsCfg {
@@ -83,14 +103,14 @@ impl From<&str> for SectionCfg {
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(default)]
 pub struct Config {
-    pub listen: Listen,
+    pub server: ServerCfg,
     pub sections: Vec<SectionCfg>,
 }
 
 impl Default for Config {
     fn default() -> Self {
         Self {
-            listen: Default::default(),
+            server: Default::default(),
             sections: vec![
                 SectionCfg::from("actors"),
                 SectionCfg::from("videos"),
@@ -99,75 +119,5 @@ impl Default for Config {
                 SectionCfg::from("dvds"),
             ],
         }
-    }
-}
-
-//fn get_cli_args() -> ArgMatches {
-fn get_cli_args() {
-    CliApp::new("pornganize")
-        .version("0.1.0")
-        .author("Brendan McGloin")
-        .about("Organize your smut!")
-        .arg(
-            Arg::with_name("port")
-                .short("p")
-                .long("port")
-                .help("The port to use.")
-                .takes_value(true),
-        )
-        .arg(
-            Arg::with_name("config")
-                .short("c")
-                .long("config")
-                .help("Path to the configuration file.")
-                .takes_value(true)
-                .default_value("config.yaml"),
-        )
-        .get_matches();
-    //.get_matches()
-}
-
-impl Config {
-    pub fn new() -> Result<Self, serde_yaml::Error> {
-        let args = CliApp::new("pornganize")
-            .version("0.1.0")
-            .author("Brendan McGloin")
-            .about("Organize your smut!")
-            .arg(
-                Arg::with_name("port")
-                    .short("p")
-                    .long("port")
-                    .help("The port to use.")
-                    .takes_value(true),
-            )
-            .arg(
-                Arg::with_name("config")
-                    .short("c")
-                    .long("config")
-                    .help("Path to the configuration file.")
-                    .takes_value(true)
-                    .default_value("config.yaml"),
-            )
-            .get_matches();
-        //let args = get_cli_args();
-        let cfg_file = File::open(&args.value_of("config").unwrap()).unwrap();
-        let mut cfg: Self = match serde_yaml::from_reader(cfg_file) {
-            Ok(c) => c,
-            //TODO ask to create default config
-            //Err(e) => panic!(e),
-            Err(e) => {
-                println!("\n");
-                debug!(e);
-                println!("\n");
-                panic!(e);
-            } //Err(e) => match e {
-              //"EndOfStream" => Default::default(),
-              //_ => panic!(e),
-              //}
-        };
-        if let Some(port) = args.value_of("port") {
-            cfg.listen.port = port.trim().parse().unwrap()
-        }
-        Ok(cfg)
     }
 }
