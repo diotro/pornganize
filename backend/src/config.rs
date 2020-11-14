@@ -2,6 +2,7 @@ extern crate serde_yaml;
 use std::fmt::{Display, Formatter, Result as FmtResult};
 use std::fs::File;
 use std::net::{IpAddr, Ipv4Addr};
+use std::borrow::Cow;
 
 use clap::{load_yaml, App as CliApp, Arg, ArgMatches};
 use serde::{Deserialize, Serialize};
@@ -117,6 +118,9 @@ pub struct Config {
     pub server: ServerCfg,
     pub sections: Vec<SectionCfg>,
 }
+
+//impl<'de: 'a, 'a> Deserialize<'de> for Config<'a> {
+//}
 
 impl Default for Config {
     fn default() -> Self {

@@ -6,7 +6,7 @@ use super::{server, config::Config};
 use super::detached::{self, RunOptions};
 
 trait Runnable {
-    fn run(&self, config: &Config);
+    fn run(&self, ctx: &RuntimeContext);
     fn modify_config(&self, config: &mut Config) {}
 }
 
@@ -15,7 +15,7 @@ trait Command: Runnable {
 }
 
 #[derive(Debug)]
-pub enum CleanOptsWhat {
+pub enum CleanWhat {
     Games,
     Images,
     Mangas,
@@ -23,76 +23,77 @@ pub enum CleanOptsWhat {
 }
 
 #[derive(Debug)]
-pub struct CleanOpts {
-    what: Vec<CleanOptsWhat>,
+pub struct Clean {
+    what: Vec<CleanWhat>,
 }
 
-impl Runnable for CleanOpts {
-    fn run(&self, config: &Config) {
+impl Runnable for Clean {
+    fn run(&self, ctx: &RuntimeContext) {
         todo!()
     }
 }
 
-impl Command for CleanOpts {
+impl Command for Clean {
     fn from_args(args: &ArgMatches) -> Self {
         todo!()
     }
 }
 
 #[derive(Debug)]
-pub struct MergeOpts {}
+pub struct Merge {}
 
-impl Runnable for MergeOpts {
-    fn run(&self, config: &Config) {
+impl Runnable for Merge {
+    fn run(&self, ctx: &RuntimeContext) {
         todo!()
     }
 }
 
-impl Command for MergeOpts {
-    fn from_args(args: &ArgMatches) -> Self {
-        Self {}
-    }
-}
-
-#[derive(Debug)]
-pub struct StopServerOpts {}
-
-impl Runnable for StopServerOpts {
-    fn run(&self, config: &Config) {
-        todo!()
-    }
-}
-
-impl Command for StopServerOpts {
+impl Command for Merge {
     fn from_args(args: &ArgMatches) -> Self {
         Self {}
     }
 }
 
 #[derive(Debug)]
-pub struct StartServerOpts {
+pub struct StopServer {}
+
+impl Runnable for StopServer {
+    fn run(&self, ctx: &RuntimeContext) {
+        todo!()
+    }
+}
+
+impl Command for StopServer {
+    fn from_args(args: &ArgMatches) -> Self {
+        Self {}
+    }
+}
+
+#[derive(Debug)]
+pub struct StartServer {
     foreground: bool,
     port: Option<u32>,
 }
 
-impl Runnable for StartServerOpts {
-    fn run(&self, config: &Config) {
-         if self.foreground {
-             server::run_server(config).unwrap();
-         } else {
-             let config_clone = config.clone();
-             let runopts = "";
-             detached::run_detached(move || {
-                 server::run_server(config_clone).unwrap();
-             })
-         }
+impl Runnable for StartServer {
+    fn run(&self, ctx: &RuntimeContext) {
+        let config = &ctx.config;
+        info!("Starting {} server version {}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
+        if self.foreground {
+            server::run_server(config).unwrap();
+        } else {
+            let config_clone = config.clone();
+            detached::run_detached(RunOptions::from(config), move || {
+                server::run_server(&config_clone).unwrap();
+            }).unwrap();
+        }
     }
     fn modify_config(&self, config: &mut Config) {
         config.server.listen.port = self.port.unwrap_or(config.server.listen.port);
     }
 }
 
-impl Command for StartServerOpts {
+impl Command for StartServer {
     fn from_args(args: &ArgMatches) -> Self {
         let subargs = args
             .subcommand_matches("server")
@@ -130,21 +131,21 @@ impl RuntimeContext {
     }
 
     pub fn run(&self) {
-        self.command.run(&self.config);
+        self.command.run(&self);
     }
 
     fn get_command(args: &ArgMatches) -> Box<dyn Runnable> {
         fn from_server_args(args: &ArgMatches) -> Box<dyn Runnable> {
             let subargs = args.subcommand_matches("server").unwrap();
             match subargs.subcommand_name() {
-                Some("start") => Box::new(StartServerOpts::from_args(args)),
-                Some("stop") => Box::new(StopServerOpts::from_args(args)),
+                Some("start") => Box::new(StartServer::from_args(args)),
+                Some("stop") => Box::new(StopServer::from_args(args)),
                 _ => todo!(),
             }
         }
         match args.subcommand_name() {
-            Some("clean") => Box::new(CleanOpts::from_args(args)),
-            Some("merge") => Box::new(MergeOpts::from_args(args)),
+            Some("clean") => Box::new(Clean::from_args(args)),
+            Some("merge") => Box::new(Merge::from_args(args)),
             Some("server") => from_server_args(args),
             _ => todo!(),
         }

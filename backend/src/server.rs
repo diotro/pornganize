@@ -30,21 +30,21 @@ pub fn run_server(config: &Config) -> std::io::Result<()> {
     sys.block_on(srv)
 }
 
-pub fn run_server_in_thread(config: & Config) -> JoinHandle<()> {
-    //pornganize::run()
-    let (tx, rx) = mpsc::channel();
-    let config_clone = config.clone();
-    let thread = ThreadBuilder::new()
-        .name(String::from("pornganize"));
-    let handle = thread.spawn(move || {
-        let mut sys = rt::System::builder()
-            .name("pornganize")
-            .stop_on_panic(true)
-            .build();
-        let srv = create_server(&config_clone);
-        let _ = tx.send(srv.clone()).unwrap();
-        let _ = sys.block_on(srv);
-    }).unwrap();
-    let srv = rx.recv().unwrap();
-    handle
- }
+//pub fn run_server_in_thread<'a>(config: &'a Config) -> JoinHandle<()> {
+//    //pornganize::run()
+//    let (tx, rx) = mpsc::channel();
+//    let config_clone = config.clone();
+//    let thread = ThreadBuilder::new()
+//        .name(String::from("pornganize"));
+//    let handle = thread.spawn(move || {
+//        let mut sys = rt::System::builder()
+//            .name("pornganize")
+//            .stop_on_panic(true)
+//            .build();
+//        let srv = create_server(&config_clone);
+//        let _ = tx.send(srv.clone()).unwrap();
+//        let _ = sys.block_on(srv);
+//    }).unwrap();
+//    let srv = rx.recv().unwrap();
+//    handle
+//}
