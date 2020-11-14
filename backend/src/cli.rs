@@ -1,7 +1,9 @@
 extern crate serde_yaml;
-use crate::config::Config;
+
 use clap::{load_yaml, App as CliApp, Arg, ArgMatches};
 use std::fs::File;
+use super::{server, config::Config};
+use super::detached::{self, RunOptions};
 
 trait Runnable {
     fn run(&self, config: &Config);
@@ -27,13 +29,13 @@ pub struct CleanOpts {
 
 impl Runnable for CleanOpts {
     fn run(&self, config: &Config) {
-        unimplemented!()
+        todo!()
     }
 }
 
 impl Command for CleanOpts {
     fn from_args(args: &ArgMatches) -> Self {
-        unimplemented!()
+        todo!()
     }
 }
 
@@ -42,7 +44,7 @@ pub struct MergeOpts {}
 
 impl Runnable for MergeOpts {
     fn run(&self, config: &Config) {
-        unimplemented!()
+        todo!()
     }
 }
 
@@ -57,7 +59,7 @@ pub struct StopServerOpts {}
 
 impl Runnable for StopServerOpts {
     fn run(&self, config: &Config) {
-        unimplemented!()
+        todo!()
     }
 }
 
@@ -75,7 +77,15 @@ pub struct StartServerOpts {
 
 impl Runnable for StartServerOpts {
     fn run(&self, config: &Config) {
-        unimplemented!()
+         if self.foreground {
+             server::run_server(config).unwrap();
+         } else {
+             let config_clone = config.clone();
+             let runopts = "";
+             detached::run_detached(move || {
+                 server::run_server(config_clone).unwrap();
+             })
+         }
     }
     fn modify_config(&self, config: &mut Config) {
         config.server.listen.port = self.port.unwrap_or(config.server.listen.port);
@@ -129,14 +139,14 @@ impl RuntimeContext {
             match subargs.subcommand_name() {
                 Some("start") => Box::new(StartServerOpts::from_args(args)),
                 Some("stop") => Box::new(StopServerOpts::from_args(args)),
-                _ => unimplemented!(),
+                _ => todo!(),
             }
         }
         match args.subcommand_name() {
             Some("clean") => Box::new(CleanOpts::from_args(args)),
             Some("merge") => Box::new(MergeOpts::from_args(args)),
             Some("server") => from_server_args(args),
-            _ => unimplemented!(),
+            _ => todo!(),
         }
     }
 }
