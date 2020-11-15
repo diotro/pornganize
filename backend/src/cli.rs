@@ -78,13 +78,14 @@ pub struct StartServer {
 impl Runnable for StartServer {
     fn run(&self, ctx: &RuntimeContext) {
         let config = &ctx.config;
+        println!("{:#?}", config);
         info!("Starting {} server version {}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
         if self.foreground {
             server::run_server(config).unwrap();
         } else {
             let config_clone = config.clone();
             detached::run_detached(RunOptions::from(config), move || {
-                server::run_server(&config_clone).unwrap();
+                let s = server::run_server(&config_clone).unwrap();
             }).unwrap();
         }
     }
@@ -106,8 +107,24 @@ impl Command for StartServer {
         }
         Self {
             port,
-            foreground: subargs.is_present("foreground"),
+            foreground: subargs.value_of("run-in").unwrap() == "foreground",
         }
+    }
+}
+
+#[cfg(debug_assertions)]
+mod sandbox {
+    use super::*;
+
+    pub struct Sandbox {}
+
+    impl Runnable for Sandbox {
+        fn run(&self, ctx: &RuntimeContext) {
+        }
+    }
+
+    impl Command for Sandbox {
+        fn from_args(args: &ArgMatches) -> Self { Self {}}
     }
 }
 
@@ -144,6 +161,8 @@ impl RuntimeContext {
             }
         }
         match args.subcommand_name() {
+            #[cfg(debug_assertions)]
+            Some("sandbox") => Box::new(sandbox::Sandbox::from_args(args)),
             Some("clean") => Box::new(Clean::from_args(args)),
             Some("merge") => Box::new(Merge::from_args(args)),
             Some("server") => from_server_args(args),

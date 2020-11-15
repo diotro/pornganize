@@ -1,14 +1,16 @@
 extern crate derive_more;
 
-#[cfg(unix)]
-mod nix;
-#[cfg(unix)]
-use nix as base;
-#[cfg(target_os = "windows")]
-mod win;
-#[cfg(target_os = "windows")]
-use win as base;
-
+cfg_if::cfg_if! {
+    if #[cfg(unix)] {
+        mod nix;
+        use nix as base;
+    } else if #[cfg(windows)] {
+        mod win;
+        use win as base;
+    } else {
+        panic!("Unsupported environment!")
+    }
+}
 pub use base::RunOptions;
 pub use base::RunOptionsBuilder;
 pub use base::run_detached;

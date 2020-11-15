@@ -7,12 +7,15 @@
 )]
 extern crate clap;
 #[macro_use]
+extern crate cfg_if;
+#[macro_use]
 extern crate derive_builder;
 #[macro_use]
 extern crate log;
 extern crate num_cpus;
 extern crate regex;
 extern crate serde_yaml;
+extern crate dotenv;
 extern crate pretty_env_logger;
 
 pub mod config;
@@ -21,6 +24,9 @@ mod app;
 mod server;
 mod cli;
 pub mod model;
+
+#[cfg(feature = "plugins")]
+pub mod plugins;
 
 use cli::RuntimeContext;
 

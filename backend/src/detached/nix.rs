@@ -3,6 +3,7 @@ use daemonize::{Daemonize, DaemonizeError, User, Group};
 use derive_more::{Error, Display};
 use std::fs::File;
 use std::io;
+use std::path::Path;
 use crate::config::Config;
 
 #[derive(Default, Builder)]
@@ -16,11 +17,11 @@ pub struct RunOptions
     #[builder(default = "None")]
     group: Option<String>,
     #[builder(default = "None")]
-    pwd: Option<String>,
+    pwd: Option<Box<Path>>,
     #[builder(default = "None")]
-    stdout: Option<String>,
+    stdout: Option<Box<Path>>,
     #[builder(default = "None")]
-    stderr: Option<String>,
+    stderr: Option<Box<Path>>,
 }
 
 impl From<& Config> for RunOptions {
@@ -32,7 +33,7 @@ impl From<& Config> for RunOptions {
             group: config.server.group.as_ref().cloned(),
             stdout: config.server.log.as_ref().cloned(),
             stderr: config.server.error_log.as_ref().cloned(),
-            pwd: Some(String::from(".")),
+            pwd: Some(Box::from(Path::new("."))),
         }
     }
 }
@@ -45,7 +46,7 @@ pub enum DetachError {
 }
 
 pub fn run_detached<F>(options: RunOptions, to_run: F) -> Result<(), DetachError>
-    where F: FnOnce() -> ()
+    where F: FnOnce()
 {
     let mut daemon = Daemonize::new();
     if let Some(path) = options.pid_file  {
@@ -74,5 +75,9 @@ pub fn run_detached<F>(options: RunOptions, to_run: F) -> Result<(), DetachError
         };
         daemon = daemon.stderr(file);
     }
-    daemon.start().or_else(|e| Err(DetachError::DaemonizationError(e)))
+    match daemon.start() {
+        #[allow(clippy::unit_arg)]
+        Ok(_) => Ok(to_run()),
+        Err(e) => Err(DetachError::DaemonizationError(e)),
+    }
 }

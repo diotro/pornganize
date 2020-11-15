@@ -38,10 +38,6 @@ repos:
       - id: codespell
         exclude: .*(?:docs.spelling_wordlist\.txt|\.lock|Cargo.toml)
         args: [-I, docs/spelling_wordlist.txt]
-  - repo: https://github.com/jumanjihouse/pre-commit-hooks.git
-    rev: 2.1.4
-    hooks:
-      - id: shellcheck
   - repo: https://github.com/doublify/pre-commit-rust
     rev: master
     hooks:

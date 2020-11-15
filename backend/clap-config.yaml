@@ -25,11 +25,16 @@ subcommands:
                   long: port
                   takes_value: true
                   help: The port to use.
-              - foreground:
-                  short: f
-                  long: foreground
-                  takes_value: false
-                  help: Runs the server in the foreground in stead of daemonizing.
+              - run-in:
+                  short: r
+                  long: run-in
+                  takes_value: true
+                  default_value: background
+                  help: Whether the server should be run in the background or in the foreground.
+                  env: PORNGANIZE_RUN_IN
+                  possible_values:
+                    - foreground
+                    - background
         - stop:
             about: Stops the server.
   - clean:

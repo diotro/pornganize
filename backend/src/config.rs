@@ -2,7 +2,7 @@ extern crate serde_yaml;
 use std::fmt::{Display, Formatter, Result as FmtResult};
 use std::fs::File;
 use std::net::{IpAddr, Ipv4Addr};
-use std::borrow::Cow;
+use std::path::{PathBuf, Path};
 
 use clap::{load_yaml, App as CliApp, Arg, ArgMatches};
 use serde::{Deserialize, Serialize};
@@ -42,8 +42,8 @@ pub struct ServerCfg {
     pub user: Option<String>,
     pub group: Option<String>,
     pub pid_file: Option<String>,
-    pub log: Option<String>,
-    pub error_log: Option<String>,
+    pub log: Option<Box<Path>>,
+    pub error_log: Option<Box<Path>>,
 }
 
 impl Default for ServerCfg {
@@ -77,17 +77,29 @@ impl Default for LibraryBackupsCfg {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(tag = "backend")]
+pub enum DatabaseCfg {
+    #[serde(rename = "sqlite")]
+    SqliteCfg { file: Box<Path>, backups: LibraryBackupsCfg }
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(default)]
 pub struct LibraryCfg {
-    pub path: String,
-    pub backups: LibraryBackupsCfg,
+    pub path: Box<Path>,
+    pub database: DatabaseCfg,
 }
 
 impl Default for LibraryCfg {
     fn default() -> Self {
+        let mut current_path = PathBuf::from("lib");
+        //let path = String::from(current_path.to_str().unwrap());
+        let path = current_path.clone().into_boxed_path();
+        current_path.push("lib.db");
+        let db_path = current_path.into_boxed_path();
         Self {
-            path: String::from("lib"),
-            backups: Default::default(),
+            path,
+            database: DatabaseCfg::SqliteCfg {file: db_path, backups: Default::default()},
         }
     }
 }
@@ -104,7 +116,7 @@ impl From<&str> for SectionCfg {
     fn from(id: &str) -> Self {
         Self {
             id: String::from(id),
-            //TODO make title
+            //TODO Capitalize id
             title: String::from(id),
             include: Vec::new(),
             exclude: Vec::new(),
@@ -116,6 +128,7 @@ impl From<&str> for SectionCfg {
 #[serde(default)]
 pub struct Config {
     pub server: ServerCfg,
+    pub library: LibraryCfg,
     pub sections: Vec<SectionCfg>,
 }
 
@@ -126,6 +139,7 @@ impl Default for Config {
     fn default() -> Self {
         Self {
             server: Default::default(),
+            library: Default::default(),
             sections: vec![
                 SectionCfg::from("actors"),
                 SectionCfg::from("videos"),
