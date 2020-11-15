@@ -1,5 +1,4 @@
 #![allow(unused_imports, unreachable_code, dead_code, unused_variables)]
-use std::env;
 
 use pornganize::run;
 

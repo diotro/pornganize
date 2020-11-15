@@ -2,9 +2,8 @@ extern crate serde_yaml;
 use std::fmt::{Display, Formatter, Result as FmtResult};
 use std::fs::File;
 use std::net::{IpAddr, Ipv4Addr};
-use std::path::{PathBuf, Path};
+use std::path::{Path, PathBuf};
 
-use clap::{load_yaml, App as CliApp, Arg, ArgMatches};
 use serde::{Deserialize, Serialize};
 
 use crate::cli;
@@ -14,6 +13,15 @@ use crate::cli;
 pub struct Listen {
     pub address: IpAddr,
     pub port: u32,
+}
+
+impl Listen {
+    pub fn with_port(&self, port: u32) -> Self {
+        Self {
+            port,
+            ..self.clone()
+        }
+    }
 }
 
 impl Default for Listen {
@@ -39,11 +47,12 @@ impl Display for Listen {
 pub struct ServerCfg {
     pub listen: Listen,
     pub workers: usize,
+    pub log: Option<PathBuf>,
+    pub error_log: Option<PathBuf>,
+    //TODO make unix only
     pub user: Option<String>,
     pub group: Option<String>,
-    pub pid_file: Option<String>,
-    pub log: Option<Box<Path>>,
-    pub error_log: Option<Box<Path>>,
+    pub pid_file: Option<PathBuf>,
 }
 
 impl Default for ServerCfg {
@@ -80,7 +89,10 @@ impl Default for LibraryBackupsCfg {
 #[serde(tag = "backend")]
 pub enum DatabaseCfg {
     #[serde(rename = "sqlite")]
-    SqliteCfg { file: Box<Path>, backups: LibraryBackupsCfg }
+    SqliteCfg {
+        file: Box<Path>,
+        backups: LibraryBackupsCfg,
+    },
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -99,7 +111,10 @@ impl Default for LibraryCfg {
         let db_path = current_path.into_boxed_path();
         Self {
             path,
-            database: DatabaseCfg::SqliteCfg {file: db_path, backups: Default::default()},
+            database: DatabaseCfg::SqliteCfg {
+                file: db_path,
+                backups: Default::default(),
+            },
         }
     }
 }

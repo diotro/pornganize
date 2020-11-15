@@ -1,9 +1,16 @@
 {
-  "cSpell.words": [
-    "cpus",
-    "idents",
-    "pornganize",
-    "subargs",
-    "subcommand"
-  ]
+    "cSpell.words": [
+        "Daemonization",
+        "Sqlite",
+        "actix",
+        "cpus",
+        "dotenv",
+        "idents",
+        "pornganize",
+        "shiftwidth",
+        "sqlx",
+        "structopt",
+        "subargs",
+        "subcommand"
+    ]
 }

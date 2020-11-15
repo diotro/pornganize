@@ -8,10 +8,10 @@ cfg_if::cfg_if! {
         mod win;
         use win as base;
     } else {
-        panic!("Unsupported environment!")
+        panic!{"Unsupported environment!"};
     }
 }
-pub use base::RunOptions;
-pub use base::RunOptionsBuilder;
 pub use base::run_detached;
 pub use base::DetachError;
+pub use base::RunOptions;
+pub use base::RunOptionsBuilder;

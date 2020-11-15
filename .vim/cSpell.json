@@ -1,9 +1,14 @@
 {
     "version": "0.1",
     "words": [
+        "actix",
         "cpus",
+        "Daemonization",
+        "dotenv",
         "idents",
         "pornganize",
+        "shiftwidth",
+        "Sqlite",
         "subargs",
         "subcommand"
     ]

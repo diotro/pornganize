@@ -19,18 +19,23 @@ extern crate dotenv;
 extern crate pretty_env_logger;
 
 pub mod config;
-mod detached;
-mod app;
-mod server;
 mod cli;
 pub mod model;
+
+mod clean;
+mod merge;
+mod server;
 
 #[cfg(feature = "plugins")]
 pub mod plugins;
 
-use cli::RuntimeContext;
+use cli::{Opts, Command};
 
 pub fn run() {
-    let ctx = RuntimeContext::new();
-    ctx.run();
+    let cli::Opts { subcommand, config } = cli::Opts::get();
+    match subcommand {
+        Command::Merge => merge::run_command(config),
+        Command::Clean{what} => clean::run_command(config, what),
+        Command::Server{command} => server::run_command(config, command),
+    }
 }
