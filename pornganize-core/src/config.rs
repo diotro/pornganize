@@ -1,12 +1,9 @@
-extern crate serde_yaml;
 use std::fmt::{Display, Formatter, Result as FmtResult};
 use std::fs::File;
 use std::net::{IpAddr, Ipv4Addr};
 use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
-
-use crate::cli;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(default)]
@@ -73,14 +70,14 @@ impl Default for ServerCfg {
 #[serde(default)]
 pub struct LibraryBackupsCfg {
     pub max: u32,
-    pub path: String,
+    pub path: PathBuf,
 }
 
 impl Default for LibraryBackupsCfg {
     fn default() -> Self {
         Self {
             max: 10,
-            path: String::from("backups"),
+            path: PathBuf::from("backups"),
         }
     }
 }
@@ -89,16 +86,22 @@ impl Default for LibraryBackupsCfg {
 #[serde(tag = "backend")]
 pub enum DatabaseCfg {
     #[serde(rename = "sqlite")]
-    SqliteCfg {
-        file: Box<Path>,
+    Sqlite {
+        file: PathBuf,
         backups: LibraryBackupsCfg,
     },
+    #[serde(rename = "postgres")]
+    Postgres {},
+    #[serde(rename = "mysql")]
+    MySql {},
+    #[serde(rename = "mssql")]
+    MsSql {},
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(default)]
 pub struct LibraryCfg {
-    pub path: Box<Path>,
+    pub path: PathBuf,
     pub database: DatabaseCfg,
 }
 
@@ -106,12 +109,12 @@ impl Default for LibraryCfg {
     fn default() -> Self {
         let mut current_path = PathBuf::from("lib");
         //let path = String::from(current_path.to_str().unwrap());
-        let path = current_path.clone().into_boxed_path();
+        let path = current_path.clone();
         current_path.push("lib.db");
-        let db_path = current_path.into_boxed_path();
+        let db_path = current_path.clone();
         Self {
             path,
-            database: DatabaseCfg::SqliteCfg {
+            database: DatabaseCfg::Sqlite {
                 file: db_path,
                 backups: Default::default(),
             },

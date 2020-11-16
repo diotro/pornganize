@@ -1,12 +1,51 @@
+[package]
+name = 'pornganize'
+version = '0.1.0'
+authors = ['Brendan McGloin <stmonkeydoom@gmail.com>']
+edition = '2018'
+publish = false
+license = "MIT"
+default-run = 'pornganize'
+
+[[bin]]
+name = 'pornganize'
+path = 'src/main.rs'
+
 [workspace]
-
 members = [
-    'backend',
-]
-exclude = [
-    'ignore',
-    'frontend',
+    '.',
+    'pornganize-core',
+    'pornganize-db',
+    'pornganize-plugins',
+    'pornganize-web',
 ]
 
-[workspace.metadata.frontend]
-root = 'frontend'
+[dependencies]
+pornganize-core = { version = "0.1.0", path="pornganize-core" }
+pornganize-db = { version = "0.1.0", path="pornganize-db" }
+pornganize-web = { version = "0.1.0", path="pornganize-web", optional=true }
+pornganize-plugins = { version = "0.1.0", path="pornganize-plugins", optional=true }
+ffmpeg-next = { version = '4.3.7', optional = true }
+mp4parse = { version = '0.11.4', optional = true }
+clap = "2.33.3"
+dotenv = "0.15.0"
+log = "0.4.11"
+pretty_env_logger = "0.4.0"
+derive_more = "0.99.11"
+derive_builder = "0.9.0"
+structopt = "0.3.20"
+serde_yaml = "0.8.14"
+cfg-if = "1.0.0"
+daemonize = "0.4.1"
+
+[target.'cfg(windows)'.dependencies]
+windows-service = "0.3.1"
+
+[target.'cfg(unix)'.dependencies]
+daemonize = "0.4.1"
+
+[features]
+default = ["web", "plugins"]
+web = ["pornganize-web"]
+plugins = ["pornganize-plugins"]
+video-processing = ["ffmpeg-next", "mp4parse"]

@@ -5,37 +5,42 @@
     trivial_casts,
     unused_import_braces,
 )]
-extern crate clap;
 #[macro_use]
 extern crate cfg_if;
 #[macro_use]
 extern crate derive_builder;
-#[macro_use]
-extern crate log;
-extern crate num_cpus;
-extern crate regex;
-extern crate serde_yaml;
+extern crate daemonize;
+extern crate clap;
+extern crate pornganize;
 extern crate dotenv;
+extern crate log;
 extern crate pretty_env_logger;
-
-pub mod config;
-mod cli;
-pub mod model;
+extern crate structopt;
+extern crate serde_yaml;
 
 mod clean;
 mod merge;
+#[cfg(debug_assertions)]
+mod sandbox;
+#[cfg(feature = "web")]
+mod detached;
+#[cfg(feature = "web")]
 mod server;
 
-#[cfg(feature = "plugins")]
-pub mod plugins;
+mod opts;
 
-use cli::{Opts, Command};
+use opts::{Opts, Command};
 
-pub fn run() {
-    let cli::Opts { subcommand, config } = cli::Opts::get();
+fn main() {
+    dotenv::dotenv().ok();
+    pretty_env_logger::init();
+    let Opts { subcommand, config } = Opts::get();
     match subcommand {
         Command::Merge => merge::run_command(config),
         Command::Clean{what} => clean::run_command(config, what),
+        #[cfg(feature = "web")]
         Command::Server{command} => server::run_command(config, command),
+        #[cfg(debug_assertions)]
+        Command::Sandbox => sandbox::run_command(config),
     }
 }

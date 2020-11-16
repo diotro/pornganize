@@ -1,10 +1,9 @@
-extern crate daemonize;
-use crate::config::Config;
-use daemonize::{Daemonize, DaemonizeError, Group, User};
-use derive_more::{Display, Error};
 use std::fs::File;
 use std::io;
 use std::path::PathBuf;
+use daemonize::{Daemonize, DaemonizeError, Group, User};
+use derive_more::{Display, Error};
+use pornganize::config::Config;
 
 #[derive(Default, Builder)]
 #[builder(setter(into))]

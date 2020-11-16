@@ -5,7 +5,7 @@ use std::path::PathBuf;
 use clap::arg_enum;
 use structopt::StructOpt;
 
-use super::config::Config;
+use pornganize::config::Config;
 
 // TODO Read the file to see if the contents are empty and only THEN return the defaults.
 fn load_cfg(src: &str) -> Result<Config> {
@@ -35,6 +35,7 @@ arg_enum! {
     }
 }
 
+#[cfg(feature = "web")]
 #[derive(Debug, StructOpt)]
 pub enum ServerCommand {
     #[structopt(about = "Starts the server.")]
@@ -73,6 +74,9 @@ pub enum ServerCommand {
 pub enum Command {
     #[structopt(about = "Merges one collection into the current collection.")]
     Merge,
+    #[cfg(debug_assertions)]
+    #[structopt(about = "Run code to test small parts out/ play with parts.")]
+    Sandbox,
     #[structopt(about = "Removes the entries for files that no longer exist.")]
     Clean {
         #[structopt(
@@ -82,6 +86,7 @@ pub enum Command {
         )]
         what: CleanWhat,
     },
+    #[cfg(feature = "web")]
     #[structopt(about = "Items related to controlling the server.")]
     Server {
         #[structopt(subcommand)]

@@ -1,41 +1,14 @@
-#![allow(unused_imports, unreachable_code, dead_code, unused_variables)]
 use std::path::PathBuf;
-use std::sync::mpsc::{self, Receiver};
-use std::thread::{Builder as ThreadBuilder, JoinHandle};
-
-use actix_web::{dev::Server, middleware, rt, App as WebApp, HttpServer};
 use log::info;
 
-use super::cli::{Opts, RunIn, ServerCommand};
-use super::config::{Config, Listen};
+use pornganize::{
+    config::{Config, Listen},
+    util,
+};
+use pornganize_web::run_server;
 
-mod app;
-mod detached;
-
-use detached::RunOptions;
-
-fn create_server(listen: &Listen, workers: usize) -> Server {
-    HttpServer::new(|| {
-        WebApp::new()
-            .configure(app::configure_web_app)
-            .wrap(middleware::Logger::default())
-            .wrap(middleware::Compress::default())
-    })
-    .bind(listen.to_string())
-    .unwrap()
-    .shutdown_timeout(10)
-    .workers(workers)
-    .run()
-}
-
-pub fn run_server(listen: &Listen, workers: usize) -> std::io::Result<()> {
-    let mut sys = rt::System::builder()
-        .name("pornganize")
-        .stop_on_panic(true)
-        .build();
-    let srv = create_server(listen, workers);
-    sys.block_on(srv)
-}
+use super::opts::{Opts, RunIn, ServerCommand};
+use super::detached::{RunOptions, run_detached};
 
 fn start_server(
     mut config: Config,
@@ -62,7 +35,7 @@ fn start_server(
         RunIn::Foreground => run_server(&config.server.listen, config.server.workers).unwrap(),
         RunIn::Background => {
             let run_opts = RunOptions::from(&config);
-            detached::run_detached(run_opts, move || {
+            run_detached(run_opts, move || {
                 let s = run_server(&config.server.listen, config.server.workers).unwrap();
             })
             .unwrap();
