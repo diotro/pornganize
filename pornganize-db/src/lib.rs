@@ -7,6 +7,9 @@
 )]
 extern crate log;
 extern crate pornganize;
+extern crate serde;
+#[macro_use]
+extern crate sqlx;
 
 pub mod model;
 

@@ -83,41 +83,39 @@ impl Default for LibraryBackupsCfg {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
-#[serde(tag = "backend")]
-pub enum DatabaseCfg {
-    #[serde(rename = "sqlite")]
-    Sqlite {
-        file: PathBuf,
-        backups: LibraryBackupsCfg,
-    },
-    #[serde(rename = "postgres")]
-    Postgres {},
-    #[serde(rename = "mysql")]
-    MySql {},
-    #[serde(rename = "mssql")]
-    MsSql {},
+#[serde(default)]
+pub struct SearchCfg {
+    //TODO parse and convert from str
+    pub max_index_size: u32,
+}
+
+impl Default for SearchCfg {
+    fn default() -> Self {
+        Self {
+            max_index_size: 128_000_000,
+        }
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(default)]
-pub struct LibraryCfg {
+pub struct DatabaseCfg {
     pub path: PathBuf,
-    pub database: DatabaseCfg,
+    pub backups: LibraryBackupsCfg,
+    pub search: SearchCfg,
 }
 
-impl Default for LibraryCfg {
+impl Default for DatabaseCfg {
     fn default() -> Self {
         let mut current_path = PathBuf::from("lib");
         //let path = String::from(current_path.to_str().unwrap());
         let path = current_path.clone();
         current_path.push("lib.db");
-        let db_path = current_path.clone();
+        let db_path = current_path;
         Self {
             path,
-            database: DatabaseCfg::Sqlite {
-                file: db_path,
-                backups: Default::default(),
-            },
+            backups: Default::default(),
+            search: Default::default(),
         }
     }
 }
@@ -146,7 +144,7 @@ impl From<&str> for SectionCfg {
 #[serde(default)]
 pub struct Config {
     pub server: ServerCfg,
-    pub library: LibraryCfg,
+    pub library: DatabaseCfg,
     pub sections: Vec<SectionCfg>,
 }
 

@@ -5,11 +5,7 @@
     trivial_casts,
     unused_import_braces,
 )]
-#[macro_use]
-extern crate log;
-extern crate serde;
-extern crate num_cpus;
-extern crate actix;
-
-pub mod config;
-pub mod util;
+extern crate syn;
+extern crate quote;
+extern crate proc_macro;
+extern crate proc_macro2;
