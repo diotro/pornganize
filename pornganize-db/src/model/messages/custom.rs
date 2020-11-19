@@ -23,7 +23,8 @@
 /// of protobuf runtime.
 // const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_18_0;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct CustomField {
     // message fields
     pub id: ::std::string::String,
@@ -32,7 +33,9 @@ pub struct CustomField {
     pub applicable_to: ::std::vec::Vec<super::common::ApplicableTo>,
     pub added_on: ::protobuf::SingularPtrField<super::common::DateTime>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -53,50 +56,12 @@ impl CustomField {
     pub fn get_id(&self) -> &str {
         &self.id
     }
-    pub fn clear_id(&mut self) {
-        self.id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_id(&mut self, v: ::std::string::String) {
-        self.id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_id(&mut self) -> &mut ::std::string::String {
-        &mut self.id
-    }
-
-    // Take field
-    pub fn take_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.id, ::std::string::String::new())
-    }
 
     // string name = 2;
 
 
     pub fn get_name(&self) -> &str {
         &self.name
-    }
-    pub fn clear_name(&mut self) {
-        self.name.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_name(&mut self, v: ::std::string::String) {
-        self.name = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_name(&mut self) -> &mut ::std::string::String {
-        &mut self.name
-    }
-
-    // Take field
-    pub fn take_name(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
     // string description = 3;
@@ -105,25 +70,6 @@ impl CustomField {
     pub fn get_description(&self) -> &str {
         &self.description
     }
-    pub fn clear_description(&mut self) {
-        self.description.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_description(&mut self, v: ::std::string::String) {
-        self.description = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_description(&mut self) -> &mut ::std::string::String {
-        &mut self.description
-    }
-
-    // Take field
-    pub fn take_description(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.description, ::std::string::String::new())
-    }
 
     // repeated .ApplicableTo applicable_to = 4;
 
@@ -131,56 +77,12 @@ impl CustomField {
     pub fn get_applicable_to(&self) -> &[super::common::ApplicableTo] {
         &self.applicable_to
     }
-    pub fn clear_applicable_to(&mut self) {
-        self.applicable_to.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_applicable_to(&mut self, v: ::std::vec::Vec<super::common::ApplicableTo>) {
-        self.applicable_to = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_applicable_to(&mut self) -> &mut ::std::vec::Vec<super::common::ApplicableTo> {
-        &mut self.applicable_to
-    }
-
-    // Take field
-    pub fn take_applicable_to(&mut self) -> ::std::vec::Vec<super::common::ApplicableTo> {
-        ::std::mem::replace(&mut self.applicable_to, ::std::vec::Vec::new())
-    }
 
     // .DateTime added_on = 350;
 
 
     pub fn get_added_on(&self) -> &super::common::DateTime {
         self.added_on.as_ref().unwrap_or_else(|| <super::common::DateTime as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_added_on(&mut self) {
-        self.added_on.clear();
-    }
-
-    pub fn has_added_on(&self) -> bool {
-        self.added_on.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_added_on(&mut self, v: super::common::DateTime) {
-        self.added_on = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_added_on(&mut self) -> &mut super::common::DateTime {
-        if self.added_on.is_none() {
-            self.added_on.set_default();
-        }
-        self.added_on.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_added_on(&mut self) -> super::common::DateTime {
-        self.added_on.take().unwrap_or_else(|| super::common::DateTime::new())
     }
 }
 
@@ -298,43 +200,6 @@ impl ::protobuf::Message for CustomField {
         CustomField::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "id",
-                |m: &CustomField| { &m.id },
-                |m: &mut CustomField| { &mut m.id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name",
-                |m: &CustomField| { &m.name },
-                |m: &mut CustomField| { &mut m.name },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "description",
-                |m: &CustomField| { &m.description },
-                |m: &mut CustomField| { &mut m.description },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_vec_accessor::<_, ::protobuf::types::ProtobufTypeEnum<super::common::ApplicableTo>>(
-                "applicable_to",
-                |m: &CustomField| { &m.applicable_to },
-                |m: &mut CustomField| { &mut m.applicable_to },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::DateTime>>(
-                "added_on",
-                |m: &CustomField| { &m.added_on },
-                |m: &mut CustomField| { &mut m.added_on },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CustomField>(
-                "CustomField",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static CustomField {
         static instance: ::protobuf::rt::LazyV2<CustomField> = ::protobuf::rt::LazyV2::INIT;
         instance.get(CustomField::new)
@@ -352,51 +217,8 @@ impl ::protobuf::Clear for CustomField {
     }
 }
 
-impl ::std::fmt::Debug for CustomField {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for CustomField {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
-}
-
-static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0ccustom.proto\x1a\x0ccommon.proto\"\xae\x01\n\x0bCustomField\x12\
-    \x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01\
-    (\tR\x04name\x12\x20\n\x0bdescription\x18\x03\x20\x01(\tR\x0bdescription\
-    \x122\n\rapplicable_to\x18\x04\x20\x03(\x0e2\r.ApplicableToR\x0capplicab\
-    leTo\x12%\n\x08added_on\x18\xde\x02\x20\x01(\x0b2\t.DateTimeR\x07addedOn\
-    J\xd6\x02\n\x06\x12\x04\0\0\n\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\t\n\
-    \x02\x03\0\x12\x03\x02\0\x16\n\n\n\x02\x04\0\x12\x04\x04\0\n\x01\n\n\n\
-    \x03\x04\0\x01\x12\x03\x04\x08\x13\n\x0b\n\x04\x04\0\x02\0\x12\x03\x05\
-    \x04\x12\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03\x05\x04\n\n\x0c\n\x05\x04\0\
-    \x02\0\x01\x12\x03\x05\x0b\r\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x05\x10\
-    \x11\n\x0b\n\x04\x04\0\x02\x01\x12\x03\x06\x04\x14\n\x0c\n\x05\x04\0\x02\
-    \x01\x05\x12\x03\x06\x04\n\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03\x06\x0b\
-    \x0f\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03\x06\x12\x13\n\x0b\n\x04\x04\0\
-    \x02\x02\x12\x03\x07\x04\x1b\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x03\x07\
-    \x04\n\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03\x07\x0b\x16\n\x0c\n\x05\x04\
-    \0\x02\x02\x03\x12\x03\x07\x19\x1a\n\x0b\n\x04\x04\0\x02\x03\x12\x03\x08\
-    \x04,\n\x0c\n\x05\x04\0\x02\x03\x04\x12\x03\x08\x04\x0c\n\x0c\n\x05\x04\
-    \0\x02\x03\x06\x12\x03\x08\r\x19\n\x0c\n\x05\x04\0\x02\x03\x01\x12\x03\
-    \x08\x1a'\n\x0c\n\x05\x04\0\x02\x03\x03\x12\x03\x08*+\n\x0b\n\x04\x04\0\
-    \x02\x04\x12\x03\t\x04\x1c\n\x0c\n\x05\x04\0\x02\x04\x06\x12\x03\t\x04\
-    \x0c\n\x0c\n\x05\x04\0\x02\x04\x01\x12\x03\t\r\x15\n\x0c\n\x05\x04\0\x02\
-    \x04\x03\x12\x03\t\x18\x1bb\x06proto3\
-";
-
-static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;
-
-fn parse_descriptor_proto() -> ::protobuf::descriptor::FileDescriptorProto {
-    ::protobuf::parse_from_bytes(file_descriptor_proto_data).unwrap()
-}
-
-pub fn file_descriptor_proto() -> &'static ::protobuf::descriptor::FileDescriptorProto {
-    file_descriptor_proto_lazy.get(|| {
-        parse_descriptor_proto()
-    })
 }

@@ -41,8 +41,8 @@ impl From<StudioMessage> for Studio {
 }
 
 impl Model<StudioMessage> for Studio {
-    fn tree_name() -> &'static str { "studios" }
-    fn get_key(&self) -> String { self.id.clone() }
+    const TREE_NAME: &'static str = "studios";
+    fn get_key(&self) -> &str { &self.id }
 }
 
 impl From<Studio> for StudioMessage {

@@ -23,14 +23,17 @@
 /// of protobuf runtime.
 // const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_18_0;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct CustomFieldValue {
     // message fields
     pub field_id: ::std::string::String,
     // message oneof groups
     pub value: ::std::option::Option<CustomFieldValue_oneof_value>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -41,6 +44,7 @@ impl<'a> ::std::default::Default for &'a CustomFieldValue {
 }
 
 #[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub enum CustomFieldValue_oneof_value {
     string_value(::std::string::String),
     int_value(i32),
@@ -59,25 +63,6 @@ impl CustomFieldValue {
     pub fn get_field_id(&self) -> &str {
         &self.field_id
     }
-    pub fn clear_field_id(&mut self) {
-        self.field_id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_field_id(&mut self, v: ::std::string::String) {
-        self.field_id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_field_id(&mut self) -> &mut ::std::string::String {
-        &mut self.field_id
-    }
-
-    // Take field
-    pub fn take_field_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.field_id, ::std::string::String::new())
-    }
 
     // string string_value = 2;
 
@@ -86,45 +71,6 @@ impl CustomFieldValue {
         match self.value {
             ::std::option::Option::Some(CustomFieldValue_oneof_value::string_value(ref v)) => v,
             _ => "",
-        }
-    }
-    pub fn clear_string_value(&mut self) {
-        self.value = ::std::option::Option::None;
-    }
-
-    pub fn has_string_value(&self) -> bool {
-        match self.value {
-            ::std::option::Option::Some(CustomFieldValue_oneof_value::string_value(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_string_value(&mut self, v: ::std::string::String) {
-        self.value = ::std::option::Option::Some(CustomFieldValue_oneof_value::string_value(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_string_value(&mut self) -> &mut ::std::string::String {
-        if let ::std::option::Option::Some(CustomFieldValue_oneof_value::string_value(_)) = self.value {
-        } else {
-            self.value = ::std::option::Option::Some(CustomFieldValue_oneof_value::string_value(::std::string::String::new()));
-        }
-        match self.value {
-            ::std::option::Option::Some(CustomFieldValue_oneof_value::string_value(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_string_value(&mut self) -> ::std::string::String {
-        if self.has_string_value() {
-            match self.value.take() {
-                ::std::option::Option::Some(CustomFieldValue_oneof_value::string_value(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ::std::string::String::new()
         }
     }
 
@@ -137,21 +83,6 @@ impl CustomFieldValue {
             _ => 0,
         }
     }
-    pub fn clear_int_value(&mut self) {
-        self.value = ::std::option::Option::None;
-    }
-
-    pub fn has_int_value(&self) -> bool {
-        match self.value {
-            ::std::option::Option::Some(CustomFieldValue_oneof_value::int_value(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_int_value(&mut self, v: i32) {
-        self.value = ::std::option::Option::Some(CustomFieldValue_oneof_value::int_value(v))
-    }
 
     // double float_value = 4;
 
@@ -162,21 +93,6 @@ impl CustomFieldValue {
             _ => 0.,
         }
     }
-    pub fn clear_float_value(&mut self) {
-        self.value = ::std::option::Option::None;
-    }
-
-    pub fn has_float_value(&self) -> bool {
-        match self.value {
-            ::std::option::Option::Some(CustomFieldValue_oneof_value::float_value(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_float_value(&mut self, v: f64) {
-        self.value = ::std::option::Option::Some(CustomFieldValue_oneof_value::float_value(v))
-    }
 
     // bool bool_value = 5;
 
@@ -186,21 +102,6 @@ impl CustomFieldValue {
             ::std::option::Option::Some(CustomFieldValue_oneof_value::bool_value(v)) => v,
             _ => false,
         }
-    }
-    pub fn clear_bool_value(&mut self) {
-        self.value = ::std::option::Option::None;
-    }
-
-    pub fn has_bool_value(&self) -> bool {
-        match self.value {
-            ::std::option::Option::Some(CustomFieldValue_oneof_value::bool_value(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_bool_value(&mut self, v: bool) {
-        self.value = ::std::option::Option::Some(CustomFieldValue_oneof_value::bool_value(v))
     }
 }
 
@@ -330,43 +231,6 @@ impl ::protobuf::Message for CustomFieldValue {
         CustomFieldValue::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "field_id",
-                |m: &CustomFieldValue| { &m.field_id },
-                |m: &mut CustomFieldValue| { &mut m.field_id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
-                "string_value",
-                CustomFieldValue::has_string_value,
-                CustomFieldValue::get_string_value,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_i32_accessor::<_>(
-                "int_value",
-                CustomFieldValue::has_int_value,
-                CustomFieldValue::get_int_value,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_f64_accessor::<_>(
-                "float_value",
-                CustomFieldValue::has_float_value,
-                CustomFieldValue::get_float_value,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_bool_accessor::<_>(
-                "bool_value",
-                CustomFieldValue::has_bool_value,
-                CustomFieldValue::get_bool_value,
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CustomFieldValue>(
-                "CustomFieldValue",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static CustomFieldValue {
         static instance: ::protobuf::rt::LazyV2<CustomFieldValue> = ::protobuf::rt::LazyV2::INIT;
         instance.get(CustomFieldValue::new)
@@ -384,19 +248,14 @@ impl ::protobuf::Clear for CustomFieldValue {
     }
 }
 
-impl ::std::fmt::Debug for CustomFieldValue {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for CustomFieldValue {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct SundryThings {
     // message fields
     pub favorite: bool,
@@ -404,7 +263,9 @@ pub struct SundryThings {
     pub custom_fields: ::protobuf::RepeatedField<CustomFieldValue>,
     pub tag_ids: ::protobuf::RepeatedField<::std::string::String>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -425,28 +286,12 @@ impl SundryThings {
     pub fn get_favorite(&self) -> bool {
         self.favorite
     }
-    pub fn clear_favorite(&mut self) {
-        self.favorite = false;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_favorite(&mut self, v: bool) {
-        self.favorite = v;
-    }
 
     // .Rating rating = 2;
 
 
     pub fn get_rating(&self) -> Rating {
         self.rating
-    }
-    pub fn clear_rating(&mut self) {
-        self.rating = Rating::NONE;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_rating(&mut self, v: Rating) {
-        self.rating = v;
     }
 
     // repeated .CustomFieldValue custom_fields = 3;
@@ -455,48 +300,12 @@ impl SundryThings {
     pub fn get_custom_fields(&self) -> &[CustomFieldValue] {
         &self.custom_fields
     }
-    pub fn clear_custom_fields(&mut self) {
-        self.custom_fields.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_custom_fields(&mut self, v: ::protobuf::RepeatedField<CustomFieldValue>) {
-        self.custom_fields = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_custom_fields(&mut self) -> &mut ::protobuf::RepeatedField<CustomFieldValue> {
-        &mut self.custom_fields
-    }
-
-    // Take field
-    pub fn take_custom_fields(&mut self) -> ::protobuf::RepeatedField<CustomFieldValue> {
-        ::std::mem::replace(&mut self.custom_fields, ::protobuf::RepeatedField::new())
-    }
 
     // repeated string tag_ids = 4;
 
 
     pub fn get_tag_ids(&self) -> &[::std::string::String] {
         &self.tag_ids
-    }
-    pub fn clear_tag_ids(&mut self) {
-        self.tag_ids.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_tag_ids(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
-        self.tag_ids = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_tag_ids(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
-        &mut self.tag_ids
-    }
-
-    // Take field
-    pub fn take_tag_ids(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
-        ::std::mem::replace(&mut self.tag_ids, ::protobuf::RepeatedField::new())
     }
 }
 
@@ -609,38 +418,6 @@ impl ::protobuf::Message for SundryThings {
         SundryThings::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
-                "favorite",
-                |m: &SundryThings| { &m.favorite },
-                |m: &mut SundryThings| { &mut m.favorite },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<Rating>>(
-                "rating",
-                |m: &SundryThings| { &m.rating },
-                |m: &mut SundryThings| { &mut m.rating },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CustomFieldValue>>(
-                "custom_fields",
-                |m: &SundryThings| { &m.custom_fields },
-                |m: &mut SundryThings| { &mut m.custom_fields },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "tag_ids",
-                |m: &SundryThings| { &m.tag_ids },
-                |m: &mut SundryThings| { &mut m.tag_ids },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<SundryThings>(
-                "SundryThings",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static SundryThings {
         static instance: ::protobuf::rt::LazyV2<SundryThings> = ::protobuf::rt::LazyV2::INIT;
         instance.get(SundryThings::new)
@@ -657,25 +434,22 @@ impl ::protobuf::Clear for SundryThings {
     }
 }
 
-impl ::std::fmt::Debug for SundryThings {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for SundryThings {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct Gender {
     // message fields
     pub gender: Gender_GenderBasic,
     pub gender_other: ::std::string::String,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -696,39 +470,12 @@ impl Gender {
     pub fn get_gender(&self) -> Gender_GenderBasic {
         self.gender
     }
-    pub fn clear_gender(&mut self) {
-        self.gender = Gender_GenderBasic::UNDEFINED;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_gender(&mut self, v: Gender_GenderBasic) {
-        self.gender = v;
-    }
 
     // string gender_other = 2;
 
 
     pub fn get_gender_other(&self) -> &str {
         &self.gender_other
-    }
-    pub fn clear_gender_other(&mut self) {
-        self.gender_other.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_gender_other(&mut self, v: ::std::string::String) {
-        self.gender_other = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_gender_other(&mut self) -> &mut ::std::string::String {
-        &mut self.gender_other
-    }
-
-    // Take field
-    pub fn take_gender_other(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.gender_other, ::std::string::String::new())
     }
 }
 
@@ -811,28 +558,6 @@ impl ::protobuf::Message for Gender {
         Gender::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<Gender_GenderBasic>>(
-                "gender",
-                |m: &Gender| { &m.gender },
-                |m: &mut Gender| { &mut m.gender },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "gender_other",
-                |m: &Gender| { &m.gender_other },
-                |m: &mut Gender| { &mut m.gender_other },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Gender>(
-                "Gender",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static Gender {
         static instance: ::protobuf::rt::LazyV2<Gender> = ::protobuf::rt::LazyV2::INIT;
         instance.get(Gender::new)
@@ -847,12 +572,6 @@ impl ::protobuf::Clear for Gender {
     }
 }
 
-impl ::std::fmt::Debug for Gender {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Gender {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
@@ -860,6 +579,7 @@ impl ::protobuf::reflect::ProtobufValue for Gender {
 }
 
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub enum Gender_GenderBasic {
     UNDEFINED = 0,
     MALE = 1,
@@ -906,13 +626,6 @@ impl ::protobuf::ProtobufEnum for Gender_GenderBasic {
         ];
         values
     }
-
-    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            ::protobuf::reflect::EnumDescriptor::new_pb_name::<Gender_GenderBasic>("Gender.GenderBasic", file_descriptor_proto())
-        })
-    }
 }
 
 impl ::std::marker::Copy for Gender_GenderBasic {
@@ -930,14 +643,17 @@ impl ::protobuf::reflect::ProtobufValue for Gender_GenderBasic {
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct Date {
     // message fields
     pub month: u32,
     pub day: u32,
     pub year: i32,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -958,14 +674,6 @@ impl Date {
     pub fn get_month(&self) -> u32 {
         self.month
     }
-    pub fn clear_month(&mut self) {
-        self.month = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_month(&mut self, v: u32) {
-        self.month = v;
-    }
 
     // uint32 day = 2;
 
@@ -973,28 +681,12 @@ impl Date {
     pub fn get_day(&self) -> u32 {
         self.day
     }
-    pub fn clear_day(&mut self) {
-        self.day = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_day(&mut self, v: u32) {
-        self.day = v;
-    }
 
     // int32 year = 3;
 
 
     pub fn get_year(&self) -> i32 {
         self.year
-    }
-    pub fn clear_year(&mut self) {
-        self.year = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_year(&mut self, v: i32) {
-        self.year = v;
     }
 }
 
@@ -1098,33 +790,6 @@ impl ::protobuf::Message for Date {
         Date::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "month",
-                |m: &Date| { &m.month },
-                |m: &mut Date| { &mut m.month },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "day",
-                |m: &Date| { &m.day },
-                |m: &mut Date| { &mut m.day },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
-                "year",
-                |m: &Date| { &m.year },
-                |m: &mut Date| { &mut m.year },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Date>(
-                "Date",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static Date {
         static instance: ::protobuf::rt::LazyV2<Date> = ::protobuf::rt::LazyV2::INIT;
         instance.get(Date::new)
@@ -1140,19 +805,14 @@ impl ::protobuf::Clear for Date {
     }
 }
 
-impl ::std::fmt::Debug for Date {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Date {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct Time {
     // message fields
     pub hour: u32,
@@ -1160,7 +820,9 @@ pub struct Time {
     pub second: u32,
     pub millisecond: u32,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -1181,28 +843,12 @@ impl Time {
     pub fn get_hour(&self) -> u32 {
         self.hour
     }
-    pub fn clear_hour(&mut self) {
-        self.hour = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_hour(&mut self, v: u32) {
-        self.hour = v;
-    }
 
     // uint32 minute = 2;
 
 
     pub fn get_minute(&self) -> u32 {
         self.minute
-    }
-    pub fn clear_minute(&mut self) {
-        self.minute = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_minute(&mut self, v: u32) {
-        self.minute = v;
     }
 
     // uint32 second = 3;
@@ -1211,28 +857,12 @@ impl Time {
     pub fn get_second(&self) -> u32 {
         self.second
     }
-    pub fn clear_second(&mut self) {
-        self.second = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_second(&mut self, v: u32) {
-        self.second = v;
-    }
 
     // uint32 millisecond = 4;
 
 
     pub fn get_millisecond(&self) -> u32 {
         self.millisecond
-    }
-    pub fn clear_millisecond(&mut self) {
-        self.millisecond = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_millisecond(&mut self, v: u32) {
-        self.millisecond = v;
     }
 }
 
@@ -1349,38 +979,6 @@ impl ::protobuf::Message for Time {
         Time::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "hour",
-                |m: &Time| { &m.hour },
-                |m: &mut Time| { &mut m.hour },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "minute",
-                |m: &Time| { &m.minute },
-                |m: &mut Time| { &mut m.minute },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "second",
-                |m: &Time| { &m.second },
-                |m: &mut Time| { &mut m.second },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "millisecond",
-                |m: &Time| { &m.millisecond },
-                |m: &mut Time| { &mut m.millisecond },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Time>(
-                "Time",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static Time {
         static instance: ::protobuf::rt::LazyV2<Time> = ::protobuf::rt::LazyV2::INIT;
         instance.get(Time::new)
@@ -1397,19 +995,14 @@ impl ::protobuf::Clear for Time {
     }
 }
 
-impl ::std::fmt::Debug for Time {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Time {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct DateTime {
     // message fields
     pub month: u32,
@@ -1420,7 +1013,9 @@ pub struct DateTime {
     pub second: u32,
     pub millisecond: u32,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -1441,28 +1036,12 @@ impl DateTime {
     pub fn get_month(&self) -> u32 {
         self.month
     }
-    pub fn clear_month(&mut self) {
-        self.month = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_month(&mut self, v: u32) {
-        self.month = v;
-    }
 
     // uint32 day = 2;
 
 
     pub fn get_day(&self) -> u32 {
         self.day
-    }
-    pub fn clear_day(&mut self) {
-        self.day = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_day(&mut self, v: u32) {
-        self.day = v;
     }
 
     // int32 year = 3;
@@ -1471,28 +1050,12 @@ impl DateTime {
     pub fn get_year(&self) -> i32 {
         self.year
     }
-    pub fn clear_year(&mut self) {
-        self.year = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_year(&mut self, v: i32) {
-        self.year = v;
-    }
 
     // uint32 hour = 4;
 
 
     pub fn get_hour(&self) -> u32 {
         self.hour
-    }
-    pub fn clear_hour(&mut self) {
-        self.hour = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_hour(&mut self, v: u32) {
-        self.hour = v;
     }
 
     // uint32 minute = 5;
@@ -1501,14 +1064,6 @@ impl DateTime {
     pub fn get_minute(&self) -> u32 {
         self.minute
     }
-    pub fn clear_minute(&mut self) {
-        self.minute = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_minute(&mut self, v: u32) {
-        self.minute = v;
-    }
 
     // uint32 second = 6;
 
@@ -1516,28 +1071,12 @@ impl DateTime {
     pub fn get_second(&self) -> u32 {
         self.second
     }
-    pub fn clear_second(&mut self) {
-        self.second = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_second(&mut self, v: u32) {
-        self.second = v;
-    }
 
     // uint32 millisecond = 7;
 
 
     pub fn get_millisecond(&self) -> u32 {
         self.millisecond
-    }
-    pub fn clear_millisecond(&mut self) {
-        self.millisecond = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_millisecond(&mut self, v: u32) {
-        self.millisecond = v;
     }
 }
 
@@ -1693,53 +1232,6 @@ impl ::protobuf::Message for DateTime {
         DateTime::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "month",
-                |m: &DateTime| { &m.month },
-                |m: &mut DateTime| { &mut m.month },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "day",
-                |m: &DateTime| { &m.day },
-                |m: &mut DateTime| { &mut m.day },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
-                "year",
-                |m: &DateTime| { &m.year },
-                |m: &mut DateTime| { &mut m.year },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "hour",
-                |m: &DateTime| { &m.hour },
-                |m: &mut DateTime| { &mut m.hour },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "minute",
-                |m: &DateTime| { &m.minute },
-                |m: &mut DateTime| { &mut m.minute },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "second",
-                |m: &DateTime| { &m.second },
-                |m: &mut DateTime| { &mut m.second },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "millisecond",
-                |m: &DateTime| { &m.millisecond },
-                |m: &mut DateTime| { &mut m.millisecond },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<DateTime>(
-                "DateTime",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static DateTime {
         static instance: ::protobuf::rt::LazyV2<DateTime> = ::protobuf::rt::LazyV2::INIT;
         instance.get(DateTime::new)
@@ -1759,12 +1251,6 @@ impl ::protobuf::Clear for DateTime {
     }
 }
 
-impl ::std::fmt::Debug for DateTime {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for DateTime {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
@@ -1772,6 +1258,7 @@ impl ::protobuf::reflect::ProtobufValue for DateTime {
 }
 
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub enum Rating {
     NONE = 0,
     VERY_LOW = 1,
@@ -1809,13 +1296,6 @@ impl ::protobuf::ProtobufEnum for Rating {
         ];
         values
     }
-
-    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            ::protobuf::reflect::EnumDescriptor::new_pb_name::<Rating>("Rating", file_descriptor_proto())
-        })
-    }
 }
 
 impl ::std::marker::Copy for Rating {
@@ -1834,6 +1314,7 @@ impl ::protobuf::reflect::ProtobufValue for Rating {
 }
 
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub enum Ownership {
     NOT_SPECIFIED = 0,
     OWN = 1,
@@ -1871,13 +1352,6 @@ impl ::protobuf::ProtobufEnum for Ownership {
         ];
         values
     }
-
-    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            ::protobuf::reflect::EnumDescriptor::new_pb_name::<Ownership>("Ownership", file_descriptor_proto())
-        })
-    }
 }
 
 impl ::std::marker::Copy for Ownership {
@@ -1896,6 +1370,7 @@ impl ::protobuf::reflect::ProtobufValue for Ownership {
 }
 
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub enum ApplicableTo {
     ANY = 0,
     ACTOR = 1,
@@ -1948,13 +1423,6 @@ impl ::protobuf::ProtobufEnum for ApplicableTo {
         ];
         values
     }
-
-    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            ::protobuf::reflect::EnumDescriptor::new_pb_name::<ApplicableTo>("ApplicableTo", file_descriptor_proto())
-        })
-    }
 }
 
 impl ::std::marker::Copy for ApplicableTo {
@@ -1970,204 +1438,4 @@ impl ::protobuf::reflect::ProtobufValue for ApplicableTo {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
     }
-}
-
-static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0ccommon.proto\"\xbe\x01\n\x10CustomFieldValue\x12\x19\n\x08field_id\
-    \x18\x01\x20\x01(\tR\x07fieldId\x12#\n\x0cstring_value\x18\x02\x20\x01(\
-    \tH\0R\x0bstringValue\x12\x1d\n\tint_value\x18\x03\x20\x01(\x11H\0R\x08i\
-    ntValue\x12!\n\x0bfloat_value\x18\x04\x20\x01(\x01H\0R\nfloatValue\x12\
-    \x1f\n\nbool_value\x18\x05\x20\x01(\x08H\0R\tboolValueB\x07\n\x05value\"\
-    \x9c\x01\n\x0cSundryThings\x12\x1a\n\x08favorite\x18\x01\x20\x01(\x08R\
-    \x08favorite\x12\x1f\n\x06rating\x18\x02\x20\x01(\x0e2\x07.RatingR\x06ra\
-    ting\x126\n\rcustom_fields\x18\x03\x20\x03(\x0b2\x11.CustomFieldValueR\
-    \x0ccustomFields\x12\x17\n\x07tag_ids\x18\x04\x20\x03(\tR\x06tagIds\"\
-    \xe3\x01\n\x06Gender\x12+\n\x06gender\x18\x01\x20\x01(\x0e2\x13.Gender.G\
-    enderBasicR\x06gender\x12!\n\x0cgender_other\x18\x02\x20\x01(\tR\x0bgend\
-    erOther\"\x88\x01\n\x0bGenderBasic\x12\r\n\tUNDEFINED\x10\0\x12\x08\n\
-    \x04MALE\x10\x01\x12\n\n\x06FEMALE\x10\x02\x12\r\n\tTRANS_M2F\x10\x03\
-    \x12\r\n\tTRANS_F2M\x10\x04\x12\x0e\n\nNON_BINARY\x10\x05\x12\t\n\x05FLU\
-    ID\x10\x06\x12\x10\n\x0cGENDER_QUEER\x10\x07\x12\t\n\x05OTHER\x10\x08\"B\
-    \n\x04Date\x12\x14\n\x05month\x18\x01\x20\x01(\rR\x05month\x12\x10\n\x03\
-    day\x18\x02\x20\x01(\rR\x03day\x12\x12\n\x04year\x18\x03\x20\x01(\x05R\
-    \x04year\"l\n\x04Time\x12\x12\n\x04hour\x18\x01\x20\x01(\rR\x04hour\x12\
-    \x16\n\x06minute\x18\x02\x20\x01(\rR\x06minute\x12\x16\n\x06second\x18\
-    \x03\x20\x01(\rR\x06second\x12\x20\n\x0bmillisecond\x18\x04\x20\x01(\rR\
-    \x0bmillisecond\"\xac\x01\n\x08DateTime\x12\x14\n\x05month\x18\x01\x20\
-    \x01(\rR\x05month\x12\x10\n\x03day\x18\x02\x20\x01(\rR\x03day\x12\x12\n\
-    \x04year\x18\x03\x20\x01(\x05R\x04year\x12\x12\n\x04hour\x18\x04\x20\x01\
-    (\rR\x04hour\x12\x16\n\x06minute\x18\x05\x20\x01(\rR\x06minute\x12\x16\n\
-    \x06second\x18\x06\x20\x01(\rR\x06second\x12\x20\n\x0bmillisecond\x18\
-    \x07\x20\x01(\rR\x0bmillisecond*S\n\x06Rating\x12\x08\n\x04NONE\x10\0\
-    \x12\x0c\n\x08VERY_LOW\x10\x01\x12\x07\n\x03LOW\x10\x02\x12\x0f\n\x0bIND\
-    IFFERENT\x10\x03\x12\x08\n\x04HIGH\x10\x04\x12\r\n\tVERY_HIGH\x10\x05*h\
-    \n\tOwnership\x12\x11\n\rNOT_SPECIFIED\x10\0\x12\x07\n\x03OWN\x10\x01\
-    \x12\x11\n\rNO_LONGER_OWN\x10\x02\x12\x08\n\x04WANT\x10\x03\x12\x0f\n\
-    \x0bDO_NOT_WANT\x10\x04\x12\x11\n\rINFORMATIONAL\x10\x05*\x9a\x01\n\x0cA\
-    pplicableTo\x12\x07\n\x03ANY\x10\0\x12\t\n\x05ACTOR\x10\x01\x12\x0b\n\
-    \x07NETWORK\x10\x02\x12\x08\n\x04SITE\x10\x03\x12\n\n\x06STUDIO\x10\x04\
-    \x12\t\n\x05VIDEO\x10\x05\x12\n\n\x06ARTIST\x10\x06\x12\r\n\tCHARACTER\
-    \x10\x07\x12\x12\n\x0eGAME_DEVELOPER\x10\x08\x12\x08\n\x04GAME\x10\t\x12\
-    \x0f\n\x0bGAME_STUDIO\x10\nJ\xa0\x18\n\x06\x12\x04\0\0[\x01\n\x17\n\x01\
-    \x0c\x12\x03\0\0\x12\"\rCommon\x20types\n\n\n\n\x02\x05\0\x12\x04\x03\0\
-    \n\x01\n\n\n\x03\x05\0\x01\x12\x03\x03\x05\x0b\n\x0b\n\x04\x05\0\x02\0\
-    \x12\x03\x04\x04\r\n\x0c\n\x05\x05\0\x02\0\x01\x12\x03\x04\x04\x08\n\x0c\
-    \n\x05\x05\0\x02\0\x02\x12\x03\x04\x0b\x0c\n\x0b\n\x04\x05\0\x02\x01\x12\
-    \x03\x05\x04\x11\n\x0c\n\x05\x05\0\x02\x01\x01\x12\x03\x05\x04\x0c\n\x0c\
-    \n\x05\x05\0\x02\x01\x02\x12\x03\x05\x0f\x10\n\x0b\n\x04\x05\0\x02\x02\
-    \x12\x03\x06\x04\x0c\n\x0c\n\x05\x05\0\x02\x02\x01\x12\x03\x06\x04\x07\n\
-    \x0c\n\x05\x05\0\x02\x02\x02\x12\x03\x06\n\x0b\n\x0b\n\x04\x05\0\x02\x03\
-    \x12\x03\x07\x04\x14\n\x0c\n\x05\x05\0\x02\x03\x01\x12\x03\x07\x04\x0f\n\
-    \x0c\n\x05\x05\0\x02\x03\x02\x12\x03\x07\x12\x13\n\x0b\n\x04\x05\0\x02\
-    \x04\x12\x03\x08\x04\r\n\x0c\n\x05\x05\0\x02\x04\x01\x12\x03\x08\x04\x08\
-    \n\x0c\n\x05\x05\0\x02\x04\x02\x12\x03\x08\x0b\x0c\n\x0b\n\x04\x05\0\x02\
-    \x05\x12\x03\t\x04\x12\n\x0c\n\x05\x05\0\x02\x05\x01\x12\x03\t\x04\r\n\
-    \x0c\n\x05\x05\0\x02\x05\x02\x12\x03\t\x10\x11\n\n\n\x02\x05\x01\x12\x04\
-    \x0c\0\x13\x01\n\n\n\x03\x05\x01\x01\x12\x03\x0c\x05\x0e\n\x0b\n\x04\x05\
-    \x01\x02\0\x12\x03\r\x04\x16\n\x0c\n\x05\x05\x01\x02\0\x01\x12\x03\r\x04\
-    \x11\n\x0c\n\x05\x05\x01\x02\0\x02\x12\x03\r\x14\x15\n\x0b\n\x04\x05\x01\
-    \x02\x01\x12\x03\x0e\x04\x0c\n\x0c\n\x05\x05\x01\x02\x01\x01\x12\x03\x0e\
-    \x04\x07\n\x0c\n\x05\x05\x01\x02\x01\x02\x12\x03\x0e\n\x0b\n\x0b\n\x04\
-    \x05\x01\x02\x02\x12\x03\x0f\x04\x16\n\x0c\n\x05\x05\x01\x02\x02\x01\x12\
-    \x03\x0f\x04\x11\n\x0c\n\x05\x05\x01\x02\x02\x02\x12\x03\x0f\x14\x15\n\
-    \x0b\n\x04\x05\x01\x02\x03\x12\x03\x10\x04\r\n\x0c\n\x05\x05\x01\x02\x03\
-    \x01\x12\x03\x10\x04\x08\n\x0c\n\x05\x05\x01\x02\x03\x02\x12\x03\x10\x0b\
-    \x0c\n\x0b\n\x04\x05\x01\x02\x04\x12\x03\x11\x04\x14\n\x0c\n\x05\x05\x01\
-    \x02\x04\x01\x12\x03\x11\x04\x0f\n\x0c\n\x05\x05\x01\x02\x04\x02\x12\x03\
-    \x11\x12\x13\n\x0b\n\x04\x05\x01\x02\x05\x12\x03\x12\x04\x16\n\x0c\n\x05\
-    \x05\x01\x02\x05\x01\x12\x03\x12\x04\x11\n\x0c\n\x05\x05\x01\x02\x05\x02\
-    \x12\x03\x12\x14\x15\n\n\n\x02\x04\0\x12\x04\x15\0\x1d\x01\n\n\n\x03\x04\
-    \0\x01\x12\x03\x15\x08\x18\n\x0b\n\x04\x04\0\x02\0\x12\x03\x16\x04\x18\n\
-    \x0c\n\x05\x04\0\x02\0\x05\x12\x03\x16\x04\n\n\x0c\n\x05\x04\0\x02\0\x01\
-    \x12\x03\x16\x0b\x13\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x16\x16\x17\n\
-    \x0c\n\x04\x04\0\x08\0\x12\x04\x17\x04\x1c\x05\n\x0c\n\x05\x04\0\x08\0\
-    \x01\x12\x03\x17\n\x0f\n\x0b\n\x04\x04\0\x02\x01\x12\x03\x18\x08\x20\n\
-    \x0c\n\x05\x04\0\x02\x01\x05\x12\x03\x18\x08\x0e\n\x0c\n\x05\x04\0\x02\
-    \x01\x01\x12\x03\x18\x0f\x1b\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03\x18\
-    \x1e\x1f\n\x0b\n\x04\x04\0\x02\x02\x12\x03\x19\x08\x1d\n\x0c\n\x05\x04\0\
-    \x02\x02\x05\x12\x03\x19\x08\x0e\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03\
-    \x19\x0f\x18\n\x0c\n\x05\x04\0\x02\x02\x03\x12\x03\x19\x1b\x1c\n\x0b\n\
-    \x04\x04\0\x02\x03\x12\x03\x1a\x08\x1f\n\x0c\n\x05\x04\0\x02\x03\x05\x12\
-    \x03\x1a\x08\x0e\n\x0c\n\x05\x04\0\x02\x03\x01\x12\x03\x1a\x0f\x1a\n\x0c\
-    \n\x05\x04\0\x02\x03\x03\x12\x03\x1a\x1d\x1e\n\x0b\n\x04\x04\0\x02\x04\
-    \x12\x03\x1b\x08\x1c\n\x0c\n\x05\x04\0\x02\x04\x05\x12\x03\x1b\x08\x0c\n\
-    \x0c\n\x05\x04\0\x02\x04\x01\x12\x03\x1b\r\x17\n\x0c\n\x05\x04\0\x02\x04\
-    \x03\x12\x03\x1b\x1a\x1b\n\n\n\x02\x04\x01\x12\x04\x1f\0$\x01\n\n\n\x03\
-    \x04\x01\x01\x12\x03\x1f\x08\x14\n\x0b\n\x04\x04\x01\x02\0\x12\x03\x20\
-    \x04\x16\n\x0c\n\x05\x04\x01\x02\0\x05\x12\x03\x20\x04\x08\n\x0c\n\x05\
-    \x04\x01\x02\0\x01\x12\x03\x20\t\x11\n\x0c\n\x05\x04\x01\x02\0\x03\x12\
-    \x03\x20\x14\x15\n\x0b\n\x04\x04\x01\x02\x01\x12\x03!\x04\x16\n\x0c\n\
-    \x05\x04\x01\x02\x01\x06\x12\x03!\x04\n\n\x0c\n\x05\x04\x01\x02\x01\x01\
-    \x12\x03!\x0b\x11\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\x03!\x14\x15\n\x0b\
-    \n\x04\x04\x01\x02\x02\x12\x03\"\x040\n\x0c\n\x05\x04\x01\x02\x02\x04\
-    \x12\x03\"\x04\x0c\n\x0c\n\x05\x04\x01\x02\x02\x06\x12\x03\"\r\x1d\n\x0c\
-    \n\x05\x04\x01\x02\x02\x01\x12\x03\"\x1e+\n\x0c\n\x05\x04\x01\x02\x02\
-    \x03\x12\x03\"./\n\x0b\n\x04\x04\x01\x02\x03\x12\x03#\x04\x20\n\x0c\n\
-    \x05\x04\x01\x02\x03\x04\x12\x03#\x04\x0c\n\x0c\n\x05\x04\x01\x02\x03\
-    \x05\x12\x03#\r\x13\n\x0c\n\x05\x04\x01\x02\x03\x01\x12\x03#\x14\x1b\n\
-    \x0c\n\x05\x04\x01\x02\x03\x03\x12\x03#\x1e\x1f\n\n\n\x02\x04\x02\x12\
-    \x04&\04\x01\n\n\n\x03\x04\x02\x01\x12\x03&\x08\x0e\n\x0c\n\x04\x04\x02\
-    \x04\0\x12\x04'\x041\x05\n\x0c\n\x05\x04\x02\x04\0\x01\x12\x03'\t\x14\n\
-    \r\n\x06\x04\x02\x04\0\x02\0\x12\x03(\x08\x16\n\x0e\n\x07\x04\x02\x04\0\
-    \x02\0\x01\x12\x03(\x08\x11\n\x0e\n\x07\x04\x02\x04\0\x02\0\x02\x12\x03(\
-    \x14\x15\n\r\n\x06\x04\x02\x04\0\x02\x01\x12\x03)\x08\x11\n\x0e\n\x07\
-    \x04\x02\x04\0\x02\x01\x01\x12\x03)\x08\x0c\n\x0e\n\x07\x04\x02\x04\0\
-    \x02\x01\x02\x12\x03)\x0f\x10\n\r\n\x06\x04\x02\x04\0\x02\x02\x12\x03*\
-    \x08\x13\n\x0e\n\x07\x04\x02\x04\0\x02\x02\x01\x12\x03*\x08\x0e\n\x0e\n\
-    \x07\x04\x02\x04\0\x02\x02\x02\x12\x03*\x11\x12\n\r\n\x06\x04\x02\x04\0\
-    \x02\x03\x12\x03+\x08\x16\n\x0e\n\x07\x04\x02\x04\0\x02\x03\x01\x12\x03+\
-    \x08\x11\n\x0e\n\x07\x04\x02\x04\0\x02\x03\x02\x12\x03+\x14\x15\n\r\n\
-    \x06\x04\x02\x04\0\x02\x04\x12\x03,\x08\x16\n\x0e\n\x07\x04\x02\x04\0\
-    \x02\x04\x01\x12\x03,\x08\x11\n\x0e\n\x07\x04\x02\x04\0\x02\x04\x02\x12\
-    \x03,\x14\x15\n\r\n\x06\x04\x02\x04\0\x02\x05\x12\x03-\x08\x17\n\x0e\n\
-    \x07\x04\x02\x04\0\x02\x05\x01\x12\x03-\x08\x12\n\x0e\n\x07\x04\x02\x04\
-    \0\x02\x05\x02\x12\x03-\x15\x16\n\r\n\x06\x04\x02\x04\0\x02\x06\x12\x03.\
-    \x08\x12\n\x0e\n\x07\x04\x02\x04\0\x02\x06\x01\x12\x03.\x08\r\n\x0e\n\
-    \x07\x04\x02\x04\0\x02\x06\x02\x12\x03.\x10\x11\n\r\n\x06\x04\x02\x04\0\
-    \x02\x07\x12\x03/\x08\x19\n\x0e\n\x07\x04\x02\x04\0\x02\x07\x01\x12\x03/\
-    \x08\x14\n\x0e\n\x07\x04\x02\x04\0\x02\x07\x02\x12\x03/\x17\x18\n\r\n\
-    \x06\x04\x02\x04\0\x02\x08\x12\x030\x08\x12\n\x0e\n\x07\x04\x02\x04\0\
-    \x02\x08\x01\x12\x030\x08\r\n\x0e\n\x07\x04\x02\x04\0\x02\x08\x02\x12\
-    \x030\x10\x11\n\x0b\n\x04\x04\x02\x02\0\x12\x032\x04\x1b\n\x0c\n\x05\x04\
-    \x02\x02\0\x06\x12\x032\x04\x0f\n\x0c\n\x05\x04\x02\x02\0\x01\x12\x032\
-    \x10\x16\n\x0c\n\x05\x04\x02\x02\0\x03\x12\x032\x19\x1a\n\x0b\n\x04\x04\
-    \x02\x02\x01\x12\x033\x04\x1c\n\x0c\n\x05\x04\x02\x02\x01\x05\x12\x033\
-    \x04\n\n\x0c\n\x05\x04\x02\x02\x01\x01\x12\x033\x0b\x17\n\x0c\n\x05\x04\
-    \x02\x02\x01\x03\x12\x033\x1a\x1b\n\n\n\x02\x05\x02\x12\x046\0D\x01\n\n\
-    \n\x03\x05\x02\x01\x12\x036\x05\x11\n\x0b\n\x04\x05\x02\x02\0\x12\x037\
-    \x04\x0c\n\x0c\n\x05\x05\x02\x02\0\x01\x12\x037\x04\x07\n\x0c\n\x05\x05\
-    \x02\x02\0\x02\x12\x037\n\x0b\n\x19\n\x04\x05\x02\x02\x01\x12\x039\x04\
-    \x0e\x1a\x0cVideo\x20stuff\n\n\x0c\n\x05\x05\x02\x02\x01\x01\x12\x039\
-    \x04\t\n\x0c\n\x05\x05\x02\x02\x01\x02\x12\x039\x0c\r\n\x0b\n\x04\x05\
-    \x02\x02\x02\x12\x03:\x04\x10\n\x0c\n\x05\x05\x02\x02\x02\x01\x12\x03:\
-    \x04\x0b\n\x0c\n\x05\x05\x02\x02\x02\x02\x12\x03:\x0e\x0f\n\x0b\n\x04\
-    \x05\x02\x02\x03\x12\x03;\x04\r\n\x0c\n\x05\x05\x02\x02\x03\x01\x12\x03;\
-    \x04\x08\n\x0c\n\x05\x05\x02\x02\x03\x02\x12\x03;\x0b\x0c\n\x0b\n\x04\
-    \x05\x02\x02\x04\x12\x03<\x04\x0f\n\x0c\n\x05\x05\x02\x02\x04\x01\x12\
-    \x03<\x04\n\n\x0c\n\x05\x05\x02\x02\x04\x02\x12\x03<\r\x0e\n\x0b\n\x04\
-    \x05\x02\x02\x05\x12\x03=\x04\x0e\n\x0c\n\x05\x05\x02\x02\x05\x01\x12\
-    \x03=\x04\t\n\x0c\n\x05\x05\x02\x02\x05\x02\x12\x03=\x0c\r\n\x1b\n\x04\
-    \x05\x02\x02\x06\x12\x03?\x04\x0f\x1a\x0e\x20Hentai\x20stuff\n\n\x0c\n\
-    \x05\x05\x02\x02\x06\x01\x12\x03?\x04\n\n\x0c\n\x05\x05\x02\x02\x06\x02\
-    \x12\x03?\r\x0e\n\x0b\n\x04\x05\x02\x02\x07\x12\x03@\x04\x12\n\x0c\n\x05\
-    \x05\x02\x02\x07\x01\x12\x03@\x04\r\n\x0c\n\x05\x05\x02\x02\x07\x02\x12\
-    \x03@\x10\x11\n\x0b\n\x04\x05\x02\x02\x08\x12\x03A\x04\x17\n\x0c\n\x05\
-    \x05\x02\x02\x08\x01\x12\x03A\x04\x12\n\x0c\n\x05\x05\x02\x02\x08\x02\
-    \x12\x03A\x15\x16\n\x0b\n\x04\x05\x02\x02\t\x12\x03B\x04\r\n\x0c\n\x05\
-    \x05\x02\x02\t\x01\x12\x03B\x04\x08\n\x0c\n\x05\x05\x02\x02\t\x02\x12\
-    \x03B\x0b\x0c\n\x0b\n\x04\x05\x02\x02\n\x12\x03C\x04\x15\n\x0c\n\x05\x05\
-    \x02\x02\n\x01\x12\x03C\x04\x0f\n\x0c\n\x05\x05\x02\x02\n\x02\x12\x03C\
-    \x12\x14\n\n\n\x02\x04\x03\x12\x04F\0J\x01\n\n\n\x03\x04\x03\x01\x12\x03\
-    F\x08\x0c\n\x0b\n\x04\x04\x03\x02\0\x12\x03G\x04\x15\n\x0c\n\x05\x04\x03\
-    \x02\0\x05\x12\x03G\x04\n\n\x0c\n\x05\x04\x03\x02\0\x01\x12\x03G\x0b\x10\
-    \n\x0c\n\x05\x04\x03\x02\0\x03\x12\x03G\x13\x14\n\x0b\n\x04\x04\x03\x02\
-    \x01\x12\x03H\x04\x13\n\x0c\n\x05\x04\x03\x02\x01\x05\x12\x03H\x04\n\n\
-    \x0c\n\x05\x04\x03\x02\x01\x01\x12\x03H\x0b\x0e\n\x0c\n\x05\x04\x03\x02\
-    \x01\x03\x12\x03H\x11\x12\n\x0b\n\x04\x04\x03\x02\x02\x12\x03I\x04\x13\n\
-    \x0c\n\x05\x04\x03\x02\x02\x05\x12\x03I\x04\t\n\x0c\n\x05\x04\x03\x02\
-    \x02\x01\x12\x03I\n\x0e\n\x0c\n\x05\x04\x03\x02\x02\x03\x12\x03I\x11\x12\
-    \n\n\n\x02\x04\x04\x12\x04L\0Q\x01\n\n\n\x03\x04\x04\x01\x12\x03L\x08\
-    \x0c\n\x0b\n\x04\x04\x04\x02\0\x12\x03M\x04\x14\n\x0c\n\x05\x04\x04\x02\
-    \0\x05\x12\x03M\x04\n\n\x0c\n\x05\x04\x04\x02\0\x01\x12\x03M\x0b\x0f\n\
-    \x0c\n\x05\x04\x04\x02\0\x03\x12\x03M\x12\x13\n\x0b\n\x04\x04\x04\x02\
-    \x01\x12\x03N\x04\x16\n\x0c\n\x05\x04\x04\x02\x01\x05\x12\x03N\x04\n\n\
-    \x0c\n\x05\x04\x04\x02\x01\x01\x12\x03N\x0b\x11\n\x0c\n\x05\x04\x04\x02\
-    \x01\x03\x12\x03N\x14\x15\n\x0b\n\x04\x04\x04\x02\x02\x12\x03O\x04\x16\n\
-    \x0c\n\x05\x04\x04\x02\x02\x05\x12\x03O\x04\n\n\x0c\n\x05\x04\x04\x02\
-    \x02\x01\x12\x03O\x0b\x11\n\x0c\n\x05\x04\x04\x02\x02\x03\x12\x03O\x14\
-    \x15\n\x0b\n\x04\x04\x04\x02\x03\x12\x03P\x04\x1b\n\x0c\n\x05\x04\x04\
-    \x02\x03\x05\x12\x03P\x04\n\n\x0c\n\x05\x04\x04\x02\x03\x01\x12\x03P\x0b\
-    \x16\n\x0c\n\x05\x04\x04\x02\x03\x03\x12\x03P\x19\x1a\n\n\n\x02\x04\x05\
-    \x12\x04S\0[\x01\n\n\n\x03\x04\x05\x01\x12\x03S\x08\x10\n\x0b\n\x04\x04\
-    \x05\x02\0\x12\x03T\x04\x15\n\x0c\n\x05\x04\x05\x02\0\x05\x12\x03T\x04\n\
-    \n\x0c\n\x05\x04\x05\x02\0\x01\x12\x03T\x0b\x10\n\x0c\n\x05\x04\x05\x02\
-    \0\x03\x12\x03T\x13\x14\n\x0b\n\x04\x04\x05\x02\x01\x12\x03U\x04\x13\n\
-    \x0c\n\x05\x04\x05\x02\x01\x05\x12\x03U\x04\n\n\x0c\n\x05\x04\x05\x02\
-    \x01\x01\x12\x03U\x0b\x0e\n\x0c\n\x05\x04\x05\x02\x01\x03\x12\x03U\x11\
-    \x12\n\x0b\n\x04\x04\x05\x02\x02\x12\x03V\x04\x13\n\x0c\n\x05\x04\x05\
-    \x02\x02\x05\x12\x03V\x04\t\n\x0c\n\x05\x04\x05\x02\x02\x01\x12\x03V\n\
-    \x0e\n\x0c\n\x05\x04\x05\x02\x02\x03\x12\x03V\x11\x12\n\x0b\n\x04\x04\
-    \x05\x02\x03\x12\x03W\x04\x14\n\x0c\n\x05\x04\x05\x02\x03\x05\x12\x03W\
-    \x04\n\n\x0c\n\x05\x04\x05\x02\x03\x01\x12\x03W\x0b\x0f\n\x0c\n\x05\x04\
-    \x05\x02\x03\x03\x12\x03W\x12\x13\n\x0b\n\x04\x04\x05\x02\x04\x12\x03X\
-    \x04\x16\n\x0c\n\x05\x04\x05\x02\x04\x05\x12\x03X\x04\n\n\x0c\n\x05\x04\
-    \x05\x02\x04\x01\x12\x03X\x0b\x11\n\x0c\n\x05\x04\x05\x02\x04\x03\x12\
-    \x03X\x14\x15\n\x0b\n\x04\x04\x05\x02\x05\x12\x03Y\x04\x16\n\x0c\n\x05\
-    \x04\x05\x02\x05\x05\x12\x03Y\x04\n\n\x0c\n\x05\x04\x05\x02\x05\x01\x12\
-    \x03Y\x0b\x11\n\x0c\n\x05\x04\x05\x02\x05\x03\x12\x03Y\x14\x15\n\x0b\n\
-    \x04\x04\x05\x02\x06\x12\x03Z\x04\x1b\n\x0c\n\x05\x04\x05\x02\x06\x05\
-    \x12\x03Z\x04\n\n\x0c\n\x05\x04\x05\x02\x06\x01\x12\x03Z\x0b\x16\n\x0c\n\
-    \x05\x04\x05\x02\x06\x03\x12\x03Z\x19\x1ab\x06proto3\
-";
-
-static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;
-
-fn parse_descriptor_proto() -> ::protobuf::descriptor::FileDescriptorProto {
-    ::protobuf::parse_from_bytes(file_descriptor_proto_data).unwrap()
-}
-
-pub fn file_descriptor_proto() -> &'static ::protobuf::descriptor::FileDescriptorProto {
-    file_descriptor_proto_lazy.get(|| {
-        parse_descriptor_proto()
-    })
 }

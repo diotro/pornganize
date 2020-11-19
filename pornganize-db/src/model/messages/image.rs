@@ -23,7 +23,8 @@
 /// of protobuf runtime.
 // const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_18_0;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct Image {
     // message fields
     pub id: ::std::string::String,
@@ -31,7 +32,9 @@ pub struct Image {
     pub tag_ids: ::protobuf::RepeatedField<::std::string::String>,
     pub added_on: ::protobuf::SingularPtrField<super::common::DateTime>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -52,50 +55,12 @@ impl Image {
     pub fn get_id(&self) -> &str {
         &self.id
     }
-    pub fn clear_id(&mut self) {
-        self.id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_id(&mut self, v: ::std::string::String) {
-        self.id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_id(&mut self) -> &mut ::std::string::String {
-        &mut self.id
-    }
-
-    // Take field
-    pub fn take_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.id, ::std::string::String::new())
-    }
 
     // string path = 2;
 
 
     pub fn get_path(&self) -> &str {
         &self.path
-    }
-    pub fn clear_path(&mut self) {
-        self.path.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_path(&mut self, v: ::std::string::String) {
-        self.path = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_path(&mut self) -> &mut ::std::string::String {
-        &mut self.path
-    }
-
-    // Take field
-    pub fn take_path(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.path, ::std::string::String::new())
     }
 
     // repeated string tag_ids = 3;
@@ -104,56 +69,12 @@ impl Image {
     pub fn get_tag_ids(&self) -> &[::std::string::String] {
         &self.tag_ids
     }
-    pub fn clear_tag_ids(&mut self) {
-        self.tag_ids.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_tag_ids(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
-        self.tag_ids = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_tag_ids(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
-        &mut self.tag_ids
-    }
-
-    // Take field
-    pub fn take_tag_ids(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
-        ::std::mem::replace(&mut self.tag_ids, ::protobuf::RepeatedField::new())
-    }
 
     // .DateTime added_on = 350;
 
 
     pub fn get_added_on(&self) -> &super::common::DateTime {
         self.added_on.as_ref().unwrap_or_else(|| <super::common::DateTime as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_added_on(&mut self) {
-        self.added_on.clear();
-    }
-
-    pub fn has_added_on(&self) -> bool {
-        self.added_on.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_added_on(&mut self, v: super::common::DateTime) {
-        self.added_on = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_added_on(&mut self) -> &mut super::common::DateTime {
-        if self.added_on.is_none() {
-            self.added_on.set_default();
-        }
-        self.added_on.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_added_on(&mut self) -> super::common::DateTime {
-        self.added_on.take().unwrap_or_else(|| super::common::DateTime::new())
     }
 }
 
@@ -262,38 +183,6 @@ impl ::protobuf::Message for Image {
         Image::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "id",
-                |m: &Image| { &m.id },
-                |m: &mut Image| { &mut m.id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "path",
-                |m: &Image| { &m.path },
-                |m: &mut Image| { &mut m.path },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "tag_ids",
-                |m: &Image| { &m.tag_ids },
-                |m: &mut Image| { &mut m.tag_ids },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::DateTime>>(
-                "added_on",
-                |m: &Image| { &m.added_on },
-                |m: &mut Image| { &mut m.added_on },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Image>(
-                "Image",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static Image {
         static instance: ::protobuf::rt::LazyV2<Image> = ::protobuf::rt::LazyV2::INIT;
         instance.get(Image::new)
@@ -310,47 +199,8 @@ impl ::protobuf::Clear for Image {
     }
 }
 
-impl ::std::fmt::Debug for Image {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Image {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
-}
-
-static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0bimage.proto\x1a\x0ccommon.proto\"k\n\x05Image\x12\x0e\n\x02id\x18\
-    \x01\x20\x01(\tR\x02id\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\x12\
-    \x17\n\x07tag_ids\x18\x03\x20\x03(\tR\x06tagIds\x12%\n\x08added_on\x18\
-    \xde\x02\x20\x01(\x0b2\t.DateTimeR\x07addedOnJ\x9f\x02\n\x06\x12\x04\0\0\
-    \t\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\t\n\x02\x03\0\x12\x03\x02\0\x16\
-    \n\n\n\x02\x04\0\x12\x04\x04\0\t\x01\n\n\n\x03\x04\0\x01\x12\x03\x04\x08\
-    \r\n\x0b\n\x04\x04\0\x02\0\x12\x03\x05\x04\x12\n\x0c\n\x05\x04\0\x02\0\
-    \x05\x12\x03\x05\x04\n\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03\x05\x0b\r\n\
-    \x0c\n\x05\x04\0\x02\0\x03\x12\x03\x05\x10\x11\n\x0b\n\x04\x04\0\x02\x01\
-    \x12\x03\x06\x04\x14\n\x0c\n\x05\x04\0\x02\x01\x05\x12\x03\x06\x04\n\n\
-    \x0c\n\x05\x04\0\x02\x01\x01\x12\x03\x06\x0b\x0f\n\x0c\n\x05\x04\0\x02\
-    \x01\x03\x12\x03\x06\x12\x13\n\x0b\n\x04\x04\0\x02\x02\x12\x03\x07\x04\
-    \x20\n\x0c\n\x05\x04\0\x02\x02\x04\x12\x03\x07\x04\x0c\n\x0c\n\x05\x04\0\
-    \x02\x02\x05\x12\x03\x07\r\x13\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03\x07\
-    \x14\x1b\n\x0c\n\x05\x04\0\x02\x02\x03\x12\x03\x07\x1e\x1f\n\x0b\n\x04\
-    \x04\0\x02\x03\x12\x03\x08\x04\x1c\n\x0c\n\x05\x04\0\x02\x03\x06\x12\x03\
-    \x08\x04\x0c\n\x0c\n\x05\x04\0\x02\x03\x01\x12\x03\x08\r\x15\n\x0c\n\x05\
-    \x04\0\x02\x03\x03\x12\x03\x08\x18\x1bb\x06proto3\
-";
-
-static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;
-
-fn parse_descriptor_proto() -> ::protobuf::descriptor::FileDescriptorProto {
-    ::protobuf::parse_from_bytes(file_descriptor_proto_data).unwrap()
-}
-
-pub fn file_descriptor_proto() -> &'static ::protobuf::descriptor::FileDescriptorProto {
-    file_descriptor_proto_lazy.get(|| {
-        parse_descriptor_proto()
-    })
 }

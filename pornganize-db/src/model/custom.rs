@@ -33,8 +33,8 @@ impl From<CustomFieldMessage> for CustomField {
 }
 
 impl Model<CustomFieldMessage> for CustomField {
-    fn tree_name() -> &'static str { "custom-fields" }
-    fn get_key(&self) -> String { self.id.clone() }
+    const TREE_NAME: &'static str = "custom-fields";
+    fn get_key(&self) -> &str { &self.id }
 }
 
 impl From<CustomField> for CustomFieldMessage {

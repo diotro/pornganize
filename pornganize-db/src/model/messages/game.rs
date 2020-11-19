@@ -23,7 +23,8 @@
 /// of protobuf runtime.
 // const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_18_0;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct GameDeveloper {
     // message fields
     pub id: ::std::string::String,
@@ -33,7 +34,9 @@ pub struct GameDeveloper {
     pub sundry: ::protobuf::SingularPtrField<super::common::SundryThings>,
     pub added_on: ::protobuf::SingularPtrField<super::common::DateTime>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -54,50 +57,12 @@ impl GameDeveloper {
     pub fn get_id(&self) -> &str {
         &self.id
     }
-    pub fn clear_id(&mut self) {
-        self.id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_id(&mut self, v: ::std::string::String) {
-        self.id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_id(&mut self) -> &mut ::std::string::String {
-        &mut self.id
-    }
-
-    // Take field
-    pub fn take_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.id, ::std::string::String::new())
-    }
 
     // string name = 2;
 
 
     pub fn get_name(&self) -> &str {
         &self.name
-    }
-    pub fn clear_name(&mut self) {
-        self.name.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_name(&mut self, v: ::std::string::String) {
-        self.name = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_name(&mut self) -> &mut ::std::string::String {
-        &mut self.name
-    }
-
-    // Take field
-    pub fn take_name(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
     // .Date established = 3;
@@ -106,57 +71,12 @@ impl GameDeveloper {
     pub fn get_established(&self) -> &super::common::Date {
         self.established.as_ref().unwrap_or_else(|| <super::common::Date as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_established(&mut self) {
-        self.established.clear();
-    }
-
-    pub fn has_established(&self) -> bool {
-        self.established.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_established(&mut self, v: super::common::Date) {
-        self.established = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_established(&mut self) -> &mut super::common::Date {
-        if self.established.is_none() {
-            self.established.set_default();
-        }
-        self.established.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_established(&mut self) -> super::common::Date {
-        self.established.take().unwrap_or_else(|| super::common::Date::new())
-    }
 
     // string description = 4;
 
 
     pub fn get_description(&self) -> &str {
         &self.description
-    }
-    pub fn clear_description(&mut self) {
-        self.description.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_description(&mut self, v: ::std::string::String) {
-        self.description = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_description(&mut self) -> &mut ::std::string::String {
-        &mut self.description
-    }
-
-    // Take field
-    pub fn take_description(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.description, ::std::string::String::new())
     }
 
     // .SundryThings sundry = 5;
@@ -165,64 +85,12 @@ impl GameDeveloper {
     pub fn get_sundry(&self) -> &super::common::SundryThings {
         self.sundry.as_ref().unwrap_or_else(|| <super::common::SundryThings as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_sundry(&mut self) {
-        self.sundry.clear();
-    }
-
-    pub fn has_sundry(&self) -> bool {
-        self.sundry.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_sundry(&mut self, v: super::common::SundryThings) {
-        self.sundry = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_sundry(&mut self) -> &mut super::common::SundryThings {
-        if self.sundry.is_none() {
-            self.sundry.set_default();
-        }
-        self.sundry.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_sundry(&mut self) -> super::common::SundryThings {
-        self.sundry.take().unwrap_or_else(|| super::common::SundryThings::new())
-    }
 
     // .DateTime added_on = 350;
 
 
     pub fn get_added_on(&self) -> &super::common::DateTime {
         self.added_on.as_ref().unwrap_or_else(|| <super::common::DateTime as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_added_on(&mut self) {
-        self.added_on.clear();
-    }
-
-    pub fn has_added_on(&self) -> bool {
-        self.added_on.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_added_on(&mut self, v: super::common::DateTime) {
-        self.added_on = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_added_on(&mut self) -> &mut super::common::DateTime {
-        if self.added_on.is_none() {
-            self.added_on.set_default();
-        }
-        self.added_on.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_added_on(&mut self) -> super::common::DateTime {
-        self.added_on.take().unwrap_or_else(|| super::common::DateTime::new())
     }
 }
 
@@ -365,48 +233,6 @@ impl ::protobuf::Message for GameDeveloper {
         GameDeveloper::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "id",
-                |m: &GameDeveloper| { &m.id },
-                |m: &mut GameDeveloper| { &mut m.id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name",
-                |m: &GameDeveloper| { &m.name },
-                |m: &mut GameDeveloper| { &mut m.name },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::Date>>(
-                "established",
-                |m: &GameDeveloper| { &m.established },
-                |m: &mut GameDeveloper| { &mut m.established },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "description",
-                |m: &GameDeveloper| { &m.description },
-                |m: &mut GameDeveloper| { &mut m.description },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::SundryThings>>(
-                "sundry",
-                |m: &GameDeveloper| { &m.sundry },
-                |m: &mut GameDeveloper| { &mut m.sundry },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::DateTime>>(
-                "added_on",
-                |m: &GameDeveloper| { &m.added_on },
-                |m: &mut GameDeveloper| { &mut m.added_on },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<GameDeveloper>(
-                "GameDeveloper",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static GameDeveloper {
         static instance: ::protobuf::rt::LazyV2<GameDeveloper> = ::protobuf::rt::LazyV2::INIT;
         instance.get(GameDeveloper::new)
@@ -425,19 +251,14 @@ impl ::protobuf::Clear for GameDeveloper {
     }
 }
 
-impl ::std::fmt::Debug for GameDeveloper {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for GameDeveloper {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct GameStudio {
     // message fields
     pub id: ::std::string::String,
@@ -447,7 +268,9 @@ pub struct GameStudio {
     pub sundry: ::protobuf::SingularPtrField<super::common::SundryThings>,
     pub added_on: ::protobuf::SingularPtrField<super::common::DateTime>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -468,50 +291,12 @@ impl GameStudio {
     pub fn get_id(&self) -> &str {
         &self.id
     }
-    pub fn clear_id(&mut self) {
-        self.id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_id(&mut self, v: ::std::string::String) {
-        self.id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_id(&mut self) -> &mut ::std::string::String {
-        &mut self.id
-    }
-
-    // Take field
-    pub fn take_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.id, ::std::string::String::new())
-    }
 
     // string name = 2;
 
 
     pub fn get_name(&self) -> &str {
         &self.name
-    }
-    pub fn clear_name(&mut self) {
-        self.name.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_name(&mut self, v: ::std::string::String) {
-        self.name = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_name(&mut self) -> &mut ::std::string::String {
-        &mut self.name
-    }
-
-    // Take field
-    pub fn take_name(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
     // .Date established = 3;
@@ -520,57 +305,12 @@ impl GameStudio {
     pub fn get_established(&self) -> &super::common::Date {
         self.established.as_ref().unwrap_or_else(|| <super::common::Date as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_established(&mut self) {
-        self.established.clear();
-    }
-
-    pub fn has_established(&self) -> bool {
-        self.established.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_established(&mut self, v: super::common::Date) {
-        self.established = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_established(&mut self) -> &mut super::common::Date {
-        if self.established.is_none() {
-            self.established.set_default();
-        }
-        self.established.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_established(&mut self) -> super::common::Date {
-        self.established.take().unwrap_or_else(|| super::common::Date::new())
-    }
 
     // string description = 4;
 
 
     pub fn get_description(&self) -> &str {
         &self.description
-    }
-    pub fn clear_description(&mut self) {
-        self.description.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_description(&mut self, v: ::std::string::String) {
-        self.description = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_description(&mut self) -> &mut ::std::string::String {
-        &mut self.description
-    }
-
-    // Take field
-    pub fn take_description(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.description, ::std::string::String::new())
     }
 
     // .SundryThings sundry = 5;
@@ -579,64 +319,12 @@ impl GameStudio {
     pub fn get_sundry(&self) -> &super::common::SundryThings {
         self.sundry.as_ref().unwrap_or_else(|| <super::common::SundryThings as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_sundry(&mut self) {
-        self.sundry.clear();
-    }
-
-    pub fn has_sundry(&self) -> bool {
-        self.sundry.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_sundry(&mut self, v: super::common::SundryThings) {
-        self.sundry = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_sundry(&mut self) -> &mut super::common::SundryThings {
-        if self.sundry.is_none() {
-            self.sundry.set_default();
-        }
-        self.sundry.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_sundry(&mut self) -> super::common::SundryThings {
-        self.sundry.take().unwrap_or_else(|| super::common::SundryThings::new())
-    }
 
     // .DateTime added_on = 350;
 
 
     pub fn get_added_on(&self) -> &super::common::DateTime {
         self.added_on.as_ref().unwrap_or_else(|| <super::common::DateTime as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_added_on(&mut self) {
-        self.added_on.clear();
-    }
-
-    pub fn has_added_on(&self) -> bool {
-        self.added_on.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_added_on(&mut self, v: super::common::DateTime) {
-        self.added_on = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_added_on(&mut self) -> &mut super::common::DateTime {
-        if self.added_on.is_none() {
-            self.added_on.set_default();
-        }
-        self.added_on.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_added_on(&mut self) -> super::common::DateTime {
-        self.added_on.take().unwrap_or_else(|| super::common::DateTime::new())
     }
 }
 
@@ -779,48 +467,6 @@ impl ::protobuf::Message for GameStudio {
         GameStudio::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "id",
-                |m: &GameStudio| { &m.id },
-                |m: &mut GameStudio| { &mut m.id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name",
-                |m: &GameStudio| { &m.name },
-                |m: &mut GameStudio| { &mut m.name },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::Date>>(
-                "established",
-                |m: &GameStudio| { &m.established },
-                |m: &mut GameStudio| { &mut m.established },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "description",
-                |m: &GameStudio| { &m.description },
-                |m: &mut GameStudio| { &mut m.description },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::SundryThings>>(
-                "sundry",
-                |m: &GameStudio| { &m.sundry },
-                |m: &mut GameStudio| { &mut m.sundry },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::DateTime>>(
-                "added_on",
-                |m: &GameStudio| { &m.added_on },
-                |m: &mut GameStudio| { &mut m.added_on },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<GameStudio>(
-                "GameStudio",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static GameStudio {
         static instance: ::protobuf::rt::LazyV2<GameStudio> = ::protobuf::rt::LazyV2::INIT;
         instance.get(GameStudio::new)
@@ -839,19 +485,14 @@ impl ::protobuf::Clear for GameStudio {
     }
 }
 
-impl ::std::fmt::Debug for GameStudio {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for GameStudio {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct GameTranslator {
     // message fields
     pub id: ::std::string::String,
@@ -861,7 +502,9 @@ pub struct GameTranslator {
     pub sundry: ::protobuf::SingularPtrField<super::common::SundryThings>,
     pub added_on: ::protobuf::SingularPtrField<super::common::DateTime>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -882,50 +525,12 @@ impl GameTranslator {
     pub fn get_id(&self) -> &str {
         &self.id
     }
-    pub fn clear_id(&mut self) {
-        self.id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_id(&mut self, v: ::std::string::String) {
-        self.id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_id(&mut self) -> &mut ::std::string::String {
-        &mut self.id
-    }
-
-    // Take field
-    pub fn take_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.id, ::std::string::String::new())
-    }
 
     // string name = 2;
 
 
     pub fn get_name(&self) -> &str {
         &self.name
-    }
-    pub fn clear_name(&mut self) {
-        self.name.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_name(&mut self, v: ::std::string::String) {
-        self.name = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_name(&mut self) -> &mut ::std::string::String {
-        &mut self.name
-    }
-
-    // Take field
-    pub fn take_name(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
     // .Date established = 3;
@@ -934,57 +539,12 @@ impl GameTranslator {
     pub fn get_established(&self) -> &super::common::Date {
         self.established.as_ref().unwrap_or_else(|| <super::common::Date as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_established(&mut self) {
-        self.established.clear();
-    }
-
-    pub fn has_established(&self) -> bool {
-        self.established.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_established(&mut self, v: super::common::Date) {
-        self.established = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_established(&mut self) -> &mut super::common::Date {
-        if self.established.is_none() {
-            self.established.set_default();
-        }
-        self.established.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_established(&mut self) -> super::common::Date {
-        self.established.take().unwrap_or_else(|| super::common::Date::new())
-    }
 
     // string description = 4;
 
 
     pub fn get_description(&self) -> &str {
         &self.description
-    }
-    pub fn clear_description(&mut self) {
-        self.description.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_description(&mut self, v: ::std::string::String) {
-        self.description = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_description(&mut self) -> &mut ::std::string::String {
-        &mut self.description
-    }
-
-    // Take field
-    pub fn take_description(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.description, ::std::string::String::new())
     }
 
     // .SundryThings sundry = 5;
@@ -993,64 +553,12 @@ impl GameTranslator {
     pub fn get_sundry(&self) -> &super::common::SundryThings {
         self.sundry.as_ref().unwrap_or_else(|| <super::common::SundryThings as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_sundry(&mut self) {
-        self.sundry.clear();
-    }
-
-    pub fn has_sundry(&self) -> bool {
-        self.sundry.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_sundry(&mut self, v: super::common::SundryThings) {
-        self.sundry = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_sundry(&mut self) -> &mut super::common::SundryThings {
-        if self.sundry.is_none() {
-            self.sundry.set_default();
-        }
-        self.sundry.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_sundry(&mut self) -> super::common::SundryThings {
-        self.sundry.take().unwrap_or_else(|| super::common::SundryThings::new())
-    }
 
     // .DateTime added_on = 350;
 
 
     pub fn get_added_on(&self) -> &super::common::DateTime {
         self.added_on.as_ref().unwrap_or_else(|| <super::common::DateTime as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_added_on(&mut self) {
-        self.added_on.clear();
-    }
-
-    pub fn has_added_on(&self) -> bool {
-        self.added_on.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_added_on(&mut self, v: super::common::DateTime) {
-        self.added_on = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_added_on(&mut self) -> &mut super::common::DateTime {
-        if self.added_on.is_none() {
-            self.added_on.set_default();
-        }
-        self.added_on.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_added_on(&mut self) -> super::common::DateTime {
-        self.added_on.take().unwrap_or_else(|| super::common::DateTime::new())
     }
 }
 
@@ -1193,48 +701,6 @@ impl ::protobuf::Message for GameTranslator {
         GameTranslator::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "id",
-                |m: &GameTranslator| { &m.id },
-                |m: &mut GameTranslator| { &mut m.id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name",
-                |m: &GameTranslator| { &m.name },
-                |m: &mut GameTranslator| { &mut m.name },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::Date>>(
-                "established",
-                |m: &GameTranslator| { &m.established },
-                |m: &mut GameTranslator| { &mut m.established },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "description",
-                |m: &GameTranslator| { &m.description },
-                |m: &mut GameTranslator| { &mut m.description },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::SundryThings>>(
-                "sundry",
-                |m: &GameTranslator| { &m.sundry },
-                |m: &mut GameTranslator| { &mut m.sundry },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::DateTime>>(
-                "added_on",
-                |m: &GameTranslator| { &m.added_on },
-                |m: &mut GameTranslator| { &mut m.added_on },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<GameTranslator>(
-                "GameTranslator",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static GameTranslator {
         static instance: ::protobuf::rt::LazyV2<GameTranslator> = ::protobuf::rt::LazyV2::INIT;
         instance.get(GameTranslator::new)
@@ -1253,19 +719,14 @@ impl ::protobuf::Clear for GameTranslator {
     }
 }
 
-impl ::std::fmt::Debug for GameTranslator {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for GameTranslator {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct GameSeries {
     // message fields
     pub id: ::std::string::String,
@@ -1277,7 +738,9 @@ pub struct GameSeries {
     pub sundry: ::protobuf::SingularPtrField<super::common::SundryThings>,
     pub added_on: ::protobuf::SingularPtrField<super::common::DateTime>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -1298,50 +761,12 @@ impl GameSeries {
     pub fn get_id(&self) -> &str {
         &self.id
     }
-    pub fn clear_id(&mut self) {
-        self.id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_id(&mut self, v: ::std::string::String) {
-        self.id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_id(&mut self) -> &mut ::std::string::String {
-        &mut self.id
-    }
-
-    // Take field
-    pub fn take_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.id, ::std::string::String::new())
-    }
 
     // string name = 2;
 
 
     pub fn get_name(&self) -> &str {
         &self.name
-    }
-    pub fn clear_name(&mut self) {
-        self.name.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_name(&mut self, v: ::std::string::String) {
-        self.name = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_name(&mut self) -> &mut ::std::string::String {
-        &mut self.name
-    }
-
-    // Take field
-    pub fn take_name(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
     // uint32 developer = 3;
@@ -1350,28 +775,12 @@ impl GameSeries {
     pub fn get_developer(&self) -> u32 {
         self.developer
     }
-    pub fn clear_developer(&mut self) {
-        self.developer = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_developer(&mut self, v: u32) {
-        self.developer = v;
-    }
 
     // uint32 studio = 4;
 
 
     pub fn get_studio(&self) -> u32 {
         self.studio
-    }
-    pub fn clear_studio(&mut self) {
-        self.studio = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_studio(&mut self, v: u32) {
-        self.studio = v;
     }
 
     // uint32 translator = 5;
@@ -1380,39 +789,12 @@ impl GameSeries {
     pub fn get_translator(&self) -> u32 {
         self.translator
     }
-    pub fn clear_translator(&mut self) {
-        self.translator = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_translator(&mut self, v: u32) {
-        self.translator = v;
-    }
 
     // string description = 6;
 
 
     pub fn get_description(&self) -> &str {
         &self.description
-    }
-    pub fn clear_description(&mut self) {
-        self.description.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_description(&mut self, v: ::std::string::String) {
-        self.description = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_description(&mut self) -> &mut ::std::string::String {
-        &mut self.description
-    }
-
-    // Take field
-    pub fn take_description(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.description, ::std::string::String::new())
     }
 
     // .SundryThings sundry = 7;
@@ -1421,64 +803,12 @@ impl GameSeries {
     pub fn get_sundry(&self) -> &super::common::SundryThings {
         self.sundry.as_ref().unwrap_or_else(|| <super::common::SundryThings as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_sundry(&mut self) {
-        self.sundry.clear();
-    }
-
-    pub fn has_sundry(&self) -> bool {
-        self.sundry.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_sundry(&mut self, v: super::common::SundryThings) {
-        self.sundry = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_sundry(&mut self) -> &mut super::common::SundryThings {
-        if self.sundry.is_none() {
-            self.sundry.set_default();
-        }
-        self.sundry.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_sundry(&mut self) -> super::common::SundryThings {
-        self.sundry.take().unwrap_or_else(|| super::common::SundryThings::new())
-    }
 
     // .DateTime added_on = 350;
 
 
     pub fn get_added_on(&self) -> &super::common::DateTime {
         self.added_on.as_ref().unwrap_or_else(|| <super::common::DateTime as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_added_on(&mut self) {
-        self.added_on.clear();
-    }
-
-    pub fn has_added_on(&self) -> bool {
-        self.added_on.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_added_on(&mut self, v: super::common::DateTime) {
-        self.added_on = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_added_on(&mut self) -> &mut super::common::DateTime {
-        if self.added_on.is_none() {
-            self.added_on.set_default();
-        }
-        self.added_on.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_added_on(&mut self) -> super::common::DateTime {
-        self.added_on.take().unwrap_or_else(|| super::common::DateTime::new())
     }
 }
 
@@ -1643,58 +973,6 @@ impl ::protobuf::Message for GameSeries {
         GameSeries::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "id",
-                |m: &GameSeries| { &m.id },
-                |m: &mut GameSeries| { &mut m.id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name",
-                |m: &GameSeries| { &m.name },
-                |m: &mut GameSeries| { &mut m.name },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "developer",
-                |m: &GameSeries| { &m.developer },
-                |m: &mut GameSeries| { &mut m.developer },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "studio",
-                |m: &GameSeries| { &m.studio },
-                |m: &mut GameSeries| { &mut m.studio },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "translator",
-                |m: &GameSeries| { &m.translator },
-                |m: &mut GameSeries| { &mut m.translator },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "description",
-                |m: &GameSeries| { &m.description },
-                |m: &mut GameSeries| { &mut m.description },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::SundryThings>>(
-                "sundry",
-                |m: &GameSeries| { &m.sundry },
-                |m: &mut GameSeries| { &mut m.sundry },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::DateTime>>(
-                "added_on",
-                |m: &GameSeries| { &m.added_on },
-                |m: &mut GameSeries| { &mut m.added_on },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<GameSeries>(
-                "GameSeries",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static GameSeries {
         static instance: ::protobuf::rt::LazyV2<GameSeries> = ::protobuf::rt::LazyV2::INIT;
         instance.get(GameSeries::new)
@@ -1715,19 +993,14 @@ impl ::protobuf::Clear for GameSeries {
     }
 }
 
-impl ::std::fmt::Debug for GameSeries {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for GameSeries {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct Release {
     // message fields
     pub name: ::std::string::String,
@@ -1739,7 +1012,9 @@ pub struct Release {
     pub own: super::common::Ownership,
     pub links: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -1760,39 +1035,12 @@ impl Release {
     pub fn get_name(&self) -> &str {
         &self.name
     }
-    pub fn clear_name(&mut self) {
-        self.name.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_name(&mut self, v: ::std::string::String) {
-        self.name = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_name(&mut self) -> &mut ::std::string::String {
-        &mut self.name
-    }
-
-    // Take field
-    pub fn take_name(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.name, ::std::string::String::new())
-    }
 
     // uint32 developer = 2;
 
 
     pub fn get_developer(&self) -> u32 {
         self.developer
-    }
-    pub fn clear_developer(&mut self) {
-        self.developer = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_developer(&mut self, v: u32) {
-        self.developer = v;
     }
 
     // uint32 studio = 3;
@@ -1801,28 +1049,12 @@ impl Release {
     pub fn get_studio(&self) -> u32 {
         self.studio
     }
-    pub fn clear_studio(&mut self) {
-        self.studio = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_studio(&mut self, v: u32) {
-        self.studio = v;
-    }
 
     // uint32 translator = 4;
 
 
     pub fn get_translator(&self) -> u32 {
         self.translator
-    }
-    pub fn clear_translator(&mut self) {
-        self.translator = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_translator(&mut self, v: u32) {
-        self.translator = v;
     }
 
     // .Date release_date = 5;
@@ -1831,57 +1063,12 @@ impl Release {
     pub fn get_release_date(&self) -> &super::common::Date {
         self.release_date.as_ref().unwrap_or_else(|| <super::common::Date as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_release_date(&mut self) {
-        self.release_date.clear();
-    }
-
-    pub fn has_release_date(&self) -> bool {
-        self.release_date.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_release_date(&mut self, v: super::common::Date) {
-        self.release_date = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_release_date(&mut self) -> &mut super::common::Date {
-        if self.release_date.is_none() {
-            self.release_date.set_default();
-        }
-        self.release_date.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_release_date(&mut self) -> super::common::Date {
-        self.release_date.take().unwrap_or_else(|| super::common::Date::new())
-    }
 
     // string description = 6;
 
 
     pub fn get_description(&self) -> &str {
         &self.description
-    }
-    pub fn clear_description(&mut self) {
-        self.description.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_description(&mut self, v: ::std::string::String) {
-        self.description = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_description(&mut self) -> &mut ::std::string::String {
-        &mut self.description
-    }
-
-    // Take field
-    pub fn take_description(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.description, ::std::string::String::new())
     }
 
     // .Ownership own = 7;
@@ -1890,38 +1077,12 @@ impl Release {
     pub fn get_own(&self) -> super::common::Ownership {
         self.own
     }
-    pub fn clear_own(&mut self) {
-        self.own = super::common::Ownership::NOT_SPECIFIED;
-    }
 
-    // Param is passed by value, moved
-    pub fn set_own(&mut self, v: super::common::Ownership) {
-        self.own = v;
-    }
-
-    // repeated .Release.LinksEntry links = 8;
+    // repeated .Release.links_MapEntry links = 8;
 
 
     pub fn get_links(&self) -> &::std::collections::HashMap<::std::string::String, ::std::string::String> {
         &self.links
-    }
-    pub fn clear_links(&mut self) {
-        self.links.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_links(&mut self, v: ::std::collections::HashMap<::std::string::String, ::std::string::String>) {
-        self.links = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_links(&mut self) -> &mut ::std::collections::HashMap<::std::string::String, ::std::string::String> {
-        &mut self.links
-    }
-
-    // Take field
-    pub fn take_links(&mut self) -> ::std::collections::HashMap<::std::string::String, ::std::string::String> {
-        ::std::mem::replace(&mut self.links, ::std::collections::HashMap::new())
     }
 }
 
@@ -2074,58 +1235,6 @@ impl ::protobuf::Message for Release {
         Release::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name",
-                |m: &Release| { &m.name },
-                |m: &mut Release| { &mut m.name },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "developer",
-                |m: &Release| { &m.developer },
-                |m: &mut Release| { &mut m.developer },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "studio",
-                |m: &Release| { &m.studio },
-                |m: &mut Release| { &mut m.studio },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "translator",
-                |m: &Release| { &m.translator },
-                |m: &mut Release| { &mut m.translator },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::Date>>(
-                "release_date",
-                |m: &Release| { &m.release_date },
-                |m: &mut Release| { &mut m.release_date },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "description",
-                |m: &Release| { &m.description },
-                |m: &mut Release| { &mut m.description },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<super::common::Ownership>>(
-                "own",
-                |m: &Release| { &m.own },
-                |m: &mut Release| { &mut m.own },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_map_accessor::<_, ::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(
-                "links",
-                |m: &Release| { &m.links },
-                |m: &mut Release| { &mut m.links },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Release>(
-                "Release",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static Release {
         static instance: ::protobuf::rt::LazyV2<Release> = ::protobuf::rt::LazyV2::INIT;
         instance.get(Release::new)
@@ -2146,26 +1255,23 @@ impl ::protobuf::Clear for Release {
     }
 }
 
-impl ::std::fmt::Debug for Release {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Release {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct CharacterApperance {
     // message fields
     pub charater_id: ::std::string::String,
     pub tag_ids: ::protobuf::RepeatedField<::std::string::String>,
     pub notes: ::std::string::String,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -2186,25 +1292,6 @@ impl CharacterApperance {
     pub fn get_charater_id(&self) -> &str {
         &self.charater_id
     }
-    pub fn clear_charater_id(&mut self) {
-        self.charater_id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_charater_id(&mut self, v: ::std::string::String) {
-        self.charater_id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_charater_id(&mut self) -> &mut ::std::string::String {
-        &mut self.charater_id
-    }
-
-    // Take field
-    pub fn take_charater_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.charater_id, ::std::string::String::new())
-    }
 
     // repeated string tag_ids = 2;
 
@@ -2212,49 +1299,12 @@ impl CharacterApperance {
     pub fn get_tag_ids(&self) -> &[::std::string::String] {
         &self.tag_ids
     }
-    pub fn clear_tag_ids(&mut self) {
-        self.tag_ids.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_tag_ids(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
-        self.tag_ids = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_tag_ids(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
-        &mut self.tag_ids
-    }
-
-    // Take field
-    pub fn take_tag_ids(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
-        ::std::mem::replace(&mut self.tag_ids, ::protobuf::RepeatedField::new())
-    }
 
     // string notes = 3;
 
 
     pub fn get_notes(&self) -> &str {
         &self.notes
-    }
-    pub fn clear_notes(&mut self) {
-        self.notes.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_notes(&mut self, v: ::std::string::String) {
-        self.notes = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_notes(&mut self) -> &mut ::std::string::String {
-        &mut self.notes
-    }
-
-    // Take field
-    pub fn take_notes(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.notes, ::std::string::String::new())
     }
 }
 
@@ -2346,33 +1396,6 @@ impl ::protobuf::Message for CharacterApperance {
         CharacterApperance::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "charater_id",
-                |m: &CharacterApperance| { &m.charater_id },
-                |m: &mut CharacterApperance| { &mut m.charater_id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "tag_ids",
-                |m: &CharacterApperance| { &m.tag_ids },
-                |m: &mut CharacterApperance| { &mut m.tag_ids },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "notes",
-                |m: &CharacterApperance| { &m.notes },
-                |m: &mut CharacterApperance| { &mut m.notes },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CharacterApperance>(
-                "CharacterApperance",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static CharacterApperance {
         static instance: ::protobuf::rt::LazyV2<CharacterApperance> = ::protobuf::rt::LazyV2::INIT;
         instance.get(CharacterApperance::new)
@@ -2388,19 +1411,14 @@ impl ::protobuf::Clear for CharacterApperance {
     }
 }
 
-impl ::std::fmt::Debug for CharacterApperance {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for CharacterApperance {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct Game {
     // message fields
     pub id: ::std::string::String,
@@ -2415,7 +1433,9 @@ pub struct Game {
     pub sundry: ::protobuf::SingularPtrField<super::common::SundryThings>,
     pub added_on: ::protobuf::SingularPtrField<super::common::DateTime>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -2436,50 +1456,12 @@ impl Game {
     pub fn get_id(&self) -> &str {
         &self.id
     }
-    pub fn clear_id(&mut self) {
-        self.id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_id(&mut self, v: ::std::string::String) {
-        self.id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_id(&mut self) -> &mut ::std::string::String {
-        &mut self.id
-    }
-
-    // Take field
-    pub fn take_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.id, ::std::string::String::new())
-    }
 
     // string name = 2;
 
 
     pub fn get_name(&self) -> &str {
         &self.name
-    }
-    pub fn clear_name(&mut self) {
-        self.name.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_name(&mut self, v: ::std::string::String) {
-        self.name = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_name(&mut self) -> &mut ::std::string::String {
-        &mut self.name
-    }
-
-    // Take field
-    pub fn take_name(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
     // uint32 developer = 3;
@@ -2488,28 +1470,12 @@ impl Game {
     pub fn get_developer(&self) -> u32 {
         self.developer
     }
-    pub fn clear_developer(&mut self) {
-        self.developer = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_developer(&mut self, v: u32) {
-        self.developer = v;
-    }
 
     // uint32 studio = 4;
 
 
     pub fn get_studio(&self) -> u32 {
         self.studio
-    }
-    pub fn clear_studio(&mut self) {
-        self.studio = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_studio(&mut self, v: u32) {
-        self.studio = v;
     }
 
     // uint32 translator = 5;
@@ -2518,38 +1484,12 @@ impl Game {
     pub fn get_translator(&self) -> u32 {
         self.translator
     }
-    pub fn clear_translator(&mut self) {
-        self.translator = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_translator(&mut self, v: u32) {
-        self.translator = v;
-    }
 
     // repeated .Release releases = 6;
 
 
     pub fn get_releases(&self) -> &[Release] {
         &self.releases
-    }
-    pub fn clear_releases(&mut self) {
-        self.releases.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_releases(&mut self, v: ::protobuf::RepeatedField<Release>) {
-        self.releases = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_releases(&mut self) -> &mut ::protobuf::RepeatedField<Release> {
-        &mut self.releases
-    }
-
-    // Take field
-    pub fn take_releases(&mut self) -> ::protobuf::RepeatedField<Release> {
-        ::std::mem::replace(&mut self.releases, ::protobuf::RepeatedField::new())
     }
 
     // repeated .CharacterApperance characters = 7;
@@ -2558,49 +1498,12 @@ impl Game {
     pub fn get_characters(&self) -> &[CharacterApperance] {
         &self.characters
     }
-    pub fn clear_characters(&mut self) {
-        self.characters.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_characters(&mut self, v: ::protobuf::RepeatedField<CharacterApperance>) {
-        self.characters = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_characters(&mut self) -> &mut ::protobuf::RepeatedField<CharacterApperance> {
-        &mut self.characters
-    }
-
-    // Take field
-    pub fn take_characters(&mut self) -> ::protobuf::RepeatedField<CharacterApperance> {
-        ::std::mem::replace(&mut self.characters, ::protobuf::RepeatedField::new())
-    }
 
     // string description = 8;
 
 
     pub fn get_description(&self) -> &str {
         &self.description
-    }
-    pub fn clear_description(&mut self) {
-        self.description.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_description(&mut self, v: ::std::string::String) {
-        self.description = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_description(&mut self) -> &mut ::std::string::String {
-        &mut self.description
-    }
-
-    // Take field
-    pub fn take_description(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.description, ::std::string::String::new())
     }
 
     // string path = 9;
@@ -2609,25 +1512,6 @@ impl Game {
     pub fn get_path(&self) -> &str {
         &self.path
     }
-    pub fn clear_path(&mut self) {
-        self.path.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_path(&mut self, v: ::std::string::String) {
-        self.path = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_path(&mut self) -> &mut ::std::string::String {
-        &mut self.path
-    }
-
-    // Take field
-    pub fn take_path(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.path, ::std::string::String::new())
-    }
 
     // .SundryThings sundry = 10;
 
@@ -2635,64 +1519,12 @@ impl Game {
     pub fn get_sundry(&self) -> &super::common::SundryThings {
         self.sundry.as_ref().unwrap_or_else(|| <super::common::SundryThings as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_sundry(&mut self) {
-        self.sundry.clear();
-    }
-
-    pub fn has_sundry(&self) -> bool {
-        self.sundry.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_sundry(&mut self, v: super::common::SundryThings) {
-        self.sundry = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_sundry(&mut self) -> &mut super::common::SundryThings {
-        if self.sundry.is_none() {
-            self.sundry.set_default();
-        }
-        self.sundry.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_sundry(&mut self) -> super::common::SundryThings {
-        self.sundry.take().unwrap_or_else(|| super::common::SundryThings::new())
-    }
 
     // .DateTime added_on = 350;
 
 
     pub fn get_added_on(&self) -> &super::common::DateTime {
         self.added_on.as_ref().unwrap_or_else(|| <super::common::DateTime as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_added_on(&mut self) {
-        self.added_on.clear();
-    }
-
-    pub fn has_added_on(&self) -> bool {
-        self.added_on.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_added_on(&mut self, v: super::common::DateTime) {
-        self.added_on = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_added_on(&mut self) -> &mut super::common::DateTime {
-        if self.added_on.is_none() {
-            self.added_on.set_default();
-        }
-        self.added_on.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_added_on(&mut self) -> super::common::DateTime {
-        self.added_on.take().unwrap_or_else(|| super::common::DateTime::new())
     }
 }
 
@@ -2900,73 +1732,6 @@ impl ::protobuf::Message for Game {
         Game::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "id",
-                |m: &Game| { &m.id },
-                |m: &mut Game| { &mut m.id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name",
-                |m: &Game| { &m.name },
-                |m: &mut Game| { &mut m.name },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "developer",
-                |m: &Game| { &m.developer },
-                |m: &mut Game| { &mut m.developer },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "studio",
-                |m: &Game| { &m.studio },
-                |m: &mut Game| { &mut m.studio },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "translator",
-                |m: &Game| { &m.translator },
-                |m: &mut Game| { &mut m.translator },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Release>>(
-                "releases",
-                |m: &Game| { &m.releases },
-                |m: &mut Game| { &mut m.releases },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CharacterApperance>>(
-                "characters",
-                |m: &Game| { &m.characters },
-                |m: &mut Game| { &mut m.characters },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "description",
-                |m: &Game| { &m.description },
-                |m: &mut Game| { &mut m.description },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "path",
-                |m: &Game| { &m.path },
-                |m: &mut Game| { &mut m.path },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::SundryThings>>(
-                "sundry",
-                |m: &Game| { &m.sundry },
-                |m: &mut Game| { &mut m.sundry },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::DateTime>>(
-                "added_on",
-                |m: &Game| { &m.added_on },
-                |m: &mut Game| { &mut m.added_on },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Game>(
-                "Game",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static Game {
         static instance: ::protobuf::rt::LazyV2<Game> = ::protobuf::rt::LazyV2::INIT;
         instance.get(Game::new)
@@ -2990,213 +1755,8 @@ impl ::protobuf::Clear for Game {
     }
 }
 
-impl ::std::fmt::Debug for Game {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Game {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
-}
-
-static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\ngame.proto\x1a\x0ccommon.proto\"\xcc\x01\n\rGameDeveloper\x12\x0e\n\
-    \x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
-    \x04name\x12'\n\x0bestablished\x18\x03\x20\x01(\x0b2\x05.DateR\x0bestabl\
-    ished\x12\x20\n\x0bdescription\x18\x04\x20\x01(\tR\x0bdescription\x12%\n\
-    \x06sundry\x18\x05\x20\x01(\x0b2\r.SundryThingsR\x06sundry\x12%\n\x08add\
-    ed_on\x18\xde\x02\x20\x01(\x0b2\t.DateTimeR\x07addedOn\"\xc9\x01\n\nGame\
-    Studio\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\
-    \x02\x20\x01(\tR\x04name\x12'\n\x0bestablished\x18\x03\x20\x01(\x0b2\x05\
-    .DateR\x0bestablished\x12\x20\n\x0bdescription\x18\x04\x20\x01(\tR\x0bde\
-    scription\x12%\n\x06sundry\x18\x05\x20\x01(\x0b2\r.SundryThingsR\x06sund\
-    ry\x12%\n\x08added_on\x18\xde\x02\x20\x01(\x0b2\t.DateTimeR\x07addedOn\"\
-    \xcd\x01\n\x0eGameTranslator\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\
-    \x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12'\n\x0bestablished\x18\
-    \x03\x20\x01(\x0b2\x05.DateR\x0bestablished\x12\x20\n\x0bdescription\x18\
-    \x04\x20\x01(\tR\x0bdescription\x12%\n\x06sundry\x18\x05\x20\x01(\x0b2\r\
-    .SundryThingsR\x06sundry\x12%\n\x08added_on\x18\xde\x02\x20\x01(\x0b2\t.\
-    DateTimeR\x07addedOn\"\xf6\x01\n\nGameSeries\x12\x0e\n\x02id\x18\x01\x20\
-    \x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\x1c\n\t\
-    developer\x18\x03\x20\x01(\rR\tdeveloper\x12\x16\n\x06studio\x18\x04\x20\
-    \x01(\rR\x06studio\x12\x1e\n\ntranslator\x18\x05\x20\x01(\rR\ntranslator\
-    \x12\x20\n\x0bdescription\x18\x06\x20\x01(\tR\x0bdescription\x12%\n\x06s\
-    undry\x18\x07\x20\x01(\x0b2\r.SundryThingsR\x06sundry\x12%\n\x08added_on\
-    \x18\xde\x02\x20\x01(\x0b2\t.DateTimeR\x07addedOn\"\xc2\x02\n\x07Release\
-    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x1c\n\tdeveloper\x18\
-    \x02\x20\x01(\rR\tdeveloper\x12\x16\n\x06studio\x18\x03\x20\x01(\rR\x06s\
-    tudio\x12\x1e\n\ntranslator\x18\x04\x20\x01(\rR\ntranslator\x12(\n\x0cre\
-    lease_date\x18\x05\x20\x01(\x0b2\x05.DateR\x0breleaseDate\x12\x20\n\x0bd\
-    escription\x18\x06\x20\x01(\tR\x0bdescription\x12\x1c\n\x03own\x18\x07\
-    \x20\x01(\x0e2\n.OwnershipR\x03own\x12)\n\x05links\x18\x08\x20\x03(\x0b2\
-    \x13.Release.LinksEntryR\x05links\x1a8\n\nLinksEntry\x12\x10\n\x03key\
-    \x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05va\
-    lue:\x028\x01\"d\n\x12CharacterApperance\x12\x1f\n\x0bcharater_id\x18\
-    \x01\x20\x01(\tR\ncharaterId\x12\x17\n\x07tag_ids\x18\x02\x20\x03(\tR\
-    \x06tagIds\x12\x14\n\x05notes\x18\x03\x20\x01(\tR\x05notes\"\xdf\x02\n\
-    \x04Game\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\
-    \x02\x20\x01(\tR\x04name\x12\x1c\n\tdeveloper\x18\x03\x20\x01(\rR\tdevel\
-    oper\x12\x16\n\x06studio\x18\x04\x20\x01(\rR\x06studio\x12\x1e\n\ntransl\
-    ator\x18\x05\x20\x01(\rR\ntranslator\x12$\n\x08releases\x18\x06\x20\x03(\
-    \x0b2\x08.ReleaseR\x08releases\x123\n\ncharacters\x18\x07\x20\x03(\x0b2\
-    \x13.CharacterApperanceR\ncharacters\x12\x20\n\x0bdescription\x18\x08\
-    \x20\x01(\tR\x0bdescription\x12\x12\n\x04path\x18\t\x20\x01(\tR\x04path\
-    \x12%\n\x06sundry\x18\n\x20\x01(\x0b2\r.SundryThingsR\x06sundry\x12%\n\
-    \x08added_on\x18\xde\x02\x20\x01(\x0b2\t.DateTimeR\x07addedOnJ\xbf\x16\n\
-    \x06\x12\x04\0\0G\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\t\n\x02\x03\0\
-    \x12\x03\x02\0\x16\n\n\n\x02\x04\0\x12\x04\x04\0\x0b\x01\n\n\n\x03\x04\0\
-    \x01\x12\x03\x04\x08\x15\n\x0b\n\x04\x04\0\x02\0\x12\x03\x05\x04\x12\n\
-    \x0c\n\x05\x04\0\x02\0\x05\x12\x03\x05\x04\n\n\x0c\n\x05\x04\0\x02\0\x01\
-    \x12\x03\x05\x0b\r\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x05\x10\x11\n\x0b\
-    \n\x04\x04\0\x02\x01\x12\x03\x06\x04\x14\n\x0c\n\x05\x04\0\x02\x01\x05\
-    \x12\x03\x06\x04\n\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03\x06\x0b\x0f\n\
-    \x0c\n\x05\x04\0\x02\x01\x03\x12\x03\x06\x12\x13\n\x0b\n\x04\x04\0\x02\
-    \x02\x12\x03\x07\x04\x19\n\x0c\n\x05\x04\0\x02\x02\x06\x12\x03\x07\x04\
-    \x08\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03\x07\t\x14\n\x0c\n\x05\x04\0\
-    \x02\x02\x03\x12\x03\x07\x17\x18\n\x0b\n\x04\x04\0\x02\x03\x12\x03\x08\
-    \x04\x1b\n\x0c\n\x05\x04\0\x02\x03\x05\x12\x03\x08\x04\n\n\x0c\n\x05\x04\
-    \0\x02\x03\x01\x12\x03\x08\x0b\x16\n\x0c\n\x05\x04\0\x02\x03\x03\x12\x03\
-    \x08\x19\x1a\n\x0b\n\x04\x04\0\x02\x04\x12\x03\t\x04\x1c\n\x0c\n\x05\x04\
-    \0\x02\x04\x06\x12\x03\t\x04\x10\n\x0c\n\x05\x04\0\x02\x04\x01\x12\x03\t\
-    \x11\x17\n\x0c\n\x05\x04\0\x02\x04\x03\x12\x03\t\x1a\x1b\n\x0b\n\x04\x04\
-    \0\x02\x05\x12\x03\n\x04\x1c\n\x0c\n\x05\x04\0\x02\x05\x06\x12\x03\n\x04\
-    \x0c\n\x0c\n\x05\x04\0\x02\x05\x01\x12\x03\n\r\x15\n\x0c\n\x05\x04\0\x02\
-    \x05\x03\x12\x03\n\x18\x1b\n\n\n\x02\x04\x01\x12\x04\r\0\x14\x01\n\n\n\
-    \x03\x04\x01\x01\x12\x03\r\x08\x12\n\x0b\n\x04\x04\x01\x02\0\x12\x03\x0e\
-    \x04\x12\n\x0c\n\x05\x04\x01\x02\0\x05\x12\x03\x0e\x04\n\n\x0c\n\x05\x04\
-    \x01\x02\0\x01\x12\x03\x0e\x0b\r\n\x0c\n\x05\x04\x01\x02\0\x03\x12\x03\
-    \x0e\x10\x11\n\x0b\n\x04\x04\x01\x02\x01\x12\x03\x0f\x04\x14\n\x0c\n\x05\
-    \x04\x01\x02\x01\x05\x12\x03\x0f\x04\n\n\x0c\n\x05\x04\x01\x02\x01\x01\
-    \x12\x03\x0f\x0b\x0f\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\x03\x0f\x12\x13\
-    \n\x0b\n\x04\x04\x01\x02\x02\x12\x03\x10\x04\x19\n\x0c\n\x05\x04\x01\x02\
-    \x02\x06\x12\x03\x10\x04\x08\n\x0c\n\x05\x04\x01\x02\x02\x01\x12\x03\x10\
-    \t\x14\n\x0c\n\x05\x04\x01\x02\x02\x03\x12\x03\x10\x17\x18\n\x0b\n\x04\
-    \x04\x01\x02\x03\x12\x03\x11\x04\x1b\n\x0c\n\x05\x04\x01\x02\x03\x05\x12\
-    \x03\x11\x04\n\n\x0c\n\x05\x04\x01\x02\x03\x01\x12\x03\x11\x0b\x16\n\x0c\
-    \n\x05\x04\x01\x02\x03\x03\x12\x03\x11\x19\x1a\n\x0b\n\x04\x04\x01\x02\
-    \x04\x12\x03\x12\x04\x1c\n\x0c\n\x05\x04\x01\x02\x04\x06\x12\x03\x12\x04\
-    \x10\n\x0c\n\x05\x04\x01\x02\x04\x01\x12\x03\x12\x11\x17\n\x0c\n\x05\x04\
-    \x01\x02\x04\x03\x12\x03\x12\x1a\x1b\n\x0b\n\x04\x04\x01\x02\x05\x12\x03\
-    \x13\x04\x1c\n\x0c\n\x05\x04\x01\x02\x05\x06\x12\x03\x13\x04\x0c\n\x0c\n\
-    \x05\x04\x01\x02\x05\x01\x12\x03\x13\r\x15\n\x0c\n\x05\x04\x01\x02\x05\
-    \x03\x12\x03\x13\x18\x1b\n\n\n\x02\x04\x02\x12\x04\x16\0\x1d\x01\n\n\n\
-    \x03\x04\x02\x01\x12\x03\x16\x08\x16\n\x0b\n\x04\x04\x02\x02\0\x12\x03\
-    \x17\x04\x12\n\x0c\n\x05\x04\x02\x02\0\x05\x12\x03\x17\x04\n\n\x0c\n\x05\
-    \x04\x02\x02\0\x01\x12\x03\x17\x0b\r\n\x0c\n\x05\x04\x02\x02\0\x03\x12\
-    \x03\x17\x10\x11\n\x0b\n\x04\x04\x02\x02\x01\x12\x03\x18\x04\x14\n\x0c\n\
-    \x05\x04\x02\x02\x01\x05\x12\x03\x18\x04\n\n\x0c\n\x05\x04\x02\x02\x01\
-    \x01\x12\x03\x18\x0b\x0f\n\x0c\n\x05\x04\x02\x02\x01\x03\x12\x03\x18\x12\
-    \x13\n\x0b\n\x04\x04\x02\x02\x02\x12\x03\x19\x04\x19\n\x0c\n\x05\x04\x02\
-    \x02\x02\x06\x12\x03\x19\x04\x08\n\x0c\n\x05\x04\x02\x02\x02\x01\x12\x03\
-    \x19\t\x14\n\x0c\n\x05\x04\x02\x02\x02\x03\x12\x03\x19\x17\x18\n\x0b\n\
-    \x04\x04\x02\x02\x03\x12\x03\x1a\x04\x1b\n\x0c\n\x05\x04\x02\x02\x03\x05\
-    \x12\x03\x1a\x04\n\n\x0c\n\x05\x04\x02\x02\x03\x01\x12\x03\x1a\x0b\x16\n\
-    \x0c\n\x05\x04\x02\x02\x03\x03\x12\x03\x1a\x19\x1a\n\x0b\n\x04\x04\x02\
-    \x02\x04\x12\x03\x1b\x04\x1c\n\x0c\n\x05\x04\x02\x02\x04\x06\x12\x03\x1b\
-    \x04\x10\n\x0c\n\x05\x04\x02\x02\x04\x01\x12\x03\x1b\x11\x17\n\x0c\n\x05\
-    \x04\x02\x02\x04\x03\x12\x03\x1b\x1a\x1b\n\x0b\n\x04\x04\x02\x02\x05\x12\
-    \x03\x1c\x04\x1c\n\x0c\n\x05\x04\x02\x02\x05\x06\x12\x03\x1c\x04\x0c\n\
-    \x0c\n\x05\x04\x02\x02\x05\x01\x12\x03\x1c\r\x15\n\x0c\n\x05\x04\x02\x02\
-    \x05\x03\x12\x03\x1c\x18\x1b\n\n\n\x02\x04\x03\x12\x04\x1f\0(\x01\n\n\n\
-    \x03\x04\x03\x01\x12\x03\x1f\x08\x12\n\x0b\n\x04\x04\x03\x02\0\x12\x03\
-    \x20\x04\x12\n\x0c\n\x05\x04\x03\x02\0\x05\x12\x03\x20\x04\n\n\x0c\n\x05\
-    \x04\x03\x02\0\x01\x12\x03\x20\x0b\r\n\x0c\n\x05\x04\x03\x02\0\x03\x12\
-    \x03\x20\x10\x11\n\x0b\n\x04\x04\x03\x02\x01\x12\x03!\x04\x14\n\x0c\n\
-    \x05\x04\x03\x02\x01\x05\x12\x03!\x04\n\n\x0c\n\x05\x04\x03\x02\x01\x01\
-    \x12\x03!\x0b\x0f\n\x0c\n\x05\x04\x03\x02\x01\x03\x12\x03!\x12\x13\n\x0b\
-    \n\x04\x04\x03\x02\x02\x12\x03\"\x04\x19\n\x0c\n\x05\x04\x03\x02\x02\x05\
-    \x12\x03\"\x04\n\n\x0c\n\x05\x04\x03\x02\x02\x01\x12\x03\"\x0b\x14\n\x0c\
-    \n\x05\x04\x03\x02\x02\x03\x12\x03\"\x17\x18\n\x0b\n\x04\x04\x03\x02\x03\
-    \x12\x03#\x04\x16\n\x0c\n\x05\x04\x03\x02\x03\x05\x12\x03#\x04\n\n\x0c\n\
-    \x05\x04\x03\x02\x03\x01\x12\x03#\x0b\x11\n\x0c\n\x05\x04\x03\x02\x03\
-    \x03\x12\x03#\x14\x15\n\x0b\n\x04\x04\x03\x02\x04\x12\x03$\x04\x1a\n\x0c\
-    \n\x05\x04\x03\x02\x04\x05\x12\x03$\x04\n\n\x0c\n\x05\x04\x03\x02\x04\
-    \x01\x12\x03$\x0b\x15\n\x0c\n\x05\x04\x03\x02\x04\x03\x12\x03$\x18\x19\n\
-    \x0b\n\x04\x04\x03\x02\x05\x12\x03%\x04\x1b\n\x0c\n\x05\x04\x03\x02\x05\
-    \x05\x12\x03%\x04\n\n\x0c\n\x05\x04\x03\x02\x05\x01\x12\x03%\x0b\x16\n\
-    \x0c\n\x05\x04\x03\x02\x05\x03\x12\x03%\x19\x1a\n\x0b\n\x04\x04\x03\x02\
-    \x06\x12\x03&\x04\x1c\n\x0c\n\x05\x04\x03\x02\x06\x06\x12\x03&\x04\x10\n\
-    \x0c\n\x05\x04\x03\x02\x06\x01\x12\x03&\x11\x17\n\x0c\n\x05\x04\x03\x02\
-    \x06\x03\x12\x03&\x1a\x1b\n\x0b\n\x04\x04\x03\x02\x07\x12\x03'\x04\x1c\n\
-    \x0c\n\x05\x04\x03\x02\x07\x06\x12\x03'\x04\x0c\n\x0c\n\x05\x04\x03\x02\
-    \x07\x01\x12\x03'\r\x15\n\x0c\n\x05\x04\x03\x02\x07\x03\x12\x03'\x18\x1b\
-    \n\n\n\x02\x04\x04\x12\x04*\03\x01\n\n\n\x03\x04\x04\x01\x12\x03*\x08\
-    \x0f\n\x0b\n\x04\x04\x04\x02\0\x12\x03+\x04\x14\n\x0c\n\x05\x04\x04\x02\
-    \0\x05\x12\x03+\x04\n\n\x0c\n\x05\x04\x04\x02\0\x01\x12\x03+\x0b\x0f\n\
-    \x0c\n\x05\x04\x04\x02\0\x03\x12\x03+\x12\x13\n\x0b\n\x04\x04\x04\x02\
-    \x01\x12\x03,\x04\x19\n\x0c\n\x05\x04\x04\x02\x01\x05\x12\x03,\x04\n\n\
-    \x0c\n\x05\x04\x04\x02\x01\x01\x12\x03,\x0b\x14\n\x0c\n\x05\x04\x04\x02\
-    \x01\x03\x12\x03,\x17\x18\n\x0b\n\x04\x04\x04\x02\x02\x12\x03-\x04\x16\n\
-    \x0c\n\x05\x04\x04\x02\x02\x05\x12\x03-\x04\n\n\x0c\n\x05\x04\x04\x02\
-    \x02\x01\x12\x03-\x0b\x11\n\x0c\n\x05\x04\x04\x02\x02\x03\x12\x03-\x14\
-    \x15\n\x0b\n\x04\x04\x04\x02\x03\x12\x03.\x04\x1a\n\x0c\n\x05\x04\x04\
-    \x02\x03\x05\x12\x03.\x04\n\n\x0c\n\x05\x04\x04\x02\x03\x01\x12\x03.\x0b\
-    \x15\n\x0c\n\x05\x04\x04\x02\x03\x03\x12\x03.\x18\x19\n\x0b\n\x04\x04\
-    \x04\x02\x04\x12\x03/\x04\x1a\n\x0c\n\x05\x04\x04\x02\x04\x06\x12\x03/\
-    \x04\x08\n\x0c\n\x05\x04\x04\x02\x04\x01\x12\x03/\t\x15\n\x0c\n\x05\x04\
-    \x04\x02\x04\x03\x12\x03/\x18\x19\n\x0b\n\x04\x04\x04\x02\x05\x12\x030\
-    \x04\x1b\n\x0c\n\x05\x04\x04\x02\x05\x05\x12\x030\x04\n\n\x0c\n\x05\x04\
-    \x04\x02\x05\x01\x12\x030\x0b\x16\n\x0c\n\x05\x04\x04\x02\x05\x03\x12\
-    \x030\x19\x1a\n\x0b\n\x04\x04\x04\x02\x06\x12\x031\x04\x16\n\x0c\n\x05\
-    \x04\x04\x02\x06\x06\x12\x031\x04\r\n\x0c\n\x05\x04\x04\x02\x06\x01\x12\
-    \x031\x0e\x11\n\x0c\n\x05\x04\x04\x02\x06\x03\x12\x031\x14\x15\n\x0b\n\
-    \x04\x04\x04\x02\x07\x12\x032\x04\"\n\x0c\n\x05\x04\x04\x02\x07\x06\x12\
-    \x032\x04\x17\n\x0c\n\x05\x04\x04\x02\x07\x01\x12\x032\x18\x1d\n\x0c\n\
-    \x05\x04\x04\x02\x07\x03\x12\x032\x20!\n\n\n\x02\x04\x05\x12\x045\09\x01\
-    \n\n\n\x03\x04\x05\x01\x12\x035\x08\x1a\n\x0b\n\x04\x04\x05\x02\0\x12\
-    \x036\x04\x1b\n\x0c\n\x05\x04\x05\x02\0\x05\x12\x036\x04\n\n\x0c\n\x05\
-    \x04\x05\x02\0\x01\x12\x036\x0b\x16\n\x0c\n\x05\x04\x05\x02\0\x03\x12\
-    \x036\x19\x1a\n\x0b\n\x04\x04\x05\x02\x01\x12\x037\x04\x20\n\x0c\n\x05\
-    \x04\x05\x02\x01\x04\x12\x037\x04\x0c\n\x0c\n\x05\x04\x05\x02\x01\x05\
-    \x12\x037\r\x13\n\x0c\n\x05\x04\x05\x02\x01\x01\x12\x037\x14\x1b\n\x0c\n\
-    \x05\x04\x05\x02\x01\x03\x12\x037\x1e\x1f\n\x0b\n\x04\x04\x05\x02\x02\
-    \x12\x038\x04\x15\n\x0c\n\x05\x04\x05\x02\x02\x05\x12\x038\x04\n\n\x0c\n\
-    \x05\x04\x05\x02\x02\x01\x12\x038\x0b\x10\n\x0c\n\x05\x04\x05\x02\x02\
-    \x03\x12\x038\x13\x14\n\n\n\x02\x04\x06\x12\x04;\0G\x01\n\n\n\x03\x04\
-    \x06\x01\x12\x03;\x08\x0c\n\x0b\n\x04\x04\x06\x02\0\x12\x03<\x04\x12\n\
-    \x0c\n\x05\x04\x06\x02\0\x05\x12\x03<\x04\n\n\x0c\n\x05\x04\x06\x02\0\
-    \x01\x12\x03<\x0b\r\n\x0c\n\x05\x04\x06\x02\0\x03\x12\x03<\x10\x11\n\x0b\
-    \n\x04\x04\x06\x02\x01\x12\x03=\x04\x14\n\x0c\n\x05\x04\x06\x02\x01\x05\
-    \x12\x03=\x04\n\n\x0c\n\x05\x04\x06\x02\x01\x01\x12\x03=\x0b\x0f\n\x0c\n\
-    \x05\x04\x06\x02\x01\x03\x12\x03=\x12\x13\n\x0b\n\x04\x04\x06\x02\x02\
-    \x12\x03>\x04\x19\n\x0c\n\x05\x04\x06\x02\x02\x05\x12\x03>\x04\n\n\x0c\n\
-    \x05\x04\x06\x02\x02\x01\x12\x03>\x0b\x14\n\x0c\n\x05\x04\x06\x02\x02\
-    \x03\x12\x03>\x17\x18\n\x0b\n\x04\x04\x06\x02\x03\x12\x03?\x04\x16\n\x0c\
-    \n\x05\x04\x06\x02\x03\x05\x12\x03?\x04\n\n\x0c\n\x05\x04\x06\x02\x03\
-    \x01\x12\x03?\x0b\x11\n\x0c\n\x05\x04\x06\x02\x03\x03\x12\x03?\x14\x15\n\
-    \x0b\n\x04\x04\x06\x02\x04\x12\x03@\x04\x1a\n\x0c\n\x05\x04\x06\x02\x04\
-    \x05\x12\x03@\x04\n\n\x0c\n\x05\x04\x06\x02\x04\x01\x12\x03@\x0b\x15\n\
-    \x0c\n\x05\x04\x06\x02\x04\x03\x12\x03@\x18\x19\n\x0b\n\x04\x04\x06\x02\
-    \x05\x12\x03A\x04\"\n\x0c\n\x05\x04\x06\x02\x05\x04\x12\x03A\x04\x0c\n\
-    \x0c\n\x05\x04\x06\x02\x05\x06\x12\x03A\r\x14\n\x0c\n\x05\x04\x06\x02\
-    \x05\x01\x12\x03A\x15\x1d\n\x0c\n\x05\x04\x06\x02\x05\x03\x12\x03A\x20!\
-    \n\x0b\n\x04\x04\x06\x02\x06\x12\x03B\x04/\n\x0c\n\x05\x04\x06\x02\x06\
-    \x04\x12\x03B\x04\x0c\n\x0c\n\x05\x04\x06\x02\x06\x06\x12\x03B\r\x1f\n\
-    \x0c\n\x05\x04\x06\x02\x06\x01\x12\x03B\x20*\n\x0c\n\x05\x04\x06\x02\x06\
-    \x03\x12\x03B-.\n\x0b\n\x04\x04\x06\x02\x07\x12\x03C\x04\x1b\n\x0c\n\x05\
-    \x04\x06\x02\x07\x05\x12\x03C\x04\n\n\x0c\n\x05\x04\x06\x02\x07\x01\x12\
-    \x03C\x0b\x16\n\x0c\n\x05\x04\x06\x02\x07\x03\x12\x03C\x19\x1a\n\x0b\n\
-    \x04\x04\x06\x02\x08\x12\x03D\x04\x14\n\x0c\n\x05\x04\x06\x02\x08\x05\
-    \x12\x03D\x04\n\n\x0c\n\x05\x04\x06\x02\x08\x01\x12\x03D\x0b\x0f\n\x0c\n\
-    \x05\x04\x06\x02\x08\x03\x12\x03D\x12\x13\n\x0b\n\x04\x04\x06\x02\t\x12\
-    \x03E\x04\x1d\n\x0c\n\x05\x04\x06\x02\t\x06\x12\x03E\x04\x10\n\x0c\n\x05\
-    \x04\x06\x02\t\x01\x12\x03E\x11\x17\n\x0c\n\x05\x04\x06\x02\t\x03\x12\
-    \x03E\x1a\x1c\n\x0b\n\x04\x04\x06\x02\n\x12\x03F\x04\x1c\n\x0c\n\x05\x04\
-    \x06\x02\n\x06\x12\x03F\x04\x0c\n\x0c\n\x05\x04\x06\x02\n\x01\x12\x03F\r\
-    \x15\n\x0c\n\x05\x04\x06\x02\n\x03\x12\x03F\x18\x1bb\x06proto3\
-";
-
-static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;
-
-fn parse_descriptor_proto() -> ::protobuf::descriptor::FileDescriptorProto {
-    ::protobuf::parse_from_bytes(file_descriptor_proto_data).unwrap()
-}
-
-pub fn file_descriptor_proto() -> &'static ::protobuf::descriptor::FileDescriptorProto {
-    file_descriptor_proto_lazy.get(|| {
-        parse_descriptor_proto()
-    })
 }

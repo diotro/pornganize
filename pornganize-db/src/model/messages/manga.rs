@@ -23,7 +23,8 @@
 /// of protobuf runtime.
 // const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_18_0;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct DoujinSeries {
     // message fields
     pub id: ::std::string::String,
@@ -32,7 +33,9 @@ pub struct DoujinSeries {
     pub sundry: ::protobuf::SingularPtrField<super::common::SundryThings>,
     pub added_on: ::protobuf::SingularPtrField<super::common::DateTime>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -53,50 +56,12 @@ impl DoujinSeries {
     pub fn get_id(&self) -> &str {
         &self.id
     }
-    pub fn clear_id(&mut self) {
-        self.id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_id(&mut self, v: ::std::string::String) {
-        self.id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_id(&mut self) -> &mut ::std::string::String {
-        &mut self.id
-    }
-
-    // Take field
-    pub fn take_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.id, ::std::string::String::new())
-    }
 
     // string name = 2;
 
 
     pub fn get_name(&self) -> &str {
         &self.name
-    }
-    pub fn clear_name(&mut self) {
-        self.name.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_name(&mut self, v: ::std::string::String) {
-        self.name = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_name(&mut self) -> &mut ::std::string::String {
-        &mut self.name
-    }
-
-    // Take field
-    pub fn take_name(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
     // string description = 3;
@@ -105,25 +70,6 @@ impl DoujinSeries {
     pub fn get_description(&self) -> &str {
         &self.description
     }
-    pub fn clear_description(&mut self) {
-        self.description.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_description(&mut self, v: ::std::string::String) {
-        self.description = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_description(&mut self) -> &mut ::std::string::String {
-        &mut self.description
-    }
-
-    // Take field
-    pub fn take_description(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.description, ::std::string::String::new())
-    }
 
     // .SundryThings sundry = 4;
 
@@ -131,64 +77,12 @@ impl DoujinSeries {
     pub fn get_sundry(&self) -> &super::common::SundryThings {
         self.sundry.as_ref().unwrap_or_else(|| <super::common::SundryThings as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_sundry(&mut self) {
-        self.sundry.clear();
-    }
-
-    pub fn has_sundry(&self) -> bool {
-        self.sundry.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_sundry(&mut self, v: super::common::SundryThings) {
-        self.sundry = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_sundry(&mut self) -> &mut super::common::SundryThings {
-        if self.sundry.is_none() {
-            self.sundry.set_default();
-        }
-        self.sundry.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_sundry(&mut self) -> super::common::SundryThings {
-        self.sundry.take().unwrap_or_else(|| super::common::SundryThings::new())
-    }
 
     // .DateTime added_on = 350;
 
 
     pub fn get_added_on(&self) -> &super::common::DateTime {
         self.added_on.as_ref().unwrap_or_else(|| <super::common::DateTime as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_added_on(&mut self) {
-        self.added_on.clear();
-    }
-
-    pub fn has_added_on(&self) -> bool {
-        self.added_on.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_added_on(&mut self, v: super::common::DateTime) {
-        self.added_on = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_added_on(&mut self) -> &mut super::common::DateTime {
-        if self.added_on.is_none() {
-            self.added_on.set_default();
-        }
-        self.added_on.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_added_on(&mut self) -> super::common::DateTime {
-        self.added_on.take().unwrap_or_else(|| super::common::DateTime::new())
     }
 }
 
@@ -314,43 +208,6 @@ impl ::protobuf::Message for DoujinSeries {
         DoujinSeries::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "id",
-                |m: &DoujinSeries| { &m.id },
-                |m: &mut DoujinSeries| { &mut m.id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name",
-                |m: &DoujinSeries| { &m.name },
-                |m: &mut DoujinSeries| { &mut m.name },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "description",
-                |m: &DoujinSeries| { &m.description },
-                |m: &mut DoujinSeries| { &mut m.description },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::SundryThings>>(
-                "sundry",
-                |m: &DoujinSeries| { &m.sundry },
-                |m: &mut DoujinSeries| { &mut m.sundry },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::DateTime>>(
-                "added_on",
-                |m: &DoujinSeries| { &m.added_on },
-                |m: &mut DoujinSeries| { &mut m.added_on },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<DoujinSeries>(
-                "DoujinSeries",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static DoujinSeries {
         static instance: ::protobuf::rt::LazyV2<DoujinSeries> = ::protobuf::rt::LazyV2::INIT;
         instance.get(DoujinSeries::new)
@@ -368,19 +225,14 @@ impl ::protobuf::Clear for DoujinSeries {
     }
 }
 
-impl ::std::fmt::Debug for DoujinSeries {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for DoujinSeries {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct MangaSite {
     // message fields
     pub id: ::std::string::String,
@@ -390,7 +242,9 @@ pub struct MangaSite {
     pub sundry: ::protobuf::SingularPtrField<super::common::SundryThings>,
     pub added_on: ::protobuf::SingularPtrField<super::common::DateTime>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -411,50 +265,12 @@ impl MangaSite {
     pub fn get_id(&self) -> &str {
         &self.id
     }
-    pub fn clear_id(&mut self) {
-        self.id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_id(&mut self, v: ::std::string::String) {
-        self.id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_id(&mut self) -> &mut ::std::string::String {
-        &mut self.id
-    }
-
-    // Take field
-    pub fn take_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.id, ::std::string::String::new())
-    }
 
     // string name = 2;
 
 
     pub fn get_name(&self) -> &str {
         &self.name
-    }
-    pub fn clear_name(&mut self) {
-        self.name.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_name(&mut self, v: ::std::string::String) {
-        self.name = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_name(&mut self) -> &mut ::std::string::String {
-        &mut self.name
-    }
-
-    // Take field
-    pub fn take_name(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
     // string description = 3;
@@ -463,50 +279,12 @@ impl MangaSite {
     pub fn get_description(&self) -> &str {
         &self.description
     }
-    pub fn clear_description(&mut self) {
-        self.description.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_description(&mut self, v: ::std::string::String) {
-        self.description = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_description(&mut self) -> &mut ::std::string::String {
-        &mut self.description
-    }
-
-    // Take field
-    pub fn take_description(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.description, ::std::string::String::new())
-    }
 
     // string url = 4;
 
 
     pub fn get_url(&self) -> &str {
         &self.url
-    }
-    pub fn clear_url(&mut self) {
-        self.url.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_url(&mut self, v: ::std::string::String) {
-        self.url = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_url(&mut self) -> &mut ::std::string::String {
-        &mut self.url
-    }
-
-    // Take field
-    pub fn take_url(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.url, ::std::string::String::new())
     }
 
     // .SundryThings sundry = 5;
@@ -515,64 +293,12 @@ impl MangaSite {
     pub fn get_sundry(&self) -> &super::common::SundryThings {
         self.sundry.as_ref().unwrap_or_else(|| <super::common::SundryThings as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_sundry(&mut self) {
-        self.sundry.clear();
-    }
-
-    pub fn has_sundry(&self) -> bool {
-        self.sundry.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_sundry(&mut self, v: super::common::SundryThings) {
-        self.sundry = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_sundry(&mut self) -> &mut super::common::SundryThings {
-        if self.sundry.is_none() {
-            self.sundry.set_default();
-        }
-        self.sundry.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_sundry(&mut self) -> super::common::SundryThings {
-        self.sundry.take().unwrap_or_else(|| super::common::SundryThings::new())
-    }
 
     // .DateTime added_on = 350;
 
 
     pub fn get_added_on(&self) -> &super::common::DateTime {
         self.added_on.as_ref().unwrap_or_else(|| <super::common::DateTime as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_added_on(&mut self) {
-        self.added_on.clear();
-    }
-
-    pub fn has_added_on(&self) -> bool {
-        self.added_on.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_added_on(&mut self, v: super::common::DateTime) {
-        self.added_on = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_added_on(&mut self) -> &mut super::common::DateTime {
-        if self.added_on.is_none() {
-            self.added_on.set_default();
-        }
-        self.added_on.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_added_on(&mut self) -> super::common::DateTime {
-        self.added_on.take().unwrap_or_else(|| super::common::DateTime::new())
     }
 }
 
@@ -707,48 +433,6 @@ impl ::protobuf::Message for MangaSite {
         MangaSite::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "id",
-                |m: &MangaSite| { &m.id },
-                |m: &mut MangaSite| { &mut m.id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name",
-                |m: &MangaSite| { &m.name },
-                |m: &mut MangaSite| { &mut m.name },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "description",
-                |m: &MangaSite| { &m.description },
-                |m: &mut MangaSite| { &mut m.description },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "url",
-                |m: &MangaSite| { &m.url },
-                |m: &mut MangaSite| { &mut m.url },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::SundryThings>>(
-                "sundry",
-                |m: &MangaSite| { &m.sundry },
-                |m: &mut MangaSite| { &mut m.sundry },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::DateTime>>(
-                "added_on",
-                |m: &MangaSite| { &m.added_on },
-                |m: &mut MangaSite| { &mut m.added_on },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MangaSite>(
-                "MangaSite",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static MangaSite {
         static instance: ::protobuf::rt::LazyV2<MangaSite> = ::protobuf::rt::LazyV2::INIT;
         instance.get(MangaSite::new)
@@ -767,19 +451,14 @@ impl ::protobuf::Clear for MangaSite {
     }
 }
 
-impl ::std::fmt::Debug for MangaSite {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for MangaSite {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct MangaTranslator {
     // message fields
     pub id: ::std::string::String,
@@ -789,7 +468,9 @@ pub struct MangaTranslator {
     pub sundry: ::protobuf::SingularPtrField<super::common::SundryThings>,
     pub added_on: ::protobuf::SingularPtrField<super::common::DateTime>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -810,50 +491,12 @@ impl MangaTranslator {
     pub fn get_id(&self) -> &str {
         &self.id
     }
-    pub fn clear_id(&mut self) {
-        self.id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_id(&mut self, v: ::std::string::String) {
-        self.id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_id(&mut self) -> &mut ::std::string::String {
-        &mut self.id
-    }
-
-    // Take field
-    pub fn take_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.id, ::std::string::String::new())
-    }
 
     // string name = 2;
 
 
     pub fn get_name(&self) -> &str {
         &self.name
-    }
-    pub fn clear_name(&mut self) {
-        self.name.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_name(&mut self, v: ::std::string::String) {
-        self.name = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_name(&mut self) -> &mut ::std::string::String {
-        &mut self.name
-    }
-
-    // Take field
-    pub fn take_name(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
     // string description = 3;
@@ -862,50 +505,12 @@ impl MangaTranslator {
     pub fn get_description(&self) -> &str {
         &self.description
     }
-    pub fn clear_description(&mut self) {
-        self.description.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_description(&mut self, v: ::std::string::String) {
-        self.description = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_description(&mut self) -> &mut ::std::string::String {
-        &mut self.description
-    }
-
-    // Take field
-    pub fn take_description(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.description, ::std::string::String::new())
-    }
 
     // string website = 4;
 
 
     pub fn get_website(&self) -> &str {
         &self.website
-    }
-    pub fn clear_website(&mut self) {
-        self.website.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_website(&mut self, v: ::std::string::String) {
-        self.website = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_website(&mut self) -> &mut ::std::string::String {
-        &mut self.website
-    }
-
-    // Take field
-    pub fn take_website(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.website, ::std::string::String::new())
     }
 
     // .SundryThings sundry = 5;
@@ -914,64 +519,12 @@ impl MangaTranslator {
     pub fn get_sundry(&self) -> &super::common::SundryThings {
         self.sundry.as_ref().unwrap_or_else(|| <super::common::SundryThings as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_sundry(&mut self) {
-        self.sundry.clear();
-    }
-
-    pub fn has_sundry(&self) -> bool {
-        self.sundry.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_sundry(&mut self, v: super::common::SundryThings) {
-        self.sundry = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_sundry(&mut self) -> &mut super::common::SundryThings {
-        if self.sundry.is_none() {
-            self.sundry.set_default();
-        }
-        self.sundry.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_sundry(&mut self) -> super::common::SundryThings {
-        self.sundry.take().unwrap_or_else(|| super::common::SundryThings::new())
-    }
 
     // .DateTime added_on = 350;
 
 
     pub fn get_added_on(&self) -> &super::common::DateTime {
         self.added_on.as_ref().unwrap_or_else(|| <super::common::DateTime as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_added_on(&mut self) {
-        self.added_on.clear();
-    }
-
-    pub fn has_added_on(&self) -> bool {
-        self.added_on.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_added_on(&mut self, v: super::common::DateTime) {
-        self.added_on = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_added_on(&mut self) -> &mut super::common::DateTime {
-        if self.added_on.is_none() {
-            self.added_on.set_default();
-        }
-        self.added_on.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_added_on(&mut self) -> super::common::DateTime {
-        self.added_on.take().unwrap_or_else(|| super::common::DateTime::new())
     }
 }
 
@@ -1106,48 +659,6 @@ impl ::protobuf::Message for MangaTranslator {
         MangaTranslator::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "id",
-                |m: &MangaTranslator| { &m.id },
-                |m: &mut MangaTranslator| { &mut m.id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name",
-                |m: &MangaTranslator| { &m.name },
-                |m: &mut MangaTranslator| { &mut m.name },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "description",
-                |m: &MangaTranslator| { &m.description },
-                |m: &mut MangaTranslator| { &mut m.description },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "website",
-                |m: &MangaTranslator| { &m.website },
-                |m: &mut MangaTranslator| { &mut m.website },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::SundryThings>>(
-                "sundry",
-                |m: &MangaTranslator| { &m.sundry },
-                |m: &mut MangaTranslator| { &mut m.sundry },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::DateTime>>(
-                "added_on",
-                |m: &MangaTranslator| { &m.added_on },
-                |m: &mut MangaTranslator| { &mut m.added_on },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MangaTranslator>(
-                "MangaTranslator",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static MangaTranslator {
         static instance: ::protobuf::rt::LazyV2<MangaTranslator> = ::protobuf::rt::LazyV2::INIT;
         instance.get(MangaTranslator::new)
@@ -1166,19 +677,14 @@ impl ::protobuf::Clear for MangaTranslator {
     }
 }
 
-impl ::std::fmt::Debug for MangaTranslator {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for MangaTranslator {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct MangaSeries {
     // message fields
     pub id: ::std::string::String,
@@ -1187,7 +693,9 @@ pub struct MangaSeries {
     pub sundry: ::protobuf::SingularPtrField<super::common::SundryThings>,
     pub added_on: ::protobuf::SingularPtrField<super::common::DateTime>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -1208,50 +716,12 @@ impl MangaSeries {
     pub fn get_id(&self) -> &str {
         &self.id
     }
-    pub fn clear_id(&mut self) {
-        self.id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_id(&mut self, v: ::std::string::String) {
-        self.id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_id(&mut self) -> &mut ::std::string::String {
-        &mut self.id
-    }
-
-    // Take field
-    pub fn take_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.id, ::std::string::String::new())
-    }
 
     // string name = 2;
 
 
     pub fn get_name(&self) -> &str {
         &self.name
-    }
-    pub fn clear_name(&mut self) {
-        self.name.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_name(&mut self, v: ::std::string::String) {
-        self.name = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_name(&mut self) -> &mut ::std::string::String {
-        &mut self.name
-    }
-
-    // Take field
-    pub fn take_name(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
     // string description = 3;
@@ -1260,25 +730,6 @@ impl MangaSeries {
     pub fn get_description(&self) -> &str {
         &self.description
     }
-    pub fn clear_description(&mut self) {
-        self.description.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_description(&mut self, v: ::std::string::String) {
-        self.description = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_description(&mut self) -> &mut ::std::string::String {
-        &mut self.description
-    }
-
-    // Take field
-    pub fn take_description(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.description, ::std::string::String::new())
-    }
 
     // .SundryThings sundry = 4;
 
@@ -1286,64 +737,12 @@ impl MangaSeries {
     pub fn get_sundry(&self) -> &super::common::SundryThings {
         self.sundry.as_ref().unwrap_or_else(|| <super::common::SundryThings as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_sundry(&mut self) {
-        self.sundry.clear();
-    }
-
-    pub fn has_sundry(&self) -> bool {
-        self.sundry.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_sundry(&mut self, v: super::common::SundryThings) {
-        self.sundry = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_sundry(&mut self) -> &mut super::common::SundryThings {
-        if self.sundry.is_none() {
-            self.sundry.set_default();
-        }
-        self.sundry.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_sundry(&mut self) -> super::common::SundryThings {
-        self.sundry.take().unwrap_or_else(|| super::common::SundryThings::new())
-    }
 
     // .DateTime added_on = 350;
 
 
     pub fn get_added_on(&self) -> &super::common::DateTime {
         self.added_on.as_ref().unwrap_or_else(|| <super::common::DateTime as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_added_on(&mut self) {
-        self.added_on.clear();
-    }
-
-    pub fn has_added_on(&self) -> bool {
-        self.added_on.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_added_on(&mut self, v: super::common::DateTime) {
-        self.added_on = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_added_on(&mut self) -> &mut super::common::DateTime {
-        if self.added_on.is_none() {
-            self.added_on.set_default();
-        }
-        self.added_on.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_added_on(&mut self) -> super::common::DateTime {
-        self.added_on.take().unwrap_or_else(|| super::common::DateTime::new())
     }
 }
 
@@ -1469,43 +868,6 @@ impl ::protobuf::Message for MangaSeries {
         MangaSeries::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "id",
-                |m: &MangaSeries| { &m.id },
-                |m: &mut MangaSeries| { &mut m.id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name",
-                |m: &MangaSeries| { &m.name },
-                |m: &mut MangaSeries| { &mut m.name },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "description",
-                |m: &MangaSeries| { &m.description },
-                |m: &mut MangaSeries| { &mut m.description },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::SundryThings>>(
-                "sundry",
-                |m: &MangaSeries| { &m.sundry },
-                |m: &mut MangaSeries| { &mut m.sundry },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::DateTime>>(
-                "added_on",
-                |m: &MangaSeries| { &m.added_on },
-                |m: &mut MangaSeries| { &mut m.added_on },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MangaSeries>(
-                "MangaSeries",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static MangaSeries {
         static instance: ::protobuf::rt::LazyV2<MangaSeries> = ::protobuf::rt::LazyV2::INIT;
         instance.get(MangaSeries::new)
@@ -1523,26 +885,23 @@ impl ::protobuf::Clear for MangaSeries {
     }
 }
 
-impl ::std::fmt::Debug for MangaSeries {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for MangaSeries {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct MangaPage {
     // message fields
     pub number: i32,
     pub path: ::std::string::String,
     pub sundry: ::protobuf::SingularPtrField<super::common::SundryThings>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -1563,14 +922,6 @@ impl MangaPage {
     pub fn get_number(&self) -> i32 {
         self.number
     }
-    pub fn clear_number(&mut self) {
-        self.number = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_number(&mut self, v: i32) {
-        self.number = v;
-    }
 
     // string path = 2;
 
@@ -1578,57 +929,12 @@ impl MangaPage {
     pub fn get_path(&self) -> &str {
         &self.path
     }
-    pub fn clear_path(&mut self) {
-        self.path.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_path(&mut self, v: ::std::string::String) {
-        self.path = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_path(&mut self) -> &mut ::std::string::String {
-        &mut self.path
-    }
-
-    // Take field
-    pub fn take_path(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.path, ::std::string::String::new())
-    }
 
     // .SundryThings sundry = 3;
 
 
     pub fn get_sundry(&self) -> &super::common::SundryThings {
         self.sundry.as_ref().unwrap_or_else(|| <super::common::SundryThings as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_sundry(&mut self) {
-        self.sundry.clear();
-    }
-
-    pub fn has_sundry(&self) -> bool {
-        self.sundry.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_sundry(&mut self, v: super::common::SundryThings) {
-        self.sundry = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_sundry(&mut self) -> &mut super::common::SundryThings {
-        if self.sundry.is_none() {
-            self.sundry.set_default();
-        }
-        self.sundry.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_sundry(&mut self) -> super::common::SundryThings {
-        self.sundry.take().unwrap_or_else(|| super::common::SundryThings::new())
     }
 }
 
@@ -1732,33 +1038,6 @@ impl ::protobuf::Message for MangaPage {
         MangaPage::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
-                "number",
-                |m: &MangaPage| { &m.number },
-                |m: &mut MangaPage| { &mut m.number },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "path",
-                |m: &MangaPage| { &m.path },
-                |m: &mut MangaPage| { &mut m.path },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::SundryThings>>(
-                "sundry",
-                |m: &MangaPage| { &m.sundry },
-                |m: &mut MangaPage| { &mut m.sundry },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MangaPage>(
-                "MangaPage",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static MangaPage {
         static instance: ::protobuf::rt::LazyV2<MangaPage> = ::protobuf::rt::LazyV2::INIT;
         instance.get(MangaPage::new)
@@ -1774,26 +1053,23 @@ impl ::protobuf::Clear for MangaPage {
     }
 }
 
-impl ::std::fmt::Debug for MangaPage {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for MangaPage {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct MangaChapter {
     // message fields
     pub number: i32,
     pub pages: ::protobuf::RepeatedField<MangaPage>,
     pub sundry: ::protobuf::SingularPtrField<super::common::SundryThings>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -1814,14 +1090,6 @@ impl MangaChapter {
     pub fn get_number(&self) -> i32 {
         self.number
     }
-    pub fn clear_number(&mut self) {
-        self.number = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_number(&mut self, v: i32) {
-        self.number = v;
-    }
 
     // repeated .MangaPage pages = 2;
 
@@ -1829,56 +1097,12 @@ impl MangaChapter {
     pub fn get_pages(&self) -> &[MangaPage] {
         &self.pages
     }
-    pub fn clear_pages(&mut self) {
-        self.pages.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_pages(&mut self, v: ::protobuf::RepeatedField<MangaPage>) {
-        self.pages = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_pages(&mut self) -> &mut ::protobuf::RepeatedField<MangaPage> {
-        &mut self.pages
-    }
-
-    // Take field
-    pub fn take_pages(&mut self) -> ::protobuf::RepeatedField<MangaPage> {
-        ::std::mem::replace(&mut self.pages, ::protobuf::RepeatedField::new())
-    }
 
     // .SundryThings sundry = 3;
 
 
     pub fn get_sundry(&self) -> &super::common::SundryThings {
         self.sundry.as_ref().unwrap_or_else(|| <super::common::SundryThings as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_sundry(&mut self) {
-        self.sundry.clear();
-    }
-
-    pub fn has_sundry(&self) -> bool {
-        self.sundry.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_sundry(&mut self, v: super::common::SundryThings) {
-        self.sundry = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_sundry(&mut self) -> &mut super::common::SundryThings {
-        if self.sundry.is_none() {
-            self.sundry.set_default();
-        }
-        self.sundry.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_sundry(&mut self) -> super::common::SundryThings {
-        self.sundry.take().unwrap_or_else(|| super::common::SundryThings::new())
     }
 }
 
@@ -1990,33 +1214,6 @@ impl ::protobuf::Message for MangaChapter {
         MangaChapter::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
-                "number",
-                |m: &MangaChapter| { &m.number },
-                |m: &mut MangaChapter| { &mut m.number },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<MangaPage>>(
-                "pages",
-                |m: &MangaChapter| { &m.pages },
-                |m: &mut MangaChapter| { &mut m.pages },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::SundryThings>>(
-                "sundry",
-                |m: &MangaChapter| { &m.sundry },
-                |m: &mut MangaChapter| { &mut m.sundry },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MangaChapter>(
-                "MangaChapter",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static MangaChapter {
         static instance: ::protobuf::rt::LazyV2<MangaChapter> = ::protobuf::rt::LazyV2::INIT;
         instance.get(MangaChapter::new)
@@ -2032,19 +1229,14 @@ impl ::protobuf::Clear for MangaChapter {
     }
 }
 
-impl ::std::fmt::Debug for MangaChapter {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for MangaChapter {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct Manga {
     // message fields
     pub id: ::std::string::String,
@@ -2054,7 +1246,9 @@ pub struct Manga {
     pub sundry: ::protobuf::SingularPtrField<super::common::SundryThings>,
     pub added_on: ::protobuf::SingularPtrField<super::common::DateTime>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -2075,50 +1269,12 @@ impl Manga {
     pub fn get_id(&self) -> &str {
         &self.id
     }
-    pub fn clear_id(&mut self) {
-        self.id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_id(&mut self, v: ::std::string::String) {
-        self.id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_id(&mut self) -> &mut ::std::string::String {
-        &mut self.id
-    }
-
-    // Take field
-    pub fn take_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.id, ::std::string::String::new())
-    }
 
     // string name = 2;
 
 
     pub fn get_name(&self) -> &str {
         &self.name
-    }
-    pub fn clear_name(&mut self) {
-        self.name.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_name(&mut self, v: ::std::string::String) {
-        self.name = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_name(&mut self) -> &mut ::std::string::String {
-        &mut self.name
-    }
-
-    // Take field
-    pub fn take_name(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
     // string description = 3;
@@ -2127,50 +1283,12 @@ impl Manga {
     pub fn get_description(&self) -> &str {
         &self.description
     }
-    pub fn clear_description(&mut self) {
-        self.description.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_description(&mut self, v: ::std::string::String) {
-        self.description = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_description(&mut self) -> &mut ::std::string::String {
-        &mut self.description
-    }
-
-    // Take field
-    pub fn take_description(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.description, ::std::string::String::new())
-    }
 
     // string artist_id = 4;
 
 
     pub fn get_artist_id(&self) -> &str {
         &self.artist_id
-    }
-    pub fn clear_artist_id(&mut self) {
-        self.artist_id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_artist_id(&mut self, v: ::std::string::String) {
-        self.artist_id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_artist_id(&mut self) -> &mut ::std::string::String {
-        &mut self.artist_id
-    }
-
-    // Take field
-    pub fn take_artist_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.artist_id, ::std::string::String::new())
     }
 
     // .SundryThings sundry = 5;
@@ -2179,64 +1297,12 @@ impl Manga {
     pub fn get_sundry(&self) -> &super::common::SundryThings {
         self.sundry.as_ref().unwrap_or_else(|| <super::common::SundryThings as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_sundry(&mut self) {
-        self.sundry.clear();
-    }
-
-    pub fn has_sundry(&self) -> bool {
-        self.sundry.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_sundry(&mut self, v: super::common::SundryThings) {
-        self.sundry = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_sundry(&mut self) -> &mut super::common::SundryThings {
-        if self.sundry.is_none() {
-            self.sundry.set_default();
-        }
-        self.sundry.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_sundry(&mut self) -> super::common::SundryThings {
-        self.sundry.take().unwrap_or_else(|| super::common::SundryThings::new())
-    }
 
     // .DateTime added_on = 350;
 
 
     pub fn get_added_on(&self) -> &super::common::DateTime {
         self.added_on.as_ref().unwrap_or_else(|| <super::common::DateTime as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_added_on(&mut self) {
-        self.added_on.clear();
-    }
-
-    pub fn has_added_on(&self) -> bool {
-        self.added_on.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_added_on(&mut self, v: super::common::DateTime) {
-        self.added_on = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_added_on(&mut self) -> &mut super::common::DateTime {
-        if self.added_on.is_none() {
-            self.added_on.set_default();
-        }
-        self.added_on.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_added_on(&mut self) -> super::common::DateTime {
-        self.added_on.take().unwrap_or_else(|| super::common::DateTime::new())
     }
 }
 
@@ -2371,48 +1437,6 @@ impl ::protobuf::Message for Manga {
         Manga::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "id",
-                |m: &Manga| { &m.id },
-                |m: &mut Manga| { &mut m.id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name",
-                |m: &Manga| { &m.name },
-                |m: &mut Manga| { &mut m.name },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "description",
-                |m: &Manga| { &m.description },
-                |m: &mut Manga| { &mut m.description },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "artist_id",
-                |m: &Manga| { &m.artist_id },
-                |m: &mut Manga| { &mut m.artist_id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::SundryThings>>(
-                "sundry",
-                |m: &Manga| { &m.sundry },
-                |m: &mut Manga| { &mut m.sundry },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::DateTime>>(
-                "added_on",
-                |m: &Manga| { &m.added_on },
-                |m: &mut Manga| { &mut m.added_on },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Manga>(
-                "Manga",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static Manga {
         static instance: ::protobuf::rt::LazyV2<Manga> = ::protobuf::rt::LazyV2::INIT;
         instance.get(Manga::new)
@@ -2431,162 +1455,8 @@ impl ::protobuf::Clear for Manga {
     }
 }
 
-impl ::std::fmt::Debug for Manga {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Manga {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
-}
-
-static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0bmanga.proto\x1a\x0ccommon.proto\"\xa2\x01\n\x0cDoujinSeries\x12\
-    \x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01\
-    (\tR\x04name\x12\x20\n\x0bdescription\x18\x03\x20\x01(\tR\x0bdescription\
-    \x12%\n\x06sundry\x18\x04\x20\x01(\x0b2\r.SundryThingsR\x06sundry\x12%\n\
-    \x08added_on\x18\xde\x02\x20\x01(\x0b2\t.DateTimeR\x07addedOn\"\xb1\x01\
-    \n\tMangaSite\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04nam\
-    e\x18\x02\x20\x01(\tR\x04name\x12\x20\n\x0bdescription\x18\x03\x20\x01(\
-    \tR\x0bdescription\x12\x10\n\x03url\x18\x04\x20\x01(\tR\x03url\x12%\n\
-    \x06sundry\x18\x05\x20\x01(\x0b2\r.SundryThingsR\x06sundry\x12%\n\x08add\
-    ed_on\x18\xde\x02\x20\x01(\x0b2\t.DateTimeR\x07addedOn\"\xbf\x01\n\x0fMa\
-    ngaTranslator\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04nam\
-    e\x18\x02\x20\x01(\tR\x04name\x12\x20\n\x0bdescription\x18\x03\x20\x01(\
-    \tR\x0bdescription\x12\x18\n\x07website\x18\x04\x20\x01(\tR\x07website\
-    \x12%\n\x06sundry\x18\x05\x20\x01(\x0b2\r.SundryThingsR\x06sundry\x12%\n\
-    \x08added_on\x18\xde\x02\x20\x01(\x0b2\t.DateTimeR\x07addedOn\"\xa1\x01\
-    \n\x0bMangaSeries\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\
-    \x04name\x18\x02\x20\x01(\tR\x04name\x12\x20\n\x0bdescription\x18\x03\
-    \x20\x01(\tR\x0bdescription\x12%\n\x06sundry\x18\x04\x20\x01(\x0b2\r.Sun\
-    dryThingsR\x06sundry\x12%\n\x08added_on\x18\xde\x02\x20\x01(\x0b2\t.Date\
-    TimeR\x07addedOn\"^\n\tMangaPage\x12\x16\n\x06number\x18\x01\x20\x01(\
-    \x05R\x06number\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\x12%\n\x06\
-    sundry\x18\x03\x20\x01(\x0b2\r.SundryThingsR\x06sundry\"o\n\x0cMangaChap\
-    ter\x12\x16\n\x06number\x18\x01\x20\x01(\x05R\x06number\x12\x20\n\x05pag\
-    es\x18\x02\x20\x03(\x0b2\n.MangaPageR\x05pages\x12%\n\x06sundry\x18\x03\
-    \x20\x01(\x0b2\r.SundryThingsR\x06sundry\"\xb8\x01\n\x05Manga\x12\x0e\n\
-    \x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
-    \x04name\x12\x20\n\x0bdescription\x18\x03\x20\x01(\tR\x0bdescription\x12\
-    \x1b\n\tartist_id\x18\x04\x20\x01(\tR\x08artistId\x12%\n\x06sundry\x18\
-    \x05\x20\x01(\x0b2\r.SundryThingsR\x06sundry\x12%\n\x08added_on\x18\xde\
-    \x02\x20\x01(\x0b2\t.DateTimeR\x07addedOnJ\xa1\x10\n\x06\x12\x04\0\09\
-    \x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\t\n\x02\x03\0\x12\x03\x02\0\x16\n\
-    \n\n\x02\x04\0\x12\x04\x04\0\n\x01\n\n\n\x03\x04\0\x01\x12\x03\x04\x08\
-    \x14\n\x0b\n\x04\x04\0\x02\0\x12\x03\x05\x04\x12\n\x0c\n\x05\x04\0\x02\0\
-    \x05\x12\x03\x05\x04\n\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03\x05\x0b\r\n\
-    \x0c\n\x05\x04\0\x02\0\x03\x12\x03\x05\x10\x11\n\x0b\n\x04\x04\0\x02\x01\
-    \x12\x03\x06\x04\x14\n\x0c\n\x05\x04\0\x02\x01\x05\x12\x03\x06\x04\n\n\
-    \x0c\n\x05\x04\0\x02\x01\x01\x12\x03\x06\x0b\x0f\n\x0c\n\x05\x04\0\x02\
-    \x01\x03\x12\x03\x06\x12\x13\n\x0b\n\x04\x04\0\x02\x02\x12\x03\x07\x04\
-    \x1b\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x03\x07\x04\n\n\x0c\n\x05\x04\0\
-    \x02\x02\x01\x12\x03\x07\x0b\x16\n\x0c\n\x05\x04\0\x02\x02\x03\x12\x03\
-    \x07\x19\x1a\n\x0b\n\x04\x04\0\x02\x03\x12\x03\x08\x04\x1c\n\x0c\n\x05\
-    \x04\0\x02\x03\x06\x12\x03\x08\x04\x10\n\x0c\n\x05\x04\0\x02\x03\x01\x12\
-    \x03\x08\x11\x17\n\x0c\n\x05\x04\0\x02\x03\x03\x12\x03\x08\x1a\x1b\n\x0b\
-    \n\x04\x04\0\x02\x04\x12\x03\t\x04\x1c\n\x0c\n\x05\x04\0\x02\x04\x06\x12\
-    \x03\t\x04\x0c\n\x0c\n\x05\x04\0\x02\x04\x01\x12\x03\t\r\x15\n\x0c\n\x05\
-    \x04\0\x02\x04\x03\x12\x03\t\x18\x1b\n\n\n\x02\x04\x01\x12\x04\x0c\0\x13\
-    \x01\n\n\n\x03\x04\x01\x01\x12\x03\x0c\x08\x11\n\x0b\n\x04\x04\x01\x02\0\
-    \x12\x03\r\x04\x12\n\x0c\n\x05\x04\x01\x02\0\x05\x12\x03\r\x04\n\n\x0c\n\
-    \x05\x04\x01\x02\0\x01\x12\x03\r\x0b\r\n\x0c\n\x05\x04\x01\x02\0\x03\x12\
-    \x03\r\x10\x11\n\x0b\n\x04\x04\x01\x02\x01\x12\x03\x0e\x04\x14\n\x0c\n\
-    \x05\x04\x01\x02\x01\x05\x12\x03\x0e\x04\n\n\x0c\n\x05\x04\x01\x02\x01\
-    \x01\x12\x03\x0e\x0b\x0f\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\x03\x0e\x12\
-    \x13\n\x0b\n\x04\x04\x01\x02\x02\x12\x03\x0f\x04\x1b\n\x0c\n\x05\x04\x01\
-    \x02\x02\x05\x12\x03\x0f\x04\n\n\x0c\n\x05\x04\x01\x02\x02\x01\x12\x03\
-    \x0f\x0b\x16\n\x0c\n\x05\x04\x01\x02\x02\x03\x12\x03\x0f\x19\x1a\n\x0b\n\
-    \x04\x04\x01\x02\x03\x12\x03\x10\x04\x13\n\x0c\n\x05\x04\x01\x02\x03\x05\
-    \x12\x03\x10\x04\n\n\x0c\n\x05\x04\x01\x02\x03\x01\x12\x03\x10\x0b\x0e\n\
-    \x0c\n\x05\x04\x01\x02\x03\x03\x12\x03\x10\x11\x12\n\x0b\n\x04\x04\x01\
-    \x02\x04\x12\x03\x11\x04\x1c\n\x0c\n\x05\x04\x01\x02\x04\x06\x12\x03\x11\
-    \x04\x10\n\x0c\n\x05\x04\x01\x02\x04\x01\x12\x03\x11\x11\x17\n\x0c\n\x05\
-    \x04\x01\x02\x04\x03\x12\x03\x11\x1a\x1b\n\x0b\n\x04\x04\x01\x02\x05\x12\
-    \x03\x12\x04\x1c\n\x0c\n\x05\x04\x01\x02\x05\x06\x12\x03\x12\x04\x0c\n\
-    \x0c\n\x05\x04\x01\x02\x05\x01\x12\x03\x12\r\x15\n\x0c\n\x05\x04\x01\x02\
-    \x05\x03\x12\x03\x12\x18\x1b\n\n\n\x02\x04\x02\x12\x04\x15\0\x1c\x01\n\n\
-    \n\x03\x04\x02\x01\x12\x03\x15\x08\x17\n\x0b\n\x04\x04\x02\x02\0\x12\x03\
-    \x16\x04\x12\n\x0c\n\x05\x04\x02\x02\0\x05\x12\x03\x16\x04\n\n\x0c\n\x05\
-    \x04\x02\x02\0\x01\x12\x03\x16\x0b\r\n\x0c\n\x05\x04\x02\x02\0\x03\x12\
-    \x03\x16\x10\x11\n\x0b\n\x04\x04\x02\x02\x01\x12\x03\x17\x04\x14\n\x0c\n\
-    \x05\x04\x02\x02\x01\x05\x12\x03\x17\x04\n\n\x0c\n\x05\x04\x02\x02\x01\
-    \x01\x12\x03\x17\x0b\x0f\n\x0c\n\x05\x04\x02\x02\x01\x03\x12\x03\x17\x12\
-    \x13\n\x0b\n\x04\x04\x02\x02\x02\x12\x03\x18\x04\x1b\n\x0c\n\x05\x04\x02\
-    \x02\x02\x05\x12\x03\x18\x04\n\n\x0c\n\x05\x04\x02\x02\x02\x01\x12\x03\
-    \x18\x0b\x16\n\x0c\n\x05\x04\x02\x02\x02\x03\x12\x03\x18\x19\x1a\n\x0b\n\
-    \x04\x04\x02\x02\x03\x12\x03\x19\x04\x17\n\x0c\n\x05\x04\x02\x02\x03\x05\
-    \x12\x03\x19\x04\n\n\x0c\n\x05\x04\x02\x02\x03\x01\x12\x03\x19\x0b\x12\n\
-    \x0c\n\x05\x04\x02\x02\x03\x03\x12\x03\x19\x15\x16\n\x0b\n\x04\x04\x02\
-    \x02\x04\x12\x03\x1a\x04\x1c\n\x0c\n\x05\x04\x02\x02\x04\x06\x12\x03\x1a\
-    \x04\x10\n\x0c\n\x05\x04\x02\x02\x04\x01\x12\x03\x1a\x11\x17\n\x0c\n\x05\
-    \x04\x02\x02\x04\x03\x12\x03\x1a\x1a\x1b\n\x0b\n\x04\x04\x02\x02\x05\x12\
-    \x03\x1b\x04\x1c\n\x0c\n\x05\x04\x02\x02\x05\x06\x12\x03\x1b\x04\x0c\n\
-    \x0c\n\x05\x04\x02\x02\x05\x01\x12\x03\x1b\r\x15\n\x0c\n\x05\x04\x02\x02\
-    \x05\x03\x12\x03\x1b\x18\x1b\n\n\n\x02\x04\x03\x12\x04\x1e\0$\x01\n\n\n\
-    \x03\x04\x03\x01\x12\x03\x1e\x08\x13\n\x0b\n\x04\x04\x03\x02\0\x12\x03\
-    \x1f\x04\x12\n\x0c\n\x05\x04\x03\x02\0\x05\x12\x03\x1f\x04\n\n\x0c\n\x05\
-    \x04\x03\x02\0\x01\x12\x03\x1f\x0b\r\n\x0c\n\x05\x04\x03\x02\0\x03\x12\
-    \x03\x1f\x10\x11\n\x0b\n\x04\x04\x03\x02\x01\x12\x03\x20\x04\x14\n\x0c\n\
-    \x05\x04\x03\x02\x01\x05\x12\x03\x20\x04\n\n\x0c\n\x05\x04\x03\x02\x01\
-    \x01\x12\x03\x20\x0b\x0f\n\x0c\n\x05\x04\x03\x02\x01\x03\x12\x03\x20\x12\
-    \x13\n\x0b\n\x04\x04\x03\x02\x02\x12\x03!\x04\x1b\n\x0c\n\x05\x04\x03\
-    \x02\x02\x05\x12\x03!\x04\n\n\x0c\n\x05\x04\x03\x02\x02\x01\x12\x03!\x0b\
-    \x16\n\x0c\n\x05\x04\x03\x02\x02\x03\x12\x03!\x19\x1a\n\x0b\n\x04\x04\
-    \x03\x02\x03\x12\x03\"\x04\x1c\n\x0c\n\x05\x04\x03\x02\x03\x06\x12\x03\"\
-    \x04\x10\n\x0c\n\x05\x04\x03\x02\x03\x01\x12\x03\"\x11\x17\n\x0c\n\x05\
-    \x04\x03\x02\x03\x03\x12\x03\"\x1a\x1b\n\x0b\n\x04\x04\x03\x02\x04\x12\
-    \x03#\x04\x1c\n\x0c\n\x05\x04\x03\x02\x04\x06\x12\x03#\x04\x0c\n\x0c\n\
-    \x05\x04\x03\x02\x04\x01\x12\x03#\r\x15\n\x0c\n\x05\x04\x03\x02\x04\x03\
-    \x12\x03#\x18\x1b\n\n\n\x02\x04\x04\x12\x04&\0*\x01\n\n\n\x03\x04\x04\
-    \x01\x12\x03&\x08\x11\n\x0b\n\x04\x04\x04\x02\0\x12\x03'\x04\x15\n\x0c\n\
-    \x05\x04\x04\x02\0\x05\x12\x03'\x04\t\n\x0c\n\x05\x04\x04\x02\0\x01\x12\
-    \x03'\n\x10\n\x0c\n\x05\x04\x04\x02\0\x03\x12\x03'\x13\x14\n\x0b\n\x04\
-    \x04\x04\x02\x01\x12\x03(\x04\x14\n\x0c\n\x05\x04\x04\x02\x01\x05\x12\
-    \x03(\x04\n\n\x0c\n\x05\x04\x04\x02\x01\x01\x12\x03(\x0b\x0f\n\x0c\n\x05\
-    \x04\x04\x02\x01\x03\x12\x03(\x12\x13\n\x0b\n\x04\x04\x04\x02\x02\x12\
-    \x03)\x04\x1c\n\x0c\n\x05\x04\x04\x02\x02\x06\x12\x03)\x04\x10\n\x0c\n\
-    \x05\x04\x04\x02\x02\x01\x12\x03)\x11\x17\n\x0c\n\x05\x04\x04\x02\x02\
-    \x03\x12\x03)\x1a\x1b\n\n\n\x02\x04\x05\x12\x04,\00\x01\n\n\n\x03\x04\
-    \x05\x01\x12\x03,\x08\x14\n\x0b\n\x04\x04\x05\x02\0\x12\x03-\x04\x15\n\
-    \x0c\n\x05\x04\x05\x02\0\x05\x12\x03-\x04\t\n\x0c\n\x05\x04\x05\x02\0\
-    \x01\x12\x03-\n\x10\n\x0c\n\x05\x04\x05\x02\0\x03\x12\x03-\x13\x14\n\x0b\
-    \n\x04\x04\x05\x02\x01\x12\x03.\x04!\n\x0c\n\x05\x04\x05\x02\x01\x04\x12\
-    \x03.\x04\x0c\n\x0c\n\x05\x04\x05\x02\x01\x06\x12\x03.\r\x16\n\x0c\n\x05\
-    \x04\x05\x02\x01\x01\x12\x03.\x17\x1c\n\x0c\n\x05\x04\x05\x02\x01\x03\
-    \x12\x03.\x1f\x20\n\x0b\n\x04\x04\x05\x02\x02\x12\x03/\x04\x1c\n\x0c\n\
-    \x05\x04\x05\x02\x02\x06\x12\x03/\x04\x10\n\x0c\n\x05\x04\x05\x02\x02\
-    \x01\x12\x03/\x11\x17\n\x0c\n\x05\x04\x05\x02\x02\x03\x12\x03/\x1a\x1b\n\
-    \n\n\x02\x04\x06\x12\x042\09\x01\n\n\n\x03\x04\x06\x01\x12\x032\x08\r\n\
-    \x0b\n\x04\x04\x06\x02\0\x12\x033\x04\x12\n\x0c\n\x05\x04\x06\x02\0\x05\
-    \x12\x033\x04\n\n\x0c\n\x05\x04\x06\x02\0\x01\x12\x033\x0b\r\n\x0c\n\x05\
-    \x04\x06\x02\0\x03\x12\x033\x10\x11\n\x0b\n\x04\x04\x06\x02\x01\x12\x034\
-    \x04\x14\n\x0c\n\x05\x04\x06\x02\x01\x05\x12\x034\x04\n\n\x0c\n\x05\x04\
-    \x06\x02\x01\x01\x12\x034\x0b\x0f\n\x0c\n\x05\x04\x06\x02\x01\x03\x12\
-    \x034\x12\x13\n\x0b\n\x04\x04\x06\x02\x02\x12\x035\x04\x1b\n\x0c\n\x05\
-    \x04\x06\x02\x02\x05\x12\x035\x04\n\n\x0c\n\x05\x04\x06\x02\x02\x01\x12\
-    \x035\x0b\x16\n\x0c\n\x05\x04\x06\x02\x02\x03\x12\x035\x19\x1a\n\x0b\n\
-    \x04\x04\x06\x02\x03\x12\x036\x04\x19\n\x0c\n\x05\x04\x06\x02\x03\x05\
-    \x12\x036\x04\n\n\x0c\n\x05\x04\x06\x02\x03\x01\x12\x036\x0b\x14\n\x0c\n\
-    \x05\x04\x06\x02\x03\x03\x12\x036\x17\x18\n\x0b\n\x04\x04\x06\x02\x04\
-    \x12\x037\x04\x1c\n\x0c\n\x05\x04\x06\x02\x04\x06\x12\x037\x04\x10\n\x0c\
-    \n\x05\x04\x06\x02\x04\x01\x12\x037\x11\x17\n\x0c\n\x05\x04\x06\x02\x04\
-    \x03\x12\x037\x1a\x1b\n\x0b\n\x04\x04\x06\x02\x05\x12\x038\x04\x1c\n\x0c\
-    \n\x05\x04\x06\x02\x05\x06\x12\x038\x04\x0c\n\x0c\n\x05\x04\x06\x02\x05\
-    \x01\x12\x038\r\x15\n\x0c\n\x05\x04\x06\x02\x05\x03\x12\x038\x18\x1bb\
-    \x06proto3\
-";
-
-static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;
-
-fn parse_descriptor_proto() -> ::protobuf::descriptor::FileDescriptorProto {
-    ::protobuf::parse_from_bytes(file_descriptor_proto_data).unwrap()
-}
-
-pub fn file_descriptor_proto() -> &'static ::protobuf::descriptor::FileDescriptorProto {
-    file_descriptor_proto_lazy.get(|| {
-        parse_descriptor_proto()
-    })
 }

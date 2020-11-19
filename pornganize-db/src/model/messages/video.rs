@@ -23,7 +23,8 @@
 /// of protobuf runtime.
 // const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_18_0;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct Marker {
     // message fields
     pub time: u64,
@@ -32,7 +33,9 @@ pub struct Marker {
     pub tag_ids: ::protobuf::RepeatedField<::std::string::String>,
     pub custom_fields: ::protobuf::RepeatedField<super::common::CustomFieldValue>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -53,39 +56,12 @@ impl Marker {
     pub fn get_time(&self) -> u64 {
         self.time
     }
-    pub fn clear_time(&mut self) {
-        self.time = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_time(&mut self, v: u64) {
-        self.time = v;
-    }
 
     // string title = 2;
 
 
     pub fn get_title(&self) -> &str {
         &self.title
-    }
-    pub fn clear_title(&mut self) {
-        self.title.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_title(&mut self, v: ::std::string::String) {
-        self.title = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_title(&mut self) -> &mut ::std::string::String {
-        &mut self.title
-    }
-
-    // Take field
-    pub fn take_title(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.title, ::std::string::String::new())
     }
 
     // string description = 3;
@@ -94,25 +70,6 @@ impl Marker {
     pub fn get_description(&self) -> &str {
         &self.description
     }
-    pub fn clear_description(&mut self) {
-        self.description.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_description(&mut self, v: ::std::string::String) {
-        self.description = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_description(&mut self) -> &mut ::std::string::String {
-        &mut self.description
-    }
-
-    // Take field
-    pub fn take_description(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.description, ::std::string::String::new())
-    }
 
     // repeated string tag_ids = 4;
 
@@ -120,48 +77,12 @@ impl Marker {
     pub fn get_tag_ids(&self) -> &[::std::string::String] {
         &self.tag_ids
     }
-    pub fn clear_tag_ids(&mut self) {
-        self.tag_ids.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_tag_ids(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
-        self.tag_ids = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_tag_ids(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
-        &mut self.tag_ids
-    }
-
-    // Take field
-    pub fn take_tag_ids(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
-        ::std::mem::replace(&mut self.tag_ids, ::protobuf::RepeatedField::new())
-    }
 
     // repeated .CustomFieldValue custom_fields = 5;
 
 
     pub fn get_custom_fields(&self) -> &[super::common::CustomFieldValue] {
         &self.custom_fields
-    }
-    pub fn clear_custom_fields(&mut self) {
-        self.custom_fields.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_custom_fields(&mut self, v: ::protobuf::RepeatedField<super::common::CustomFieldValue>) {
-        self.custom_fields = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_custom_fields(&mut self) -> &mut ::protobuf::RepeatedField<super::common::CustomFieldValue> {
-        &mut self.custom_fields
-    }
-
-    // Take field
-    pub fn take_custom_fields(&mut self) -> ::protobuf::RepeatedField<super::common::CustomFieldValue> {
-        ::std::mem::replace(&mut self.custom_fields, ::protobuf::RepeatedField::new())
     }
 }
 
@@ -283,43 +204,6 @@ impl ::protobuf::Message for Marker {
         Marker::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                "time",
-                |m: &Marker| { &m.time },
-                |m: &mut Marker| { &mut m.time },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "title",
-                |m: &Marker| { &m.title },
-                |m: &mut Marker| { &mut m.title },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "description",
-                |m: &Marker| { &m.description },
-                |m: &mut Marker| { &mut m.description },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "tag_ids",
-                |m: &Marker| { &m.tag_ids },
-                |m: &mut Marker| { &mut m.tag_ids },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::CustomFieldValue>>(
-                "custom_fields",
-                |m: &Marker| { &m.custom_fields },
-                |m: &mut Marker| { &mut m.custom_fields },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Marker>(
-                "Marker",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static Marker {
         static instance: ::protobuf::rt::LazyV2<Marker> = ::protobuf::rt::LazyV2::INIT;
         instance.get(Marker::new)
@@ -337,25 +221,22 @@ impl ::protobuf::Clear for Marker {
     }
 }
 
-impl ::std::fmt::Debug for Marker {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Marker {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct StreamInfo {
     // message fields
     pub codec: ::std::string::String,
     pub sample_rate: u64,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -376,39 +257,12 @@ impl StreamInfo {
     pub fn get_codec(&self) -> &str {
         &self.codec
     }
-    pub fn clear_codec(&mut self) {
-        self.codec.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_codec(&mut self, v: ::std::string::String) {
-        self.codec = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_codec(&mut self) -> &mut ::std::string::String {
-        &mut self.codec
-    }
-
-    // Take field
-    pub fn take_codec(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.codec, ::std::string::String::new())
-    }
 
     // uint64 sample_rate = 2;
 
 
     pub fn get_sample_rate(&self) -> u64 {
         self.sample_rate
-    }
-    pub fn clear_sample_rate(&mut self) {
-        self.sample_rate = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_sample_rate(&mut self, v: u64) {
-        self.sample_rate = v;
     }
 }
 
@@ -495,28 +349,6 @@ impl ::protobuf::Message for StreamInfo {
         StreamInfo::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "codec",
-                |m: &StreamInfo| { &m.codec },
-                |m: &mut StreamInfo| { &mut m.codec },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                "sample_rate",
-                |m: &StreamInfo| { &m.sample_rate },
-                |m: &mut StreamInfo| { &mut m.sample_rate },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<StreamInfo>(
-                "StreamInfo",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static StreamInfo {
         static instance: ::protobuf::rt::LazyV2<StreamInfo> = ::protobuf::rt::LazyV2::INIT;
         instance.get(StreamInfo::new)
@@ -531,19 +363,14 @@ impl ::protobuf::Clear for StreamInfo {
     }
 }
 
-impl ::std::fmt::Debug for StreamInfo {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for StreamInfo {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct VideoMetadata {
     // message fields
     pub resolution: ::protobuf::SingularPtrField<VideoMetadata_Resolution>,
@@ -552,7 +379,9 @@ pub struct VideoMetadata {
     pub frame_rate: f32,
     pub file_size: u64,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -573,64 +402,12 @@ impl VideoMetadata {
     pub fn get_resolution(&self) -> &VideoMetadata_Resolution {
         self.resolution.as_ref().unwrap_or_else(|| <VideoMetadata_Resolution as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_resolution(&mut self) {
-        self.resolution.clear();
-    }
-
-    pub fn has_resolution(&self) -> bool {
-        self.resolution.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_resolution(&mut self, v: VideoMetadata_Resolution) {
-        self.resolution = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_resolution(&mut self) -> &mut VideoMetadata_Resolution {
-        if self.resolution.is_none() {
-            self.resolution.set_default();
-        }
-        self.resolution.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_resolution(&mut self) -> VideoMetadata_Resolution {
-        self.resolution.take().unwrap_or_else(|| VideoMetadata_Resolution::new())
-    }
 
     // .StreamInfo audio = 2;
 
 
     pub fn get_audio(&self) -> &StreamInfo {
         self.audio.as_ref().unwrap_or_else(|| <StreamInfo as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_audio(&mut self) {
-        self.audio.clear();
-    }
-
-    pub fn has_audio(&self) -> bool {
-        self.audio.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_audio(&mut self, v: StreamInfo) {
-        self.audio = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_audio(&mut self) -> &mut StreamInfo {
-        if self.audio.is_none() {
-            self.audio.set_default();
-        }
-        self.audio.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_audio(&mut self) -> StreamInfo {
-        self.audio.take().unwrap_or_else(|| StreamInfo::new())
     }
 
     // .StreamInfo video = 3;
@@ -639,32 +416,6 @@ impl VideoMetadata {
     pub fn get_video(&self) -> &StreamInfo {
         self.video.as_ref().unwrap_or_else(|| <StreamInfo as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_video(&mut self) {
-        self.video.clear();
-    }
-
-    pub fn has_video(&self) -> bool {
-        self.video.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_video(&mut self, v: StreamInfo) {
-        self.video = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_video(&mut self) -> &mut StreamInfo {
-        if self.video.is_none() {
-            self.video.set_default();
-        }
-        self.video.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_video(&mut self) -> StreamInfo {
-        self.video.take().unwrap_or_else(|| StreamInfo::new())
-    }
 
     // float frame_rate = 4;
 
@@ -672,28 +423,12 @@ impl VideoMetadata {
     pub fn get_frame_rate(&self) -> f32 {
         self.frame_rate
     }
-    pub fn clear_frame_rate(&mut self) {
-        self.frame_rate = 0.;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_frame_rate(&mut self, v: f32) {
-        self.frame_rate = v;
-    }
 
     // uint64 file_size = 5;
 
 
     pub fn get_file_size(&self) -> u64 {
         self.file_size
-    }
-    pub fn clear_file_size(&mut self) {
-        self.file_size = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_file_size(&mut self, v: u64) {
-        self.file_size = v;
     }
 }
 
@@ -835,43 +570,6 @@ impl ::protobuf::Message for VideoMetadata {
         VideoMetadata::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<VideoMetadata_Resolution>>(
-                "resolution",
-                |m: &VideoMetadata| { &m.resolution },
-                |m: &mut VideoMetadata| { &mut m.resolution },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<StreamInfo>>(
-                "audio",
-                |m: &VideoMetadata| { &m.audio },
-                |m: &mut VideoMetadata| { &mut m.audio },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<StreamInfo>>(
-                "video",
-                |m: &VideoMetadata| { &m.video },
-                |m: &mut VideoMetadata| { &mut m.video },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeFloat>(
-                "frame_rate",
-                |m: &VideoMetadata| { &m.frame_rate },
-                |m: &mut VideoMetadata| { &mut m.frame_rate },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                "file_size",
-                |m: &VideoMetadata| { &m.file_size },
-                |m: &mut VideoMetadata| { &mut m.file_size },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<VideoMetadata>(
-                "VideoMetadata",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static VideoMetadata {
         static instance: ::protobuf::rt::LazyV2<VideoMetadata> = ::protobuf::rt::LazyV2::INIT;
         instance.get(VideoMetadata::new)
@@ -889,25 +587,22 @@ impl ::protobuf::Clear for VideoMetadata {
     }
 }
 
-impl ::std::fmt::Debug for VideoMetadata {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for VideoMetadata {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct VideoMetadata_Resolution {
     // message fields
     pub height: u32,
     pub width: u32,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -928,28 +623,12 @@ impl VideoMetadata_Resolution {
     pub fn get_height(&self) -> u32 {
         self.height
     }
-    pub fn clear_height(&mut self) {
-        self.height = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_height(&mut self, v: u32) {
-        self.height = v;
-    }
 
     // uint32 width = 2;
 
 
     pub fn get_width(&self) -> u32 {
         self.width
-    }
-    pub fn clear_width(&mut self) {
-        self.width = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_width(&mut self, v: u32) {
-        self.width = v;
     }
 }
 
@@ -1040,28 +719,6 @@ impl ::protobuf::Message for VideoMetadata_Resolution {
         VideoMetadata_Resolution::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "height",
-                |m: &VideoMetadata_Resolution| { &m.height },
-                |m: &mut VideoMetadata_Resolution| { &mut m.height },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "width",
-                |m: &VideoMetadata_Resolution| { &m.width },
-                |m: &mut VideoMetadata_Resolution| { &mut m.width },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<VideoMetadata_Resolution>(
-                "VideoMetadata.Resolution",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static VideoMetadata_Resolution {
         static instance: ::protobuf::rt::LazyV2<VideoMetadata_Resolution> = ::protobuf::rt::LazyV2::INIT;
         instance.get(VideoMetadata_Resolution::new)
@@ -1076,19 +733,14 @@ impl ::protobuf::Clear for VideoMetadata_Resolution {
     }
 }
 
-impl ::std::fmt::Debug for VideoMetadata_Resolution {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for VideoMetadata_Resolution {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct Video {
     // message fields
     pub id: ::std::string::String,
@@ -1105,7 +757,9 @@ pub struct Video {
     // message oneof groups
     pub source: ::std::option::Option<Video_oneof_source>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -1116,6 +770,7 @@ impl<'a> ::std::default::Default for &'a Video {
 }
 
 #[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub enum Video_oneof_source {
     studio_id(::std::string::String),
     network_id(::std::string::String),
@@ -1133,25 +788,6 @@ impl Video {
     pub fn get_id(&self) -> &str {
         &self.id
     }
-    pub fn clear_id(&mut self) {
-        self.id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_id(&mut self, v: ::std::string::String) {
-        self.id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_id(&mut self) -> &mut ::std::string::String {
-        &mut self.id
-    }
-
-    // Take field
-    pub fn take_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.id, ::std::string::String::new())
-    }
 
     // string path = 2;
 
@@ -1159,57 +795,12 @@ impl Video {
     pub fn get_path(&self) -> &str {
         &self.path
     }
-    pub fn clear_path(&mut self) {
-        self.path.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_path(&mut self, v: ::std::string::String) {
-        self.path = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_path(&mut self) -> &mut ::std::string::String {
-        &mut self.path
-    }
-
-    // Take field
-    pub fn take_path(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.path, ::std::string::String::new())
-    }
 
     // .VideoMetadata metadata = 3;
 
 
     pub fn get_metadata(&self) -> &VideoMetadata {
         self.metadata.as_ref().unwrap_or_else(|| <VideoMetadata as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_metadata(&mut self) {
-        self.metadata.clear();
-    }
-
-    pub fn has_metadata(&self) -> bool {
-        self.metadata.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_metadata(&mut self, v: VideoMetadata) {
-        self.metadata = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_metadata(&mut self) -> &mut VideoMetadata {
-        if self.metadata.is_none() {
-            self.metadata.set_default();
-        }
-        self.metadata.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_metadata(&mut self) -> VideoMetadata {
-        self.metadata.take().unwrap_or_else(|| VideoMetadata::new())
     }
 
     // string studio_id = 4;
@@ -1219,45 +810,6 @@ impl Video {
         match self.source {
             ::std::option::Option::Some(Video_oneof_source::studio_id(ref v)) => v,
             _ => "",
-        }
-    }
-    pub fn clear_studio_id(&mut self) {
-        self.source = ::std::option::Option::None;
-    }
-
-    pub fn has_studio_id(&self) -> bool {
-        match self.source {
-            ::std::option::Option::Some(Video_oneof_source::studio_id(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_studio_id(&mut self, v: ::std::string::String) {
-        self.source = ::std::option::Option::Some(Video_oneof_source::studio_id(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_studio_id(&mut self) -> &mut ::std::string::String {
-        if let ::std::option::Option::Some(Video_oneof_source::studio_id(_)) = self.source {
-        } else {
-            self.source = ::std::option::Option::Some(Video_oneof_source::studio_id(::std::string::String::new()));
-        }
-        match self.source {
-            ::std::option::Option::Some(Video_oneof_source::studio_id(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_studio_id(&mut self) -> ::std::string::String {
-        if self.has_studio_id() {
-            match self.source.take() {
-                ::std::option::Option::Some(Video_oneof_source::studio_id(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ::std::string::String::new()
         }
     }
 
@@ -1270,45 +822,6 @@ impl Video {
             _ => "",
         }
     }
-    pub fn clear_network_id(&mut self) {
-        self.source = ::std::option::Option::None;
-    }
-
-    pub fn has_network_id(&self) -> bool {
-        match self.source {
-            ::std::option::Option::Some(Video_oneof_source::network_id(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_network_id(&mut self, v: ::std::string::String) {
-        self.source = ::std::option::Option::Some(Video_oneof_source::network_id(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_network_id(&mut self) -> &mut ::std::string::String {
-        if let ::std::option::Option::Some(Video_oneof_source::network_id(_)) = self.source {
-        } else {
-            self.source = ::std::option::Option::Some(Video_oneof_source::network_id(::std::string::String::new()));
-        }
-        match self.source {
-            ::std::option::Option::Some(Video_oneof_source::network_id(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_network_id(&mut self) -> ::std::string::String {
-        if self.has_network_id() {
-            match self.source.take() {
-                ::std::option::Option::Some(Video_oneof_source::network_id(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ::std::string::String::new()
-        }
-    }
 
     // string site_id = 6;
 
@@ -1319,77 +832,12 @@ impl Video {
             _ => "",
         }
     }
-    pub fn clear_site_id(&mut self) {
-        self.source = ::std::option::Option::None;
-    }
-
-    pub fn has_site_id(&self) -> bool {
-        match self.source {
-            ::std::option::Option::Some(Video_oneof_source::site_id(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_site_id(&mut self, v: ::std::string::String) {
-        self.source = ::std::option::Option::Some(Video_oneof_source::site_id(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_site_id(&mut self) -> &mut ::std::string::String {
-        if let ::std::option::Option::Some(Video_oneof_source::site_id(_)) = self.source {
-        } else {
-            self.source = ::std::option::Option::Some(Video_oneof_source::site_id(::std::string::String::new()));
-        }
-        match self.source {
-            ::std::option::Option::Some(Video_oneof_source::site_id(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_site_id(&mut self) -> ::std::string::String {
-        if self.has_site_id() {
-            match self.source.take() {
-                ::std::option::Option::Some(Video_oneof_source::site_id(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ::std::string::String::new()
-        }
-    }
 
     // .Date released = 7;
 
 
     pub fn get_released(&self) -> &super::common::Date {
         self.released.as_ref().unwrap_or_else(|| <super::common::Date as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_released(&mut self) {
-        self.released.clear();
-    }
-
-    pub fn has_released(&self) -> bool {
-        self.released.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_released(&mut self, v: super::common::Date) {
-        self.released = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_released(&mut self) -> &mut super::common::Date {
-        if self.released.is_none() {
-            self.released.set_default();
-        }
-        self.released.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_released(&mut self) -> super::common::Date {
-        self.released.take().unwrap_or_else(|| super::common::Date::new())
     }
 
     // string language = 8;
@@ -1398,49 +846,12 @@ impl Video {
     pub fn get_language(&self) -> &str {
         &self.language
     }
-    pub fn clear_language(&mut self) {
-        self.language.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_language(&mut self, v: ::std::string::String) {
-        self.language = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_language(&mut self) -> &mut ::std::string::String {
-        &mut self.language
-    }
-
-    // Take field
-    pub fn take_language(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.language, ::std::string::String::new())
-    }
 
     // repeated string actor_ids = 9;
 
 
     pub fn get_actor_ids(&self) -> &[::std::string::String] {
         &self.actor_ids
-    }
-    pub fn clear_actor_ids(&mut self) {
-        self.actor_ids.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_actor_ids(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
-        self.actor_ids = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_actor_ids(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
-        &mut self.actor_ids
-    }
-
-    // Take field
-    pub fn take_actor_ids(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
-        ::std::mem::replace(&mut self.actor_ids, ::protobuf::RepeatedField::new())
     }
 
     // repeated string tag_ids = 10;
@@ -1449,48 +860,12 @@ impl Video {
     pub fn get_tag_ids(&self) -> &[::std::string::String] {
         &self.tag_ids
     }
-    pub fn clear_tag_ids(&mut self) {
-        self.tag_ids.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_tag_ids(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
-        self.tag_ids = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_tag_ids(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
-        &mut self.tag_ids
-    }
-
-    // Take field
-    pub fn take_tag_ids(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
-        ::std::mem::replace(&mut self.tag_ids, ::protobuf::RepeatedField::new())
-    }
 
     // repeated .CustomFieldValue custom_fields = 11;
 
 
     pub fn get_custom_fields(&self) -> &[super::common::CustomFieldValue] {
         &self.custom_fields
-    }
-    pub fn clear_custom_fields(&mut self) {
-        self.custom_fields.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_custom_fields(&mut self, v: ::protobuf::RepeatedField<super::common::CustomFieldValue>) {
-        self.custom_fields = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_custom_fields(&mut self) -> &mut ::protobuf::RepeatedField<super::common::CustomFieldValue> {
-        &mut self.custom_fields
-    }
-
-    // Take field
-    pub fn take_custom_fields(&mut self) -> ::protobuf::RepeatedField<super::common::CustomFieldValue> {
-        ::std::mem::replace(&mut self.custom_fields, ::protobuf::RepeatedField::new())
     }
 
     // repeated .Marker markers = 12;
@@ -1499,24 +874,6 @@ impl Video {
     pub fn get_markers(&self) -> &[Marker] {
         &self.markers
     }
-    pub fn clear_markers(&mut self) {
-        self.markers.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_markers(&mut self, v: ::protobuf::RepeatedField<Marker>) {
-        self.markers = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_markers(&mut self) -> &mut ::protobuf::RepeatedField<Marker> {
-        &mut self.markers
-    }
-
-    // Take field
-    pub fn take_markers(&mut self) -> ::protobuf::RepeatedField<Marker> {
-        ::std::mem::replace(&mut self.markers, ::protobuf::RepeatedField::new())
-    }
 
     // uint64 duration = 13;
 
@@ -1524,46 +881,12 @@ impl Video {
     pub fn get_duration(&self) -> u64 {
         self.duration
     }
-    pub fn clear_duration(&mut self) {
-        self.duration = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_duration(&mut self, v: u64) {
-        self.duration = v;
-    }
 
     // .DateTime added_on = 350;
 
 
     pub fn get_added_on(&self) -> &super::common::DateTime {
         self.added_on.as_ref().unwrap_or_else(|| <super::common::DateTime as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_added_on(&mut self) {
-        self.added_on.clear();
-    }
-
-    pub fn has_added_on(&self) -> bool {
-        self.added_on.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_added_on(&mut self, v: super::common::DateTime) {
-        self.added_on = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_added_on(&mut self) -> &mut super::common::DateTime {
-        if self.added_on.is_none() {
-            self.added_on.set_default();
-        }
-        self.added_on.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_added_on(&mut self) -> super::common::DateTime {
-        self.added_on.take().unwrap_or_else(|| super::common::DateTime::new())
     }
 }
 
@@ -1815,88 +1138,6 @@ impl ::protobuf::Message for Video {
         Video::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "id",
-                |m: &Video| { &m.id },
-                |m: &mut Video| { &mut m.id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "path",
-                |m: &Video| { &m.path },
-                |m: &mut Video| { &mut m.path },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<VideoMetadata>>(
-                "metadata",
-                |m: &Video| { &m.metadata },
-                |m: &mut Video| { &mut m.metadata },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
-                "studio_id",
-                Video::has_studio_id,
-                Video::get_studio_id,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
-                "network_id",
-                Video::has_network_id,
-                Video::get_network_id,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
-                "site_id",
-                Video::has_site_id,
-                Video::get_site_id,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::Date>>(
-                "released",
-                |m: &Video| { &m.released },
-                |m: &mut Video| { &mut m.released },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "language",
-                |m: &Video| { &m.language },
-                |m: &mut Video| { &mut m.language },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "actor_ids",
-                |m: &Video| { &m.actor_ids },
-                |m: &mut Video| { &mut m.actor_ids },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "tag_ids",
-                |m: &Video| { &m.tag_ids },
-                |m: &mut Video| { &mut m.tag_ids },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::CustomFieldValue>>(
-                "custom_fields",
-                |m: &Video| { &m.custom_fields },
-                |m: &mut Video| { &mut m.custom_fields },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Marker>>(
-                "markers",
-                |m: &Video| { &m.markers },
-                |m: &mut Video| { &mut m.markers },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                "duration",
-                |m: &Video| { &m.duration },
-                |m: &mut Video| { &mut m.duration },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::DateTime>>(
-                "added_on",
-                |m: &Video| { &m.added_on },
-                |m: &mut Video| { &mut m.added_on },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Video>(
-                "Video",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static Video {
         static instance: ::protobuf::rt::LazyV2<Video> = ::protobuf::rt::LazyV2::INIT;
         instance.get(Video::new)
@@ -1923,144 +1164,8 @@ impl ::protobuf::Clear for Video {
     }
 }
 
-impl ::std::fmt::Debug for Video {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Video {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
-}
-
-static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0bvideo.proto\x1a\x0ccommon.proto\"\xa5\x01\n\x06Marker\x12\x12\n\
-    \x04time\x18\x01\x20\x01(\x04R\x04time\x12\x14\n\x05title\x18\x02\x20\
-    \x01(\tR\x05title\x12\x20\n\x0bdescription\x18\x03\x20\x01(\tR\x0bdescri\
-    ption\x12\x17\n\x07tag_ids\x18\x04\x20\x03(\tR\x06tagIds\x126\n\rcustom_\
-    fields\x18\x05\x20\x03(\x0b2\x11.CustomFieldValueR\x0ccustomFields\"C\n\
-    \nStreamInfo\x12\x14\n\x05codec\x18\x01\x20\x01(\tR\x05codec\x12\x1f\n\
-    \x0bsample_rate\x18\x02\x20\x01(\x04R\nsampleRate\"\x88\x02\n\rVideoMeta\
-    data\x129\n\nresolution\x18\x01\x20\x01(\x0b2\x19.VideoMetadata.Resoluti\
-    onR\nresolution\x12!\n\x05audio\x18\x02\x20\x01(\x0b2\x0b.StreamInfoR\
-    \x05audio\x12!\n\x05video\x18\x03\x20\x01(\x0b2\x0b.StreamInfoR\x05video\
-    \x12\x1d\n\nframe_rate\x18\x04\x20\x01(\x02R\tframeRate\x12\x1b\n\tfile_\
-    size\x18\x05\x20\x01(\x04R\x08fileSize\x1a:\n\nResolution\x12\x16\n\x06h\
-    eight\x18\x01\x20\x01(\rR\x06height\x12\x14\n\x05width\x18\x02\x20\x01(\
-    \rR\x05width\"\xcf\x03\n\x05Video\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\
-    \x02id\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\x12*\n\x08metadata\
-    \x18\x03\x20\x01(\x0b2\x0e.VideoMetadataR\x08metadata\x12\x1d\n\tstudio_\
-    id\x18\x04\x20\x01(\tH\0R\x08studioId\x12\x1f\n\nnetwork_id\x18\x05\x20\
-    \x01(\tH\0R\tnetworkId\x12\x19\n\x07site_id\x18\x06\x20\x01(\tH\0R\x06si\
-    teId\x12!\n\x08released\x18\x07\x20\x01(\x0b2\x05.DateR\x08released\x12\
-    \x1a\n\x08language\x18\x08\x20\x01(\tR\x08language\x12\x1b\n\tactor_ids\
-    \x18\t\x20\x03(\tR\x08actorIds\x12\x17\n\x07tag_ids\x18\n\x20\x03(\tR\
-    \x06tagIds\x126\n\rcustom_fields\x18\x0b\x20\x03(\x0b2\x11.CustomFieldVa\
-    lueR\x0ccustomFields\x12!\n\x07markers\x18\x0c\x20\x03(\x0b2\x07.MarkerR\
-    \x07markers\x12\x1a\n\x08duration\x18\r\x20\x01(\x04R\x08duration\x12%\n\
-    \x08added_on\x18\xde\x02\x20\x01(\x0b2\t.DateTimeR\x07addedOnB\x08\n\x06\
-    sourceJ\x9d\x0e\n\x06\x12\x04\0\0.\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\
-    \t\n\x02\x03\0\x12\x03\x02\0\x16\n\n\n\x02\x04\0\x12\x04\x04\0\n\x01\n\n\
-    \n\x03\x04\0\x01\x12\x03\x04\x08\x0e\n\x0b\n\x04\x04\0\x02\0\x12\x03\x05\
-    \x04\x14\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03\x05\x04\n\n\x0c\n\x05\x04\0\
-    \x02\0\x01\x12\x03\x05\x0b\x0f\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x05\
-    \x12\x13\n\x0b\n\x04\x04\0\x02\x01\x12\x03\x06\x04\x15\n\x0c\n\x05\x04\0\
-    \x02\x01\x05\x12\x03\x06\x04\n\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03\x06\
-    \x0b\x10\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03\x06\x13\x14\n\x0b\n\x04\
-    \x04\0\x02\x02\x12\x03\x07\x04\x1b\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x03\
-    \x07\x04\n\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03\x07\x0b\x16\n\x0c\n\x05\
-    \x04\0\x02\x02\x03\x12\x03\x07\x19\x1a\n\x0b\n\x04\x04\0\x02\x03\x12\x03\
-    \x08\x04\x20\n\x0c\n\x05\x04\0\x02\x03\x04\x12\x03\x08\x04\x0c\n\x0c\n\
-    \x05\x04\0\x02\x03\x05\x12\x03\x08\r\x13\n\x0c\n\x05\x04\0\x02\x03\x01\
-    \x12\x03\x08\x14\x1b\n\x0c\n\x05\x04\0\x02\x03\x03\x12\x03\x08\x1e\x1f\n\
-    \x0b\n\x04\x04\0\x02\x04\x12\x03\t\x040\n\x0c\n\x05\x04\0\x02\x04\x04\
-    \x12\x03\t\x04\x0c\n\x0c\n\x05\x04\0\x02\x04\x06\x12\x03\t\r\x1d\n\x0c\n\
-    \x05\x04\0\x02\x04\x01\x12\x03\t\x1e+\n\x0c\n\x05\x04\0\x02\x04\x03\x12\
-    \x03\t./\n\n\n\x02\x04\x01\x12\x04\x0c\0\x0f\x01\n\n\n\x03\x04\x01\x01\
-    \x12\x03\x0c\x08\x12\n\x0b\n\x04\x04\x01\x02\0\x12\x03\r\x04\x15\n\x0c\n\
-    \x05\x04\x01\x02\0\x05\x12\x03\r\x04\n\n\x0c\n\x05\x04\x01\x02\0\x01\x12\
-    \x03\r\x0b\x10\n\x0c\n\x05\x04\x01\x02\0\x03\x12\x03\r\x13\x14\n\x0b\n\
-    \x04\x04\x01\x02\x01\x12\x03\x0e\x04\x1b\n\x0c\n\x05\x04\x01\x02\x01\x05\
-    \x12\x03\x0e\x04\n\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\x03\x0e\x0b\x16\n\
-    \x0c\n\x05\x04\x01\x02\x01\x03\x12\x03\x0e\x19\x1a\n\n\n\x02\x04\x02\x12\
-    \x04\x11\0\x1b\x01\n\n\n\x03\x04\x02\x01\x12\x03\x11\x08\x15\n\x0c\n\x04\
-    \x04\x02\x03\0\x12\x04\x12\x04\x15\x05\n\x0c\n\x05\x04\x02\x03\0\x01\x12\
-    \x03\x12\x0c\x16\n\r\n\x06\x04\x02\x03\0\x02\0\x12\x03\x13\x08\x1a\n\x0e\
-    \n\x07\x04\x02\x03\0\x02\0\x05\x12\x03\x13\x08\x0e\n\x0e\n\x07\x04\x02\
-    \x03\0\x02\0\x01\x12\x03\x13\x0f\x15\n\x0e\n\x07\x04\x02\x03\0\x02\0\x03\
-    \x12\x03\x13\x18\x19\n\r\n\x06\x04\x02\x03\0\x02\x01\x12\x03\x14\x08\x19\
-    \n\x0e\n\x07\x04\x02\x03\0\x02\x01\x05\x12\x03\x14\x08\x0e\n\x0e\n\x07\
-    \x04\x02\x03\0\x02\x01\x01\x12\x03\x14\x0f\x14\n\x0e\n\x07\x04\x02\x03\0\
-    \x02\x01\x03\x12\x03\x14\x17\x18\n\x0b\n\x04\x04\x02\x02\0\x12\x03\x16\
-    \x04\x1e\n\x0c\n\x05\x04\x02\x02\0\x06\x12\x03\x16\x04\x0e\n\x0c\n\x05\
-    \x04\x02\x02\0\x01\x12\x03\x16\x0f\x19\n\x0c\n\x05\x04\x02\x02\0\x03\x12\
-    \x03\x16\x1c\x1d\n\x0b\n\x04\x04\x02\x02\x01\x12\x03\x17\x04\x19\n\x0c\n\
-    \x05\x04\x02\x02\x01\x06\x12\x03\x17\x04\x0e\n\x0c\n\x05\x04\x02\x02\x01\
-    \x01\x12\x03\x17\x0f\x14\n\x0c\n\x05\x04\x02\x02\x01\x03\x12\x03\x17\x17\
-    \x18\n\x0b\n\x04\x04\x02\x02\x02\x12\x03\x18\x04\x19\n\x0c\n\x05\x04\x02\
-    \x02\x02\x06\x12\x03\x18\x04\x0e\n\x0c\n\x05\x04\x02\x02\x02\x01\x12\x03\
-    \x18\x0f\x14\n\x0c\n\x05\x04\x02\x02\x02\x03\x12\x03\x18\x17\x18\n\x0b\n\
-    \x04\x04\x02\x02\x03\x12\x03\x19\x04\x19\n\x0c\n\x05\x04\x02\x02\x03\x05\
-    \x12\x03\x19\x04\t\n\x0c\n\x05\x04\x02\x02\x03\x01\x12\x03\x19\n\x14\n\
-    \x0c\n\x05\x04\x02\x02\x03\x03\x12\x03\x19\x17\x18\n\x0b\n\x04\x04\x02\
-    \x02\x04\x12\x03\x1a\x04\x19\n\x0c\n\x05\x04\x02\x02\x04\x05\x12\x03\x1a\
-    \x04\n\n\x0c\n\x05\x04\x02\x02\x04\x01\x12\x03\x1a\x0b\x14\n\x0c\n\x05\
-    \x04\x02\x02\x04\x03\x12\x03\x1a\x17\x18\n\n\n\x02\x04\x03\x12\x04\x1d\0\
-    .\x01\n\n\n\x03\x04\x03\x01\x12\x03\x1d\x08\r\n\x0b\n\x04\x04\x03\x02\0\
-    \x12\x03\x1e\x04\x12\n\x0c\n\x05\x04\x03\x02\0\x05\x12\x03\x1e\x04\n\n\
-    \x0c\n\x05\x04\x03\x02\0\x01\x12\x03\x1e\x0b\r\n\x0c\n\x05\x04\x03\x02\0\
-    \x03\x12\x03\x1e\x10\x11\n\x0b\n\x04\x04\x03\x02\x01\x12\x03\x1f\x04\x14\
-    \n\x0c\n\x05\x04\x03\x02\x01\x05\x12\x03\x1f\x04\n\n\x0c\n\x05\x04\x03\
-    \x02\x01\x01\x12\x03\x1f\x0b\x0f\n\x0c\n\x05\x04\x03\x02\x01\x03\x12\x03\
-    \x1f\x12\x13\n\x0b\n\x04\x04\x03\x02\x02\x12\x03\x20\x04\x1f\n\x0c\n\x05\
-    \x04\x03\x02\x02\x06\x12\x03\x20\x04\x11\n\x0c\n\x05\x04\x03\x02\x02\x01\
-    \x12\x03\x20\x12\x1a\n\x0c\n\x05\x04\x03\x02\x02\x03\x12\x03\x20\x1d\x1e\
-    \n\x0c\n\x04\x04\x03\x08\0\x12\x04!\x04%\x05\n\x0c\n\x05\x04\x03\x08\0\
-    \x01\x12\x03!\n\x10\n\x0b\n\x04\x04\x03\x02\x03\x12\x03\"\x08\x1d\n\x0c\
-    \n\x05\x04\x03\x02\x03\x05\x12\x03\"\x08\x0e\n\x0c\n\x05\x04\x03\x02\x03\
-    \x01\x12\x03\"\x0f\x18\n\x0c\n\x05\x04\x03\x02\x03\x03\x12\x03\"\x1b\x1c\
-    \n\x0b\n\x04\x04\x03\x02\x04\x12\x03#\x08\x1e\n\x0c\n\x05\x04\x03\x02\
-    \x04\x05\x12\x03#\x08\x0e\n\x0c\n\x05\x04\x03\x02\x04\x01\x12\x03#\x0f\
-    \x19\n\x0c\n\x05\x04\x03\x02\x04\x03\x12\x03#\x1c\x1d\n\x0b\n\x04\x04\
-    \x03\x02\x05\x12\x03$\x08\x1b\n\x0c\n\x05\x04\x03\x02\x05\x05\x12\x03$\
-    \x08\x0e\n\x0c\n\x05\x04\x03\x02\x05\x01\x12\x03$\x0f\x16\n\x0c\n\x05\
-    \x04\x03\x02\x05\x03\x12\x03$\x19\x1a\n\x0b\n\x04\x04\x03\x02\x06\x12\
-    \x03&\x04\x16\n\x0c\n\x05\x04\x03\x02\x06\x06\x12\x03&\x04\x08\n\x0c\n\
-    \x05\x04\x03\x02\x06\x01\x12\x03&\t\x11\n\x0c\n\x05\x04\x03\x02\x06\x03\
-    \x12\x03&\x14\x15\n\x0b\n\x04\x04\x03\x02\x07\x12\x03'\x04\x18\n\x0c\n\
-    \x05\x04\x03\x02\x07\x05\x12\x03'\x04\n\n\x0c\n\x05\x04\x03\x02\x07\x01\
-    \x12\x03'\x0b\x13\n\x0c\n\x05\x04\x03\x02\x07\x03\x12\x03'\x16\x17\n\x0b\
-    \n\x04\x04\x03\x02\x08\x12\x03(\x04\"\n\x0c\n\x05\x04\x03\x02\x08\x04\
-    \x12\x03(\x04\x0c\n\x0c\n\x05\x04\x03\x02\x08\x05\x12\x03(\r\x13\n\x0c\n\
-    \x05\x04\x03\x02\x08\x01\x12\x03(\x14\x1d\n\x0c\n\x05\x04\x03\x02\x08\
-    \x03\x12\x03(\x20!\n\x0b\n\x04\x04\x03\x02\t\x12\x03)\x04!\n\x0c\n\x05\
-    \x04\x03\x02\t\x04\x12\x03)\x04\x0c\n\x0c\n\x05\x04\x03\x02\t\x05\x12\
-    \x03)\r\x13\n\x0c\n\x05\x04\x03\x02\t\x01\x12\x03)\x14\x1b\n\x0c\n\x05\
-    \x04\x03\x02\t\x03\x12\x03)\x1e\x20\n\x0b\n\x04\x04\x03\x02\n\x12\x03*\
-    \x041\n\x0c\n\x05\x04\x03\x02\n\x04\x12\x03*\x04\x0c\n\x0c\n\x05\x04\x03\
-    \x02\n\x06\x12\x03*\r\x1d\n\x0c\n\x05\x04\x03\x02\n\x01\x12\x03*\x1e+\n\
-    \x0c\n\x05\x04\x03\x02\n\x03\x12\x03*.0\n\x0b\n\x04\x04\x03\x02\x0b\x12\
-    \x03+\x04!\n\x0c\n\x05\x04\x03\x02\x0b\x04\x12\x03+\x04\x0c\n\x0c\n\x05\
-    \x04\x03\x02\x0b\x06\x12\x03+\r\x13\n\x0c\n\x05\x04\x03\x02\x0b\x01\x12\
-    \x03+\x14\x1b\n\x0c\n\x05\x04\x03\x02\x0b\x03\x12\x03+\x1e\x20\n\x0b\n\
-    \x04\x04\x03\x02\x0c\x12\x03,\x04\x19\n\x0c\n\x05\x04\x03\x02\x0c\x05\
-    \x12\x03,\x04\n\n\x0c\n\x05\x04\x03\x02\x0c\x01\x12\x03,\x0b\x13\n\x0c\n\
-    \x05\x04\x03\x02\x0c\x03\x12\x03,\x16\x18\n\x0b\n\x04\x04\x03\x02\r\x12\
-    \x03-\x04\x1c\n\x0c\n\x05\x04\x03\x02\r\x06\x12\x03-\x04\x0c\n\x0c\n\x05\
-    \x04\x03\x02\r\x01\x12\x03-\r\x15\n\x0c\n\x05\x04\x03\x02\r\x03\x12\x03-\
-    \x18\x1bb\x06proto3\
-";
-
-static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;
-
-fn parse_descriptor_proto() -> ::protobuf::descriptor::FileDescriptorProto {
-    ::protobuf::parse_from_bytes(file_descriptor_proto_data).unwrap()
-}
-
-pub fn file_descriptor_proto() -> &'static ::protobuf::descriptor::FileDescriptorProto {
-    file_descriptor_proto_lazy.get(|| {
-        parse_descriptor_proto()
-    })
 }

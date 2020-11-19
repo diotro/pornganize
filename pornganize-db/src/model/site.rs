@@ -45,8 +45,8 @@ impl From<SiteMessage> for Site {
 }
 
 impl Model<SiteMessage> for Site {
-    fn tree_name() -> &'static str { "sites" }
-    fn get_key(&self) -> String { self.id.clone() }
+    const TREE_NAME: &'static str = "sites";
+    fn get_key(&self) -> &str { &self.id }
 }
 
 impl From<Site> for SiteMessage {

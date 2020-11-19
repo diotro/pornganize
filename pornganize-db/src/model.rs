@@ -4,12 +4,12 @@ pub trait Model<M>: From<M> + Into<M>
 where
     M: Message,
 {
-    fn tree_name() -> &'static str;
-    fn get_key(&self) -> String;
+    const TREE_NAME: &'static str;
+    fn get_key<'a>(&'a self) -> &'a str;
 }
 
 mod common;
-pub use common::*;
+pub (crate) use common::*;
 mod messages;
 
 pub mod actor;

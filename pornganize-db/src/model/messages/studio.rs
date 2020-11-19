@@ -23,7 +23,8 @@
 /// of protobuf runtime.
 // const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_18_0;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct Studio {
     // message fields
     pub id: ::std::string::String,
@@ -35,7 +36,9 @@ pub struct Studio {
     pub established: ::protobuf::SingularPtrField<super::common::Date>,
     pub added_on: ::protobuf::SingularPtrField<super::common::DateTime>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -56,50 +59,12 @@ impl Studio {
     pub fn get_id(&self) -> &str {
         &self.id
     }
-    pub fn clear_id(&mut self) {
-        self.id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_id(&mut self, v: ::std::string::String) {
-        self.id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_id(&mut self) -> &mut ::std::string::String {
-        &mut self.id
-    }
-
-    // Take field
-    pub fn take_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.id, ::std::string::String::new())
-    }
 
     // string name = 2;
 
 
     pub fn get_name(&self) -> &str {
         &self.name
-    }
-    pub fn clear_name(&mut self) {
-        self.name.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_name(&mut self, v: ::std::string::String) {
-        self.name = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_name(&mut self) -> &mut ::std::string::String {
-        &mut self.name
-    }
-
-    // Take field
-    pub fn take_name(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
     // string banner = 3;
@@ -108,50 +73,12 @@ impl Studio {
     pub fn get_banner(&self) -> &str {
         &self.banner
     }
-    pub fn clear_banner(&mut self) {
-        self.banner.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_banner(&mut self, v: ::std::string::String) {
-        self.banner = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_banner(&mut self) -> &mut ::std::string::String {
-        &mut self.banner
-    }
-
-    // Take field
-    pub fn take_banner(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.banner, ::std::string::String::new())
-    }
 
     // string logo = 4;
 
 
     pub fn get_logo(&self) -> &str {
         &self.logo
-    }
-    pub fn clear_logo(&mut self) {
-        self.logo.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_logo(&mut self, v: ::std::string::String) {
-        self.logo = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_logo(&mut self) -> &mut ::std::string::String {
-        &mut self.logo
-    }
-
-    // Take field
-    pub fn take_logo(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.logo, ::std::string::String::new())
     }
 
     // string website = 5;
@@ -160,50 +87,12 @@ impl Studio {
     pub fn get_website(&self) -> &str {
         &self.website
     }
-    pub fn clear_website(&mut self) {
-        self.website.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_website(&mut self, v: ::std::string::String) {
-        self.website = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_website(&mut self) -> &mut ::std::string::String {
-        &mut self.website
-    }
-
-    // Take field
-    pub fn take_website(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.website, ::std::string::String::new())
-    }
 
     // string description = 6;
 
 
     pub fn get_description(&self) -> &str {
         &self.description
-    }
-    pub fn clear_description(&mut self) {
-        self.description.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_description(&mut self, v: ::std::string::String) {
-        self.description = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_description(&mut self) -> &mut ::std::string::String {
-        &mut self.description
-    }
-
-    // Take field
-    pub fn take_description(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.description, ::std::string::String::new())
     }
 
     // .Date established = 7;
@@ -212,64 +101,12 @@ impl Studio {
     pub fn get_established(&self) -> &super::common::Date {
         self.established.as_ref().unwrap_or_else(|| <super::common::Date as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_established(&mut self) {
-        self.established.clear();
-    }
-
-    pub fn has_established(&self) -> bool {
-        self.established.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_established(&mut self, v: super::common::Date) {
-        self.established = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_established(&mut self) -> &mut super::common::Date {
-        if self.established.is_none() {
-            self.established.set_default();
-        }
-        self.established.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_established(&mut self) -> super::common::Date {
-        self.established.take().unwrap_or_else(|| super::common::Date::new())
-    }
 
     // .DateTime added_on = 350;
 
 
     pub fn get_added_on(&self) -> &super::common::DateTime {
         self.added_on.as_ref().unwrap_or_else(|| <super::common::DateTime as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_added_on(&mut self) {
-        self.added_on.clear();
-    }
-
-    pub fn has_added_on(&self) -> bool {
-        self.added_on.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_added_on(&mut self, v: super::common::DateTime) {
-        self.added_on = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_added_on(&mut self) -> &mut super::common::DateTime {
-        if self.added_on.is_none() {
-            self.added_on.set_default();
-        }
-        self.added_on.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_added_on(&mut self) -> super::common::DateTime {
-        self.added_on.take().unwrap_or_else(|| super::common::DateTime::new())
     }
 }
 
@@ -422,58 +259,6 @@ impl ::protobuf::Message for Studio {
         Studio::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "id",
-                |m: &Studio| { &m.id },
-                |m: &mut Studio| { &mut m.id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name",
-                |m: &Studio| { &m.name },
-                |m: &mut Studio| { &mut m.name },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "banner",
-                |m: &Studio| { &m.banner },
-                |m: &mut Studio| { &mut m.banner },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "logo",
-                |m: &Studio| { &m.logo },
-                |m: &mut Studio| { &mut m.logo },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "website",
-                |m: &Studio| { &m.website },
-                |m: &mut Studio| { &mut m.website },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "description",
-                |m: &Studio| { &m.description },
-                |m: &mut Studio| { &mut m.description },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::Date>>(
-                "established",
-                |m: &Studio| { &m.established },
-                |m: &mut Studio| { &mut m.established },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::DateTime>>(
-                "added_on",
-                |m: &Studio| { &m.added_on },
-                |m: &mut Studio| { &mut m.added_on },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Studio>(
-                "Studio",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static Studio {
         static instance: ::protobuf::rt::LazyV2<Studio> = ::protobuf::rt::LazyV2::INIT;
         instance.get(Studio::new)
@@ -494,60 +279,8 @@ impl ::protobuf::Clear for Studio {
     }
 }
 
-impl ::std::fmt::Debug for Studio {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Studio {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
-}
-
-static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0cstudio.proto\x1a\x0ccommon.proto\"\xe4\x01\n\x06Studio\x12\x0e\n\
-    \x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
-    \x04name\x12\x16\n\x06banner\x18\x03\x20\x01(\tR\x06banner\x12\x12\n\x04\
-    logo\x18\x04\x20\x01(\tR\x04logo\x12\x18\n\x07website\x18\x05\x20\x01(\t\
-    R\x07website\x12\x20\n\x0bdescription\x18\x06\x20\x01(\tR\x0bdescription\
-    \x12'\n\x0bestablished\x18\x07\x20\x01(\x0b2\x05.DateR\x0bestablished\
-    \x12%\n\x08added_on\x18\xde\x02\x20\x01(\x0b2\t.DateTimeR\x07addedOnJ\
-    \xed\x03\n\x06\x12\x04\0\0\x0c\x02\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\t\n\
-    \x02\x03\0\x12\x03\x01\0\x16\n\n\n\x02\x04\0\x12\x04\x03\0\x0c\x01\n\n\n\
-    \x03\x04\0\x01\x12\x03\x03\x08\x0e\n\x0b\n\x04\x04\0\x02\0\x12\x03\x04\
-    \x04\x12\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03\x04\x04\n\n\x0c\n\x05\x04\0\
-    \x02\0\x01\x12\x03\x04\x0b\r\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x04\x10\
-    \x11\n\x0b\n\x04\x04\0\x02\x01\x12\x03\x05\x04\x14\n\x0c\n\x05\x04\0\x02\
-    \x01\x05\x12\x03\x05\x04\n\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03\x05\x0b\
-    \x0f\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03\x05\x12\x13\n\x0b\n\x04\x04\0\
-    \x02\x02\x12\x03\x06\x04\x16\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x03\x06\
-    \x04\n\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03\x06\x0b\x11\n\x0c\n\x05\x04\
-    \0\x02\x02\x03\x12\x03\x06\x14\x15\n\x0b\n\x04\x04\0\x02\x03\x12\x03\x07\
-    \x04\x14\n\x0c\n\x05\x04\0\x02\x03\x05\x12\x03\x07\x04\n\n\x0c\n\x05\x04\
-    \0\x02\x03\x01\x12\x03\x07\x0b\x0f\n\x0c\n\x05\x04\0\x02\x03\x03\x12\x03\
-    \x07\x12\x13\n\x0b\n\x04\x04\0\x02\x04\x12\x03\x08\x04\x17\n\x0c\n\x05\
-    \x04\0\x02\x04\x05\x12\x03\x08\x04\n\n\x0c\n\x05\x04\0\x02\x04\x01\x12\
-    \x03\x08\x0b\x12\n\x0c\n\x05\x04\0\x02\x04\x03\x12\x03\x08\x15\x16\n\x0b\
-    \n\x04\x04\0\x02\x05\x12\x03\t\x04\x1b\n\x0c\n\x05\x04\0\x02\x05\x05\x12\
-    \x03\t\x04\n\n\x0c\n\x05\x04\0\x02\x05\x01\x12\x03\t\x0b\x16\n\x0c\n\x05\
-    \x04\0\x02\x05\x03\x12\x03\t\x19\x1a\n\x0b\n\x04\x04\0\x02\x06\x12\x03\n\
-    \x04\x19\n\x0c\n\x05\x04\0\x02\x06\x06\x12\x03\n\x04\x08\n\x0c\n\x05\x04\
-    \0\x02\x06\x01\x12\x03\n\t\x14\n\x0c\n\x05\x04\0\x02\x06\x03\x12\x03\n\
-    \x17\x18\n\x0b\n\x04\x04\0\x02\x07\x12\x03\x0b\x04\x1c\n\x0c\n\x05\x04\0\
-    \x02\x07\x06\x12\x03\x0b\x04\x0c\n\x0c\n\x05\x04\0\x02\x07\x01\x12\x03\
-    \x0b\r\x15\n\x0c\n\x05\x04\0\x02\x07\x03\x12\x03\x0b\x18\x1bb\x06proto3\
-";
-
-static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;
-
-fn parse_descriptor_proto() -> ::protobuf::descriptor::FileDescriptorProto {
-    ::protobuf::parse_from_bytes(file_descriptor_proto_data).unwrap()
-}
-
-pub fn file_descriptor_proto() -> &'static ::protobuf::descriptor::FileDescriptorProto {
-    file_descriptor_proto_lazy.get(|| {
-        parse_descriptor_proto()
-    })
 }

@@ -41,13 +41,8 @@ impl From<TagMessage> for Tag {
 }
 
 impl Model<TagMessage> for Tag {
-    fn tree_name() -> &'static str {
-        "tags"
-    }
-
-    fn get_key(&self) -> String {
-        self.id.clone()
-    }
+    const TREE_NAME: &'static str = "tags";
+    fn get_key(&self) -> &str { &self.id }
 }
 
 impl From<Tag> for TagMessage {

@@ -21,6 +21,7 @@ t[0-9]
 t.*
 t[0-9].*
 sandbox.*
+sandbox/
 *.log
 *.db
 
@@ -69,3 +70,6 @@ testem.log
 .DS_Store
 Thumbs.db
 config.yaml
+
+ast
+ast.txt

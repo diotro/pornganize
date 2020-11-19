@@ -43,11 +43,8 @@ impl From<NetworkMessage> for Network {
 }
 
 impl Model<NetworkMessage> for Network {
-    fn tree_name() -> &'static str { "networks" }
-
-    fn get_key(&self) -> String {
-        self.id.clone()
-    }
+    const TREE_NAME: &'static str = "networks";
+    fn get_key(&self) -> &str { &self.id }
 }
 
 impl From<Network> for NetworkMessage {

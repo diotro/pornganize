@@ -23,7 +23,8 @@
 /// of protobuf runtime.
 // const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_18_0;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct ActorImages {
     // message fields
     pub avatar: ::std::string::String,
@@ -31,7 +32,9 @@ pub struct ActorImages {
     pub profile1: ::std::string::String,
     pub profile2: ::std::string::String,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -52,50 +55,12 @@ impl ActorImages {
     pub fn get_avatar(&self) -> &str {
         &self.avatar
     }
-    pub fn clear_avatar(&mut self) {
-        self.avatar.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_avatar(&mut self, v: ::std::string::String) {
-        self.avatar = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_avatar(&mut self) -> &mut ::std::string::String {
-        &mut self.avatar
-    }
-
-    // Take field
-    pub fn take_avatar(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.avatar, ::std::string::String::new())
-    }
 
     // string banner = 2;
 
 
     pub fn get_banner(&self) -> &str {
         &self.banner
-    }
-    pub fn clear_banner(&mut self) {
-        self.banner.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_banner(&mut self, v: ::std::string::String) {
-        self.banner = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_banner(&mut self) -> &mut ::std::string::String {
-        &mut self.banner
-    }
-
-    // Take field
-    pub fn take_banner(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.banner, ::std::string::String::new())
     }
 
     // string profile1 = 3;
@@ -104,50 +69,12 @@ impl ActorImages {
     pub fn get_profile1(&self) -> &str {
         &self.profile1
     }
-    pub fn clear_profile1(&mut self) {
-        self.profile1.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_profile1(&mut self, v: ::std::string::String) {
-        self.profile1 = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_profile1(&mut self) -> &mut ::std::string::String {
-        &mut self.profile1
-    }
-
-    // Take field
-    pub fn take_profile1(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.profile1, ::std::string::String::new())
-    }
 
     // string profile2 = 4;
 
 
     pub fn get_profile2(&self) -> &str {
         &self.profile2
-    }
-    pub fn clear_profile2(&mut self) {
-        self.profile2.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_profile2(&mut self, v: ::std::string::String) {
-        self.profile2 = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_profile2(&mut self) -> &mut ::std::string::String {
-        &mut self.profile2
-    }
-
-    // Take field
-    pub fn take_profile2(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.profile2, ::std::string::String::new())
     }
 }
 
@@ -248,38 +175,6 @@ impl ::protobuf::Message for ActorImages {
         ActorImages::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "avatar",
-                |m: &ActorImages| { &m.avatar },
-                |m: &mut ActorImages| { &mut m.avatar },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "banner",
-                |m: &ActorImages| { &m.banner },
-                |m: &mut ActorImages| { &mut m.banner },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "profile1",
-                |m: &ActorImages| { &m.profile1 },
-                |m: &mut ActorImages| { &mut m.profile1 },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "profile2",
-                |m: &ActorImages| { &m.profile2 },
-                |m: &mut ActorImages| { &mut m.profile2 },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ActorImages>(
-                "ActorImages",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static ActorImages {
         static instance: ::protobuf::rt::LazyV2<ActorImages> = ::protobuf::rt::LazyV2::INIT;
         instance.get(ActorImages::new)
@@ -296,26 +191,23 @@ impl ::protobuf::Clear for ActorImages {
     }
 }
 
-impl ::std::fmt::Debug for ActorImages {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for ActorImages {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct CareerStatus {
     // message fields
     pub started: ::protobuf::SingularPtrField<super::common::Date>,
     pub is_active: bool,
     pub retried: ::protobuf::SingularPtrField<super::common::Date>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -336,32 +228,6 @@ impl CareerStatus {
     pub fn get_started(&self) -> &super::common::Date {
         self.started.as_ref().unwrap_or_else(|| <super::common::Date as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_started(&mut self) {
-        self.started.clear();
-    }
-
-    pub fn has_started(&self) -> bool {
-        self.started.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_started(&mut self, v: super::common::Date) {
-        self.started = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_started(&mut self) -> &mut super::common::Date {
-        if self.started.is_none() {
-            self.started.set_default();
-        }
-        self.started.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_started(&mut self) -> super::common::Date {
-        self.started.take().unwrap_or_else(|| super::common::Date::new())
-    }
 
     // bool is_active = 2;
 
@@ -369,46 +235,12 @@ impl CareerStatus {
     pub fn get_is_active(&self) -> bool {
         self.is_active
     }
-    pub fn clear_is_active(&mut self) {
-        self.is_active = false;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_is_active(&mut self, v: bool) {
-        self.is_active = v;
-    }
 
     // .Date retried = 3;
 
 
     pub fn get_retried(&self) -> &super::common::Date {
         self.retried.as_ref().unwrap_or_else(|| <super::common::Date as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_retried(&mut self) {
-        self.retried.clear();
-    }
-
-    pub fn has_retried(&self) -> bool {
-        self.retried.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_retried(&mut self, v: super::common::Date) {
-        self.retried = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_retried(&mut self) -> &mut super::common::Date {
-        if self.retried.is_none() {
-            self.retried.set_default();
-        }
-        self.retried.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_retried(&mut self) -> super::common::Date {
-        self.retried.take().unwrap_or_else(|| super::common::Date::new())
     }
 }
 
@@ -520,33 +352,6 @@ impl ::protobuf::Message for CareerStatus {
         CareerStatus::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::Date>>(
-                "started",
-                |m: &CareerStatus| { &m.started },
-                |m: &mut CareerStatus| { &mut m.started },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
-                "is_active",
-                |m: &CareerStatus| { &m.is_active },
-                |m: &mut CareerStatus| { &mut m.is_active },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::Date>>(
-                "retried",
-                |m: &CareerStatus| { &m.retried },
-                |m: &mut CareerStatus| { &mut m.retried },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CareerStatus>(
-                "CareerStatus",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static CareerStatus {
         static instance: ::protobuf::rt::LazyV2<CareerStatus> = ::protobuf::rt::LazyV2::INIT;
         instance.get(CareerStatus::new)
@@ -562,19 +367,14 @@ impl ::protobuf::Clear for CareerStatus {
     }
 }
 
-impl ::std::fmt::Debug for CareerStatus {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for CareerStatus {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct Actor {
     // message fields
     pub id: ::std::string::String,
@@ -590,7 +390,9 @@ pub struct Actor {
     pub sundry: ::protobuf::SingularPtrField<super::common::SundryThings>,
     pub added_on: ::protobuf::SingularPtrField<super::common::DateTime>,
     // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -611,50 +413,12 @@ impl Actor {
     pub fn get_id(&self) -> &str {
         &self.id
     }
-    pub fn clear_id(&mut self) {
-        self.id.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_id(&mut self, v: ::std::string::String) {
-        self.id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_id(&mut self) -> &mut ::std::string::String {
-        &mut self.id
-    }
-
-    // Take field
-    pub fn take_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.id, ::std::string::String::new())
-    }
 
     // string name = 2;
 
 
     pub fn get_name(&self) -> &str {
         &self.name
-    }
-    pub fn clear_name(&mut self) {
-        self.name.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_name(&mut self, v: ::std::string::String) {
-        self.name = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_name(&mut self) -> &mut ::std::string::String {
-        &mut self.name
-    }
-
-    // Take field
-    pub fn take_name(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
     // repeated string aliases = 3;
@@ -663,48 +427,12 @@ impl Actor {
     pub fn get_aliases(&self) -> &[::std::string::String] {
         &self.aliases
     }
-    pub fn clear_aliases(&mut self) {
-        self.aliases.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_aliases(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
-        self.aliases = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_aliases(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
-        &mut self.aliases
-    }
-
-    // Take field
-    pub fn take_aliases(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
-        ::std::mem::replace(&mut self.aliases, ::protobuf::RepeatedField::new())
-    }
 
     // repeated string name_patterns = 4;
 
 
     pub fn get_name_patterns(&self) -> &[::std::string::String] {
         &self.name_patterns
-    }
-    pub fn clear_name_patterns(&mut self) {
-        self.name_patterns.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_name_patterns(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
-        self.name_patterns = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_name_patterns(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
-        &mut self.name_patterns
-    }
-
-    // Take field
-    pub fn take_name_patterns(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
-        ::std::mem::replace(&mut self.name_patterns, ::protobuf::RepeatedField::new())
     }
 
     // .Gender gender = 5;
@@ -713,57 +441,12 @@ impl Actor {
     pub fn get_gender(&self) -> &super::common::Gender {
         self.gender.as_ref().unwrap_or_else(|| <super::common::Gender as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_gender(&mut self) {
-        self.gender.clear();
-    }
-
-    pub fn has_gender(&self) -> bool {
-        self.gender.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_gender(&mut self, v: super::common::Gender) {
-        self.gender = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_gender(&mut self) -> &mut super::common::Gender {
-        if self.gender.is_none() {
-            self.gender.set_default();
-        }
-        self.gender.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_gender(&mut self) -> super::common::Gender {
-        self.gender.take().unwrap_or_else(|| super::common::Gender::new())
-    }
 
     // string nationality = 7;
 
 
     pub fn get_nationality(&self) -> &str {
         &self.nationality
-    }
-    pub fn clear_nationality(&mut self) {
-        self.nationality.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_nationality(&mut self, v: ::std::string::String) {
-        self.nationality = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_nationality(&mut self) -> &mut ::std::string::String {
-        &mut self.nationality
-    }
-
-    // Take field
-    pub fn take_nationality(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.nationality, ::std::string::String::new())
     }
 
     // .Date dob = 8;
@@ -772,57 +455,12 @@ impl Actor {
     pub fn get_dob(&self) -> &super::common::Date {
         self.dob.as_ref().unwrap_or_else(|| <super::common::Date as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_dob(&mut self) {
-        self.dob.clear();
-    }
-
-    pub fn has_dob(&self) -> bool {
-        self.dob.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_dob(&mut self, v: super::common::Date) {
-        self.dob = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_dob(&mut self) -> &mut super::common::Date {
-        if self.dob.is_none() {
-            self.dob.set_default();
-        }
-        self.dob.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_dob(&mut self) -> super::common::Date {
-        self.dob.take().unwrap_or_else(|| super::common::Date::new())
-    }
 
     // string description = 9;
 
 
     pub fn get_description(&self) -> &str {
         &self.description
-    }
-    pub fn clear_description(&mut self) {
-        self.description.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_description(&mut self, v: ::std::string::String) {
-        self.description = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_description(&mut self) -> &mut ::std::string::String {
-        &mut self.description
-    }
-
-    // Take field
-    pub fn take_description(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.description, ::std::string::String::new())
     }
 
     // .CareerStatus career_status = 10;
@@ -831,64 +469,12 @@ impl Actor {
     pub fn get_career_status(&self) -> &CareerStatus {
         self.career_status.as_ref().unwrap_or_else(|| <CareerStatus as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_career_status(&mut self) {
-        self.career_status.clear();
-    }
-
-    pub fn has_career_status(&self) -> bool {
-        self.career_status.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_career_status(&mut self, v: CareerStatus) {
-        self.career_status = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_career_status(&mut self) -> &mut CareerStatus {
-        if self.career_status.is_none() {
-            self.career_status.set_default();
-        }
-        self.career_status.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_career_status(&mut self) -> CareerStatus {
-        self.career_status.take().unwrap_or_else(|| CareerStatus::new())
-    }
 
     // .ActorImages images = 11;
 
 
     pub fn get_images(&self) -> &ActorImages {
         self.images.as_ref().unwrap_or_else(|| <ActorImages as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_images(&mut self) {
-        self.images.clear();
-    }
-
-    pub fn has_images(&self) -> bool {
-        self.images.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_images(&mut self, v: ActorImages) {
-        self.images = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_images(&mut self) -> &mut ActorImages {
-        if self.images.is_none() {
-            self.images.set_default();
-        }
-        self.images.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_images(&mut self) -> ActorImages {
-        self.images.take().unwrap_or_else(|| ActorImages::new())
     }
 
     // .SundryThings sundry = 12;
@@ -897,64 +483,12 @@ impl Actor {
     pub fn get_sundry(&self) -> &super::common::SundryThings {
         self.sundry.as_ref().unwrap_or_else(|| <super::common::SundryThings as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_sundry(&mut self) {
-        self.sundry.clear();
-    }
-
-    pub fn has_sundry(&self) -> bool {
-        self.sundry.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_sundry(&mut self, v: super::common::SundryThings) {
-        self.sundry = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_sundry(&mut self) -> &mut super::common::SundryThings {
-        if self.sundry.is_none() {
-            self.sundry.set_default();
-        }
-        self.sundry.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_sundry(&mut self) -> super::common::SundryThings {
-        self.sundry.take().unwrap_or_else(|| super::common::SundryThings::new())
-    }
 
     // .DateTime added_on = 350;
 
 
     pub fn get_added_on(&self) -> &super::common::DateTime {
         self.added_on.as_ref().unwrap_or_else(|| <super::common::DateTime as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_added_on(&mut self) {
-        self.added_on.clear();
-    }
-
-    pub fn has_added_on(&self) -> bool {
-        self.added_on.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_added_on(&mut self, v: super::common::DateTime) {
-        self.added_on = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_added_on(&mut self) -> &mut super::common::DateTime {
-        if self.added_on.is_none() {
-            self.added_on.set_default();
-        }
-        self.added_on.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_added_on(&mut self) -> super::common::DateTime {
-        self.added_on.take().unwrap_or_else(|| super::common::DateTime::new())
     }
 }
 
@@ -1175,78 +709,6 @@ impl ::protobuf::Message for Actor {
         Actor::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "id",
-                |m: &Actor| { &m.id },
-                |m: &mut Actor| { &mut m.id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name",
-                |m: &Actor| { &m.name },
-                |m: &mut Actor| { &mut m.name },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "aliases",
-                |m: &Actor| { &m.aliases },
-                |m: &mut Actor| { &mut m.aliases },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name_patterns",
-                |m: &Actor| { &m.name_patterns },
-                |m: &mut Actor| { &mut m.name_patterns },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::Gender>>(
-                "gender",
-                |m: &Actor| { &m.gender },
-                |m: &mut Actor| { &mut m.gender },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "nationality",
-                |m: &Actor| { &m.nationality },
-                |m: &mut Actor| { &mut m.nationality },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::Date>>(
-                "dob",
-                |m: &Actor| { &m.dob },
-                |m: &mut Actor| { &mut m.dob },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "description",
-                |m: &Actor| { &m.description },
-                |m: &mut Actor| { &mut m.description },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CareerStatus>>(
-                "career_status",
-                |m: &Actor| { &m.career_status },
-                |m: &mut Actor| { &mut m.career_status },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<ActorImages>>(
-                "images",
-                |m: &Actor| { &m.images },
-                |m: &mut Actor| { &mut m.images },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::SundryThings>>(
-                "sundry",
-                |m: &Actor| { &m.sundry },
-                |m: &mut Actor| { &mut m.sundry },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::common::DateTime>>(
-                "added_on",
-                |m: &Actor| { &m.added_on },
-                |m: &mut Actor| { &mut m.added_on },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Actor>(
-                "Actor",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
     fn default_instance() -> &'static Actor {
         static instance: ::protobuf::rt::LazyV2<Actor> = ::protobuf::rt::LazyV2::INIT;
         instance.get(Actor::new)
@@ -1271,105 +733,8 @@ impl ::protobuf::Clear for Actor {
     }
 }
 
-impl ::std::fmt::Debug for Actor {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Actor {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
-}
-
-static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0bactor.proto\x1a\x0ccommon.proto\"u\n\x0bActorImages\x12\x16\n\x06a\
-    vatar\x18\x01\x20\x01(\tR\x06avatar\x12\x16\n\x06banner\x18\x02\x20\x01(\
-    \tR\x06banner\x12\x1a\n\x08profile1\x18\x03\x20\x01(\tR\x08profile1\x12\
-    \x1a\n\x08profile2\x18\x04\x20\x01(\tR\x08profile2\"m\n\x0cCareerStatus\
-    \x12\x1f\n\x07started\x18\x01\x20\x01(\x0b2\x05.DateR\x07started\x12\x1b\
-    \n\tis_active\x18\x02\x20\x01(\x08R\x08isActive\x12\x1f\n\x07retried\x18\
-    \x03\x20\x01(\x0b2\x05.DateR\x07retried\"\x90\x03\n\x05Actor\x12\x0e\n\
-    \x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
-    \x04name\x12\x18\n\x07aliases\x18\x03\x20\x03(\tR\x07aliases\x12#\n\rnam\
-    e_patterns\x18\x04\x20\x03(\tR\x0cnamePatterns\x12\x1f\n\x06gender\x18\
-    \x05\x20\x01(\x0b2\x07.GenderR\x06gender\x12\x20\n\x0bnationality\x18\
-    \x07\x20\x01(\tR\x0bnationality\x12\x17\n\x03dob\x18\x08\x20\x01(\x0b2\
-    \x05.DateR\x03dob\x12\x20\n\x0bdescription\x18\t\x20\x01(\tR\x0bdescript\
-    ion\x122\n\rcareer_status\x18\n\x20\x01(\x0b2\r.CareerStatusR\x0ccareerS\
-    tatus\x12$\n\x06images\x18\x0b\x20\x01(\x0b2\x0c.ActorImagesR\x06images\
-    \x12%\n\x06sundry\x18\x0c\x20\x01(\x0b2\r.SundryThingsR\x06sundry\x12%\n\
-    \x08added_on\x18\xde\x02\x20\x01(\x0b2\t.DateTimeR\x07addedOnJ\x96\t\n\
-    \x06\x12\x04\0\0\x1e\x02\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\t\n\x02\x03\0\
-    \x12\x03\x02\0\x16\n\n\n\x02\x04\0\x12\x04\x04\0\t\x01\n\n\n\x03\x04\0\
-    \x01\x12\x03\x04\x08\x13\n\x0b\n\x04\x04\0\x02\0\x12\x03\x05\x04\x16\n\
-    \x0c\n\x05\x04\0\x02\0\x05\x12\x03\x05\x04\n\n\x0c\n\x05\x04\0\x02\0\x01\
-    \x12\x03\x05\x0b\x11\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x05\x14\x15\n\
-    \x0b\n\x04\x04\0\x02\x01\x12\x03\x06\x04\x16\n\x0c\n\x05\x04\0\x02\x01\
-    \x05\x12\x03\x06\x04\n\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03\x06\x0b\x11\
-    \n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03\x06\x14\x15\n\x0b\n\x04\x04\0\x02\
-    \x02\x12\x03\x07\x04\x18\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x03\x07\x04\n\
-    \n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03\x07\x0b\x13\n\x0c\n\x05\x04\0\x02\
-    \x02\x03\x12\x03\x07\x16\x17\n\x0b\n\x04\x04\0\x02\x03\x12\x03\x08\x04\
-    \x18\n\x0c\n\x05\x04\0\x02\x03\x05\x12\x03\x08\x04\n\n\x0c\n\x05\x04\0\
-    \x02\x03\x01\x12\x03\x08\x0b\x13\n\x0c\n\x05\x04\0\x02\x03\x03\x12\x03\
-    \x08\x16\x17\n\n\n\x02\x04\x01\x12\x04\x0b\0\x0f\x01\n\n\n\x03\x04\x01\
-    \x01\x12\x03\x0b\x08\x14\n\x0b\n\x04\x04\x01\x02\0\x12\x03\x0c\x04\x15\n\
-    \x0c\n\x05\x04\x01\x02\0\x06\x12\x03\x0c\x04\x08\n\x0c\n\x05\x04\x01\x02\
-    \0\x01\x12\x03\x0c\t\x10\n\x0c\n\x05\x04\x01\x02\0\x03\x12\x03\x0c\x13\
-    \x14\n\x0b\n\x04\x04\x01\x02\x01\x12\x03\r\x04\x17\n\x0c\n\x05\x04\x01\
-    \x02\x01\x05\x12\x03\r\x04\x08\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\x03\r\
-    \t\x12\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\x03\r\x15\x16\n\x0b\n\x04\x04\
-    \x01\x02\x02\x12\x03\x0e\x04\x15\n\x0c\n\x05\x04\x01\x02\x02\x06\x12\x03\
-    \x0e\x04\x08\n\x0c\n\x05\x04\x01\x02\x02\x01\x12\x03\x0e\t\x10\n\x0c\n\
-    \x05\x04\x01\x02\x02\x03\x12\x03\x0e\x13\x14\n\n\n\x02\x04\x02\x12\x04\
-    \x11\0\x1e\x01\n\n\n\x03\x04\x02\x01\x12\x03\x11\x08\r\n\x0b\n\x04\x04\
-    \x02\x02\0\x12\x03\x12\x04\x12\n\x0c\n\x05\x04\x02\x02\0\x05\x12\x03\x12\
-    \x04\n\n\x0c\n\x05\x04\x02\x02\0\x01\x12\x03\x12\x0b\r\n\x0c\n\x05\x04\
-    \x02\x02\0\x03\x12\x03\x12\x10\x11\n\x0b\n\x04\x04\x02\x02\x01\x12\x03\
-    \x13\x04\x14\n\x0c\n\x05\x04\x02\x02\x01\x05\x12\x03\x13\x04\n\n\x0c\n\
-    \x05\x04\x02\x02\x01\x01\x12\x03\x13\x0b\x0f\n\x0c\n\x05\x04\x02\x02\x01\
-    \x03\x12\x03\x13\x12\x13\n\x0b\n\x04\x04\x02\x02\x02\x12\x03\x14\x04\x20\
-    \n\x0c\n\x05\x04\x02\x02\x02\x04\x12\x03\x14\x04\x0c\n\x0c\n\x05\x04\x02\
-    \x02\x02\x05\x12\x03\x14\r\x13\n\x0c\n\x05\x04\x02\x02\x02\x01\x12\x03\
-    \x14\x14\x1b\n\x0c\n\x05\x04\x02\x02\x02\x03\x12\x03\x14\x1e\x1f\n\x0b\n\
-    \x04\x04\x02\x02\x03\x12\x03\x15\x04&\n\x0c\n\x05\x04\x02\x02\x03\x04\
-    \x12\x03\x15\x04\x0c\n\x0c\n\x05\x04\x02\x02\x03\x05\x12\x03\x15\r\x13\n\
-    \x0c\n\x05\x04\x02\x02\x03\x01\x12\x03\x15\x14!\n\x0c\n\x05\x04\x02\x02\
-    \x03\x03\x12\x03\x15$%\n\x0b\n\x04\x04\x02\x02\x04\x12\x03\x16\x04\x16\n\
-    \x0c\n\x05\x04\x02\x02\x04\x06\x12\x03\x16\x04\n\n\x0c\n\x05\x04\x02\x02\
-    \x04\x01\x12\x03\x16\x0b\x11\n\x0c\n\x05\x04\x02\x02\x04\x03\x12\x03\x16\
-    \x14\x15\n\x0b\n\x04\x04\x02\x02\x05\x12\x03\x17\x04\x1b\n\x0c\n\x05\x04\
-    \x02\x02\x05\x05\x12\x03\x17\x04\n\n\x0c\n\x05\x04\x02\x02\x05\x01\x12\
-    \x03\x17\x0b\x16\n\x0c\n\x05\x04\x02\x02\x05\x03\x12\x03\x17\x19\x1a\n\
-    \x0b\n\x04\x04\x02\x02\x06\x12\x03\x18\x04\x11\n\x0c\n\x05\x04\x02\x02\
-    \x06\x06\x12\x03\x18\x04\x08\n\x0c\n\x05\x04\x02\x02\x06\x01\x12\x03\x18\
-    \t\x0c\n\x0c\n\x05\x04\x02\x02\x06\x03\x12\x03\x18\x0f\x10\n\x0b\n\x04\
-    \x04\x02\x02\x07\x12\x03\x19\x04\x1b\n\x0c\n\x05\x04\x02\x02\x07\x05\x12\
-    \x03\x19\x04\n\n\x0c\n\x05\x04\x02\x02\x07\x01\x12\x03\x19\x0b\x16\n\x0c\
-    \n\x05\x04\x02\x02\x07\x03\x12\x03\x19\x19\x1a\n\x0b\n\x04\x04\x02\x02\
-    \x08\x12\x03\x1a\x04$\n\x0c\n\x05\x04\x02\x02\x08\x06\x12\x03\x1a\x04\
-    \x10\n\x0c\n\x05\x04\x02\x02\x08\x01\x12\x03\x1a\x11\x1e\n\x0c\n\x05\x04\
-    \x02\x02\x08\x03\x12\x03\x1a!#\n\x0b\n\x04\x04\x02\x02\t\x12\x03\x1b\x04\
-    \x1c\n\x0c\n\x05\x04\x02\x02\t\x06\x12\x03\x1b\x04\x0f\n\x0c\n\x05\x04\
-    \x02\x02\t\x01\x12\x03\x1b\x10\x16\n\x0c\n\x05\x04\x02\x02\t\x03\x12\x03\
-    \x1b\x19\x1b\n\x0b\n\x04\x04\x02\x02\n\x12\x03\x1c\x04\x1d\n\x0c\n\x05\
-    \x04\x02\x02\n\x06\x12\x03\x1c\x04\x10\n\x0c\n\x05\x04\x02\x02\n\x01\x12\
-    \x03\x1c\x11\x17\n\x0c\n\x05\x04\x02\x02\n\x03\x12\x03\x1c\x1a\x1c\n\x0b\
-    \n\x04\x04\x02\x02\x0b\x12\x03\x1d\x04\x1c\n\x0c\n\x05\x04\x02\x02\x0b\
-    \x06\x12\x03\x1d\x04\x0c\n\x0c\n\x05\x04\x02\x02\x0b\x01\x12\x03\x1d\r\
-    \x15\n\x0c\n\x05\x04\x02\x02\x0b\x03\x12\x03\x1d\x18\x1bb\x06proto3\
-";
-
-static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;
-
-fn parse_descriptor_proto() -> ::protobuf::descriptor::FileDescriptorProto {
-    ::protobuf::parse_from_bytes(file_descriptor_proto_data).unwrap()
-}
-
-pub fn file_descriptor_proto() -> &'static ::protobuf::descriptor::FileDescriptorProto {
-    file_descriptor_proto_lazy.get(|| {
-        parse_descriptor_proto()
-    })
 }
