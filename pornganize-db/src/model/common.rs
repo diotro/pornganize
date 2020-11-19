@@ -157,6 +157,21 @@ impl From<SingularPtrField<TimeMessage>> for Time  {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+pub enum Gender {
+    Any = 0,
+    Actor = 1,
+    Network = 2,
+    Site = 3,
+    Studio = 4,
+    Video = 5,
+    Artist = 6,
+    Character = 7,
+    GameDeveloper = 8,
+    Game = 9,
+    GameStudio = 10,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub enum ApplicableTo {
     Any = 0,
     Actor = 1,
@@ -282,7 +297,7 @@ pub fn from_vec<M, T: From<M>>(field: Vec<M>) -> Vec<T> {
 }
 
 pub fn to_repeated_field<M: From<T>, T>(from: Vec<T>) -> RepeatedField<M> {
-    RepeatedField::from_iter(from.into_iter().map(M::from).into_iter())
+    RepeatedField::from_iter(from.into_iter().map(M::from))
 }
 
 pub fn from_repeated_field<M, T: From<M>>(field: RepeatedField<M>) -> Vec<T> {

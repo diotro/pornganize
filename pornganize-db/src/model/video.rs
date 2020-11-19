@@ -1,6 +1,14 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
+pub struct Stream {
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Metadata {
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Marker {
     pub id: u32,
     pub label: String,

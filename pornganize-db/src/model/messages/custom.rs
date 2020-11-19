@@ -28,7 +28,7 @@ pub struct CustomField {
     // message fields
     pub id: ::std::string::String,
     pub name: ::std::string::String,
-    pub descriptin: ::std::string::String,
+    pub description: ::std::string::String,
     pub applicable_to: ::std::vec::Vec<super::common::ApplicableTo>,
     pub added_on: ::protobuf::SingularPtrField<super::common::DateTime>,
     // special fields
@@ -99,30 +99,30 @@ impl CustomField {
         ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
-    // string descriptin = 3;
+    // string description = 3;
 
 
-    pub fn get_descriptin(&self) -> &str {
-        &self.descriptin
+    pub fn get_description(&self) -> &str {
+        &self.description
     }
-    pub fn clear_descriptin(&mut self) {
-        self.descriptin.clear();
+    pub fn clear_description(&mut self) {
+        self.description.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_descriptin(&mut self, v: ::std::string::String) {
-        self.descriptin = v;
+    pub fn set_description(&mut self, v: ::std::string::String) {
+        self.description = v;
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_descriptin(&mut self) -> &mut ::std::string::String {
-        &mut self.descriptin
+    pub fn mut_description(&mut self) -> &mut ::std::string::String {
+        &mut self.description
     }
 
     // Take field
-    pub fn take_descriptin(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.descriptin, ::std::string::String::new())
+    pub fn take_description(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.description, ::std::string::String::new())
     }
 
     // repeated .ApplicableTo applicable_to = 4;
@@ -205,7 +205,7 @@ impl ::protobuf::Message for CustomField {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
                 },
                 3 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.descriptin)?;
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.description)?;
                 },
                 4 => {
                     ::protobuf::rt::read_repeated_enum_with_unknown_fields_into(wire_type, is, &mut self.applicable_to, 4, &mut self.unknown_fields)?
@@ -231,8 +231,8 @@ impl ::protobuf::Message for CustomField {
         if !self.name.is_empty() {
             my_size += ::protobuf::rt::string_size(2, &self.name);
         }
-        if !self.descriptin.is_empty() {
-            my_size += ::protobuf::rt::string_size(3, &self.descriptin);
+        if !self.description.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.description);
         }
         for value in &self.applicable_to {
             my_size += ::protobuf::rt::enum_size(4, *value);
@@ -253,8 +253,8 @@ impl ::protobuf::Message for CustomField {
         if !self.name.is_empty() {
             os.write_string(2, &self.name)?;
         }
-        if !self.descriptin.is_empty() {
-            os.write_string(3, &self.descriptin)?;
+        if !self.description.is_empty() {
+            os.write_string(3, &self.description)?;
         }
         for v in &self.applicable_to {
             os.write_enum(4, ::protobuf::ProtobufEnum::value(v))?;
@@ -313,9 +313,9 @@ impl ::protobuf::Message for CustomField {
                 |m: &mut CustomField| { &mut m.name },
             ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "descriptin",
-                |m: &CustomField| { &m.descriptin },
-                |m: &mut CustomField| { &mut m.descriptin },
+                "description",
+                |m: &CustomField| { &m.description },
+                |m: &mut CustomField| { &mut m.description },
             ));
             fields.push(::protobuf::reflect::accessor::make_vec_accessor::<_, ::protobuf::types::ProtobufTypeEnum<super::common::ApplicableTo>>(
                 "applicable_to",
@@ -345,7 +345,7 @@ impl ::protobuf::Clear for CustomField {
     fn clear(&mut self) {
         self.id.clear();
         self.name.clear();
-        self.descriptin.clear();
+        self.description.clear();
         self.applicable_to.clear();
         self.added_on.clear();
         self.unknown_fields.clear();
@@ -365,12 +365,12 @@ impl ::protobuf::reflect::ProtobufValue for CustomField {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0ccustom.proto\x1a\x0ccommon.proto\"\xac\x01\n\x0bCustomField\x12\
+    \n\x0ccustom.proto\x1a\x0ccommon.proto\"\xae\x01\n\x0bCustomField\x12\
     \x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01\
-    (\tR\x04name\x12\x1e\n\ndescriptin\x18\x03\x20\x01(\tR\ndescriptin\x122\
-    \n\rapplicable_to\x18\x04\x20\x03(\x0e2\r.ApplicableToR\x0capplicableTo\
-    \x12%\n\x08added_on\x18\xde\x02\x20\x01(\x0b2\t.DateTimeR\x07addedOnJ\
-    \xd6\x02\n\x06\x12\x04\0\0\n\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\t\n\
+    (\tR\x04name\x12\x20\n\x0bdescription\x18\x03\x20\x01(\tR\x0bdescription\
+    \x122\n\rapplicable_to\x18\x04\x20\x03(\x0e2\r.ApplicableToR\x0capplicab\
+    leTo\x12%\n\x08added_on\x18\xde\x02\x20\x01(\x0b2\t.DateTimeR\x07addedOn\
+    J\xd6\x02\n\x06\x12\x04\0\0\n\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\t\n\
     \x02\x03\0\x12\x03\x02\0\x16\n\n\n\x02\x04\0\x12\x04\x04\0\n\x01\n\n\n\
     \x03\x04\0\x01\x12\x03\x04\x08\x13\n\x0b\n\x04\x04\0\x02\0\x12\x03\x05\
     \x04\x12\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03\x05\x04\n\n\x0c\n\x05\x04\0\
@@ -378,9 +378,9 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x11\n\x0b\n\x04\x04\0\x02\x01\x12\x03\x06\x04\x14\n\x0c\n\x05\x04\0\x02\
     \x01\x05\x12\x03\x06\x04\n\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03\x06\x0b\
     \x0f\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03\x06\x12\x13\n\x0b\n\x04\x04\0\
-    \x02\x02\x12\x03\x07\x04\x1a\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x03\x07\
-    \x04\n\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03\x07\x0b\x15\n\x0c\n\x05\x04\
-    \0\x02\x02\x03\x12\x03\x07\x18\x19\n\x0b\n\x04\x04\0\x02\x03\x12\x03\x08\
+    \x02\x02\x12\x03\x07\x04\x1b\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x03\x07\
+    \x04\n\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03\x07\x0b\x16\n\x0c\n\x05\x04\
+    \0\x02\x02\x03\x12\x03\x07\x19\x1a\n\x0b\n\x04\x04\0\x02\x03\x12\x03\x08\
     \x04,\n\x0c\n\x05\x04\0\x02\x03\x04\x12\x03\x08\x04\x0c\n\x0c\n\x05\x04\
     \0\x02\x03\x06\x12\x03\x08\r\x19\n\x0c\n\x05\x04\0\x02\x03\x01\x12\x03\
     \x08\x1a'\n\x0c\n\x05\x04\0\x02\x03\x03\x12\x03\x08*+\n\x0b\n\x04\x04\0\
