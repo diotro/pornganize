@@ -23,38 +23,37 @@ pub struct Tag {
     pub added_on: DateTime,
 }
 
-impl From<TagMessage> for Tag {
-    fn from(msg: TagMessage) -> Self {
-        let added_on: DateTime = match msg.added_on.into_option() {
-            Some(dt) => DateTime::from(dt),
-            None => DateTime::now(),
-        };
+impl From<&TagMessage> for Tag {
+    fn from(msg: &TagMessage) -> Self {
         Self {
-            id: msg.id,
-            name: msg.name,
-            applicable_to: ProtobufEnumVec::from_vec(msg.applicable_to).into(),
-            also_adds: msg.also_adds.into_vec(),
-            aliases: msg.aliases.into_vec(),
-            added_on,
+            id: msg.id.clone(),
+            name: msg.name.clone(),
+            applicable_to: ProtobufEnumVec::from_vec(&msg.applicable_to).into(),
+            also_adds: msg.also_adds.iter().map(|x| {x.clone()}).collect(),
+            aliases: msg.aliases.iter().map(|x| {x.clone()}).collect(),
+            added_on: match msg.added_on.as_ref() {
+                Some(dt) => DateTime::from(dt),
+                None => DateTime::now(),
+            },
         }
     }
 }
 
-impl Model<TagMessage> for Tag {
-    const TREE_NAME: &'static str = "tags";
-    fn get_key(&self) -> &str { &self.id }
-}
-
-impl From<Tag> for TagMessage {
-    fn from(model: Tag) -> Self {
+impl From<&Tag> for TagMessage {
+    fn from(model: &Tag) -> Self {
         Self {
-            id: model.id,
-            name: model.name,
-            applicable_to: to_vec(model.applicable_to),
-            also_adds: to_repeated_field(model.also_adds),
-            aliases: to_repeated_field(model.aliases),
-            added_on: model.added_on.into(),
+            id: model.id.clone(),
+            name: model.name.clone(),
+            applicable_to: to_vec(&model.applicable_to),
+            also_adds: to_repeated_field(&model.also_adds),
+            aliases: to_repeated_field(&model.aliases),
+            added_on: (&model.added_on).into(),
             ..TagMessage::default()
         }
     }
+}
+
+impl Model<'_, TagMessage> for Tag {
+    const TREE_NAME: &'static str = "tags";
+    fn get_key(&self) -> &str { &self.id }
 }

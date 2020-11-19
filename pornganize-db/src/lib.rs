@@ -5,11 +5,6 @@
     trivial_casts,
     unused_import_braces,
 )]
-extern crate log;
-extern crate pornganize;
-extern crate serde;
-extern crate protobuf;
-extern crate chrono;
 
 pub mod model;
 

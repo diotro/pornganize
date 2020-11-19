@@ -20,52 +20,55 @@ pub struct Site {
     added_on: DateTime,
 }
 
-impl From<SiteMessage> for Site {
-    fn from(msg: SiteMessage) -> Self {
-        let added_on: DateTime = match msg.added_on.into_option() {
-            Some(dt) => DateTime::from(dt),
-            None => DateTime::now(),
-        };
+impl From<&SiteMessage> for Site {
+    fn from(msg: &SiteMessage) -> Self {
         Self {
-            id: msg.id,
-            name: msg.name,
-            banner: msg.banner,
-            logo: msg.logo,
-            url: msg.url,
-            description: msg.description,
-            studio_id: if msg.studio_id.is_empty() { None } else { Some(msg.studio_id) },
-            network_id: if msg.network_id.is_empty() { None } else { Some(msg.network_id) },
-            established: match msg.established.into_option() {
+            id: msg.id.clone(),
+            name: msg.name.clone(),
+            banner: msg.banner.clone(),
+            logo: msg.logo.clone(),
+            url: msg.url.clone(),
+            description: msg.description.clone(),
+            studio_id:
+                if msg.studio_id.is_empty() { None }
+                else { Some(msg.studio_id.clone()) },
+            network_id:
+                if msg.network_id.is_empty() { None }
+                else { Some(msg.network_id.clone()) },
+            established: match msg.established.as_ref() {
                 Some(dt) => Some(DateTime::from(dt)),
                 None => None,
             },
-            added_on,
+            added_on: match msg.added_on.as_ref() {
+                Some(dt) => DateTime::from(dt),
+                None => DateTime::now(),
+            },
         }
     }
 }
 
-impl Model<SiteMessage> for Site {
-    const TREE_NAME: &'static str = "sites";
-    fn get_key(&self) -> &str { &self.id }
-}
-
-impl From<Site> for SiteMessage {
-    fn from(site: Site) -> Self {
+impl From<&Site> for SiteMessage {
+    fn from(site: &Site) -> Self {
         Self {
-            id: site.id,
-            name: site.name,
-            banner: site.banner,
-            logo: site.logo,
-            url: site.url,
-            description: site.description,
-            studio_id: site.studio_id.unwrap_or(String::from("")),
-            network_id: site.network_id.unwrap_or(String::from("")),
-            established: SingularPtrField::from_option(match site.established {
+            id: site.id.clone(),
+            name: site.name.clone(),
+            banner: site.banner.clone(),
+            logo: site.logo.clone(),
+            url: site.url.clone(),
+            description: site.description.clone(),
+            studio_id: String::from(site.studio_id.as_deref().unwrap_or("")),
+            network_id: String::from(site.network_id.as_deref().unwrap_or("")),
+            established: SingularPtrField::from_option(match site.established.as_ref() {
                 Some(dt) => Some(dt.into()),
                 None => None
             }),
-            added_on: site.added_on.into(),
+            added_on: (&site.added_on).into(),
             .. Self::default()
         }
     }
+}
+
+impl Model<'_, SiteMessage> for Site {
+    const TREE_NAME: &'static str = "sites";
+    fn get_key(&self) -> &str { &self.id }
 }

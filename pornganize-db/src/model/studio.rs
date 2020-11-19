@@ -18,48 +18,47 @@ pub struct Studio {
     added_on: DateTime,
 }
 
-impl From<StudioMessage> for Studio {
-    fn from(msg: StudioMessage) -> Self {
-        let added_on: DateTime = match msg.added_on.into_option() {
-            Some(dt) => DateTime::from(dt),
-            None => DateTime::now(),
-        };
+impl From<&StudioMessage> for Studio {
+    fn from(msg: &StudioMessage) -> Self {
         Self {
-            id: msg.id,
-            name: msg.name,
-            banner: msg.banner,
-            logo: msg.logo,
-            website: msg.website,
-            description: msg.description,
-            established: match msg.established.into_option() {
+            id: msg.id.clone(),
+            name: msg.name.clone(),
+            banner: msg.banner.clone(),
+            logo: msg.logo.clone(),
+            website: msg.website.clone(),
+            description: msg.description.clone(),
+            established: match msg.established.as_ref() {
                 Some(dt) => Some(DateTime::from(dt)),
                 None => None,
             },
-            added_on,
+            added_on: match msg.added_on.as_ref() {
+                Some(dt) => DateTime::from(dt),
+                None => DateTime::now(),
+            },
         }
     }
 }
 
-impl Model<StudioMessage> for Studio {
-    const TREE_NAME: &'static str = "studios";
-    fn get_key(&self) -> &str { &self.id }
-}
-
-impl From<Studio> for StudioMessage {
-    fn from(studio: Studio) -> Self {
+impl From<&Studio> for StudioMessage {
+    fn from(studio: &Studio) -> Self {
         Self {
-            id: studio.id,
-            name: studio.name,
-            banner: studio.banner,
-            logo: studio.logo,
-            website: studio.website,
-            description: studio.description,
-            established: SingularPtrField::from_option(match studio.established {
+            id: studio.id.clone(),
+            name: studio.name.clone(),
+            banner: studio.banner.clone(),
+            logo: studio.logo.clone(),
+            website: studio.website.clone(),
+            description: studio.description.clone(),
+            established: SingularPtrField::from_option(match studio.established.as_ref() {
                 Some(dt) => Some(dt.into()),
                 None => None
             }),
-            added_on: studio.added_on.into(),
+            added_on: (&studio.added_on).into(),
             .. Self::default()
         }
     }
+}
+
+impl Model<'_, StudioMessage> for Studio {
+    const TREE_NAME: &'static str = "studios";
+    fn get_key(&self) -> &str { &self.id }
 }

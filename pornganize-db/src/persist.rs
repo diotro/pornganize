@@ -1,1 +1,3 @@
-use pornganize::config::{Config, LibraryCfg};
+use pornganize::config::{Config, DatabaseCfg};
+
+
