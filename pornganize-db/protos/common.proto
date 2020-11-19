@@ -1,0 +1,92 @@
+syntax = "proto3";
+//Common types
+
+enum Rating {
+    NONE = 0;
+    VERY_LOW = 1;
+    LOW = 2;
+    INDIFFERENT = 3;
+    HIGH = 4;
+    VERY_HIGH = 5;
+}
+
+enum Ownership {
+    NOT_SPECIFIED = 0;
+    OWN = 1;
+    NO_LONGER_OWN = 2;
+    WANT = 3;
+    DO_NOT_WANT = 4;
+    INFORMATIONAL = 5;
+}
+
+message CustomFieldValue {
+    string field_id = 1;
+    oneof value {
+        string string_value = 2;
+        sint32 int_value = 3;
+        double float_value = 4;
+        bool bool_value = 5;
+    }
+}
+
+message SundryThings {
+    bool favorite = 1;
+    Rating rating = 2;
+    repeated CustomFieldValue custom_fields = 3;
+    repeated string tag_ids = 4;
+}
+
+message Gender {
+    enum GenderBasic {
+        UNDEFINED = 0;
+        MALE = 1;
+        FEMALE = 2;
+        TRANS_M2F = 3;
+        TRANS_F2M = 4;
+        NON_BINARY = 5;
+        FLUID = 6;
+        GENDER_QUEER = 7;
+        OTHER = 8;
+    }
+    GenderBasic gender = 1;
+    string gender_other = 2;
+}
+
+enum ApplicableTo {
+    ANY = 0;
+    //Video stuff
+    ACTOR = 1;
+    NETWORK = 2;
+    SITE = 3;
+    STUDIO = 4;
+    VIDEO = 5;
+    // Hentai stuff
+    ARTIST = 6;
+    CHARACTER = 7;
+    GAME_DEVELOPER = 8;
+    GAME = 9;
+    GAME_STUDIO = 10;
+}
+
+message Date {
+    uint32 month = 1;
+    uint32 day = 2;
+    int32 year = 3;
+}
+
+message Time {
+    uint32 hour = 1;
+    uint32 minute = 2;
+    uint32 second = 3;
+    uint32 millisecond = 4;
+}
+
+message DateTime {
+    uint32 month = 1;
+    uint32 day = 2;
+    int32 year = 3;
+    uint32 hour = 4;
+    uint32 minute = 5;
+    uint32 second = 6;
+    uint32 millisecond = 7;
+}

@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+import "common.proto";
+
+message Marker {
+    uint64 time = 1;
+    string title = 2;
+    string description = 3;
+    repeated string tag_ids = 4;
+    repeated CustomFieldValue custom_fields = 5;
+}
+
+message StreamInfo {
+    string codec = 1;
+    uint64 sample_rate = 2;
+}
+
+message VideoMetadata {
+    message Resolution {
+        uint32 height = 1;
+        uint32 width = 2;
+    }
+    Resolution resolution = 1;
+    StreamInfo audio = 2;
+    StreamInfo video = 3;
+    float frame_rate = 4;
+    uint64 file_size = 5;
+}
+
+message Video {
+    string id = 1;
+    string path = 2;
+    VideoMetadata metadata = 3;
+    oneof source {
+        string studio_id = 4;
+        string network_id = 5;
+        string site_id = 6;
+    };
+    Date released = 7;
+    string language = 8;
+    repeated string actor_ids = 9;
+    repeated string tag_ids = 10;
+    repeated CustomFieldValue custom_fields = 11;
+    repeated Marker markers = 12;
+    uint64 duration = 13;
+    DateTime added_on = 350;
+}

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+import "common.proto";
+
+message CustomField {
+    string id = 1;
+    string name = 2;
+    string descriptin = 3;
+    repeated ApplicableTo applicable_to = 4;
+    DateTime added_on = 350;
+}

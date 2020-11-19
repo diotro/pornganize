@@ -1,8 +1,10 @@
 {
     "cSpell.words": [
         "Daemonization",
+        "Datelike",
         "Modelable",
         "Sqlite",
+        "Timelike",
         "actix",
         "cpus",
         "dotenv",

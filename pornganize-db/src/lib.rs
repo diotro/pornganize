@@ -8,8 +8,8 @@
 extern crate log;
 extern crate pornganize;
 extern crate serde;
-#[macro_use]
-extern crate sqlx;
+extern crate protobuf;
+extern crate chrono;
 
 pub mod model;
 

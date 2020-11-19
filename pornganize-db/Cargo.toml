@@ -9,10 +9,11 @@ workspace = '..'
 
 [dependencies]
 pornganize-core = {path="../pornganize-core"}
-pornganize-macros = { path="pornganize-macros" }
+pornganize-macros = { path="../pornganize-macros" }
 log = "0.4.11"
 serde = "1.0.117"
 serde_derive = "1.0.117"
-sqlx = { version = "0.4.1", features = ["all-databases", "default", "time", "runtime-async-std-rustls"] }
 sled = { version = "0.34.6", features = ["compression", "event_log"] }
 tantivy = { version = "0.13.2", features = ["lz4-compression"] }
+protobuf = { version = "2.18.0", features = ["with-serde"] }
+chrono = { version = "0.4.19", features = ["serde"] }
