@@ -23,14 +23,14 @@ pub struct Tag {
     pub added_on: DateTime,
 }
 
-impl From<&TagMessage> for Tag {
-    fn from(msg: &TagMessage) -> Self {
-        Self {
-            id: msg.id.clone(),
-            name: msg.name.clone(),
+impl<'a> From<TagMessage> for &'a Tag {
+    fn from(msg: TagMessage) -> Self {
+        &&Tag {
+            id: msg.id,
+            name: msg.name,
             applicable_to: ProtobufEnumVec::from_vec(&msg.applicable_to).into(),
-            also_adds: msg.also_adds.iter().map(|x| {x.clone()}).collect(),
-            aliases: msg.aliases.iter().map(|x| {x.clone()}).collect(),
+            also_adds: msg.also_adds.into_iter().collect(),
+            aliases: msg.aliases.into_iter().collect(),
             added_on: match msg.added_on.as_ref() {
                 Some(dt) => DateTime::from(dt),
                 None => DateTime::now(),
@@ -42,8 +42,8 @@ impl From<&TagMessage> for Tag {
 impl From<&Tag> for TagMessage {
     fn from(model: &Tag) -> Self {
         Self {
-            id: model.id.clone(),
-            name: model.name.clone(),
+            id: model.id,
+            name: model.name,
             applicable_to: to_vec(&model.applicable_to),
             also_adds: to_repeated_field(&model.also_adds),
             aliases: to_repeated_field(&model.aliases),
@@ -53,7 +53,11 @@ impl From<&Tag> for TagMessage {
     }
 }
 
-impl Model<'_, TagMessage> for Tag {
-    const TREE_NAME: &'static str = "tags";
-    fn get_key(&self) -> &str { &self.id }
+pub struct TagModeler;
+
+impl<'a> Modeler<'a> for TagModeler {
+    type Model = Tag;
+    type Message = TagMessage;
+    const TREE_NAME: &'static str = "custom-fields";
+    fn get_key(model: &'a Self::Model) -> &'a str { &model.id }
 }

@@ -5,18 +5,14 @@
     trivial_casts,
     unused_import_braces,
 )]
-
-use proc_macro2::TokenStream;
-use quote::quote;
+#[macro_use]
+extern crate darling;
+mod protobuf_model;
+mod util;
 use syn::{parse_macro_input, DeriveInput};
 
-#[proc_macro_derive(Model, attributes(model))]
-pub fn model_derive(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    let ast = parse_macro_input!(input as DeriveInput);
-    impl_model_derive(&ast).into()
-}
-
-fn impl_model_derive(ast: &syn::DeriveInput) -> TokenStream {
-    dbg!(ast);
-    TokenStream::new()
+#[proc_macro_derive(ProtobufModel, attributes(protobuf_model))]
+pub fn protobuf_model_derive(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    let st = parse_macro_input!(input as DeriveInput);
+    protobuf_model::impl_protobuf_model_derive(&st).into()
 }

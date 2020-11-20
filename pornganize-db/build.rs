@@ -4,6 +4,8 @@ use protobuf_codegen_pure::{
 };
 use walkdir::{WalkDir, DirEntry};
 
+const DATABASE_VERSION: &str = "0.0.1";
+
 fn process_proto_file(entry: &DirEntry) -> Option<String> {
     let path = String::from(entry.path().to_str().unwrap());
     if entry.file_type().is_dir() {
@@ -14,11 +16,7 @@ fn process_proto_file(entry: &DirEntry) -> Option<String> {
     }
 }
 
-fn main() {
-    let protos: Vec<String> = WalkDir::new("protos")
-        .into_iter()
-        .filter_map(|x| {process_proto_file(&x.unwrap())})
-        .collect();
+fn build_protos(protos: &[String]) {
     ProtobufCodegen::new()
         .out_dir("src/model/messages")
         .include("protos")
@@ -33,4 +31,13 @@ fn main() {
         })
         .run()
         .unwrap();
+}
+
+fn main() {
+    println!("cargo:rustc-env=PORNGANIZE_DB_VERSION={}", DATABASE_VERSION);
+    let protos: Vec<String> = WalkDir::new("protos")
+        .into_iter()
+        .filter_map(|x| {process_proto_file(&x.unwrap())})
+        .collect();
+    build_protos(&protos);
 }

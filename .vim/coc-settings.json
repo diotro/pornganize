@@ -10,6 +10,7 @@
         "dotenv",
         "idents",
         "pornganize",
+        "prost",
         "shiftwidth",
         "sqlx",
         "structopt",

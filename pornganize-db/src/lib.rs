@@ -7,6 +7,8 @@
 )]
 
 pub mod model;
+mod persist;
+pub use persist::Database;
 
 #[cfg(test)]
 mod tests {

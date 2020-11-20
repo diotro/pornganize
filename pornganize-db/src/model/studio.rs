@@ -18,15 +18,15 @@ pub struct Studio {
     added_on: DateTime,
 }
 
-impl From<&StudioMessage> for Studio {
-    fn from(msg: &StudioMessage) -> Self {
-        Self {
-            id: msg.id.clone(),
-            name: msg.name.clone(),
-            banner: msg.banner.clone(),
-            logo: msg.logo.clone(),
-            website: msg.website.clone(),
-            description: msg.description.clone(),
+impl<'a> From<StudioMessage> for &'a Studio {
+    fn from(msg: StudioMessage) -> Self {
+        &&Studio {
+            id: msg.id,
+            name: msg.name,
+            banner: msg.banner,
+            logo: msg.logo,
+            website: msg.website,
+            description: msg.description,
             established: match msg.established.as_ref() {
                 Some(dt) => Some(DateTime::from(dt)),
                 None => None,
@@ -42,12 +42,12 @@ impl From<&StudioMessage> for Studio {
 impl From<&Studio> for StudioMessage {
     fn from(studio: &Studio) -> Self {
         Self {
-            id: studio.id.clone(),
-            name: studio.name.clone(),
-            banner: studio.banner.clone(),
-            logo: studio.logo.clone(),
-            website: studio.website.clone(),
-            description: studio.description.clone(),
+            id: studio.id,
+            name: studio.name,
+            banner: studio.banner,
+            logo: studio.logo,
+            website: studio.website,
+            description: studio.description,
             established: SingularPtrField::from_option(match studio.established.as_ref() {
                 Some(dt) => Some(dt.into()),
                 None => None
@@ -58,7 +58,12 @@ impl From<&Studio> for StudioMessage {
     }
 }
 
-impl Model<'_, StudioMessage> for Studio {
+
+pub struct StudioModeler;
+
+impl<'a> Modeler<'a> for StudioModeler {
+    type Model = Studio;
+    type Message = StudioMessage;
     const TREE_NAME: &'static str = "studios";
-    fn get_key(&self) -> &str { &self.id }
+    fn get_key(model: &'a Self::Model) -> &'a str { &model.id }
 }

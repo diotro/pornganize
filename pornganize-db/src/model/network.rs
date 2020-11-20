@@ -20,9 +20,9 @@ pub struct Network {
     added_on: DateTime,
 }
 
-impl From<&NetworkMessage> for Network {
-    fn from(msg: &NetworkMessage) -> Self {
-        Self {
+impl<'a> From<NetworkMessage> for &'a Network {
+    fn from(msg: NetworkMessage) -> Self {
+        &&Network {
             id: msg.id.clone(),
             name: msg.name.clone(),
             banner: msg.banner.clone(),
@@ -64,7 +64,11 @@ impl From<&Network> for NetworkMessage {
     }
 }
 
-impl Model<'_, NetworkMessage> for Network {
-    const TREE_NAME: &'static str = "networks";
-    fn get_key(&self) -> &str { &self.id }
+pub struct NetworkModeler;
+
+impl<'a> Modeler<'a> for NetworkModeler {
+    type Model = Network;
+    type Message = NetworkMessage;
+    const TREE_NAME: &'static str = "custom-fields";
+    fn get_key(model: &'a Self::Model) -> &'a str { &model.id }
 }

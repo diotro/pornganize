@@ -20,21 +20,21 @@ pub struct Site {
     added_on: DateTime,
 }
 
-impl From<&SiteMessage> for Site {
-    fn from(msg: &SiteMessage) -> Self {
-        Self {
-            id: msg.id.clone(),
-            name: msg.name.clone(),
-            banner: msg.banner.clone(),
-            logo: msg.logo.clone(),
-            url: msg.url.clone(),
-            description: msg.description.clone(),
+impl<'a> From<SiteMessage> for &'a Site {
+    fn from(msg: SiteMessage) -> Self {
+        &&Site {
+            id: msg.id,
+            name: msg.name,
+            banner: msg.banner,
+            logo: msg.logo,
+            url: msg.url,
+            description: msg.description,
             studio_id:
                 if msg.studio_id.is_empty() { None }
-                else { Some(msg.studio_id.clone()) },
+                else { Some(msg.studio_id) },
             network_id:
                 if msg.network_id.is_empty() { None }
-                else { Some(msg.network_id.clone()) },
+                else { Some(msg.network_id) },
             established: match msg.established.as_ref() {
                 Some(dt) => Some(DateTime::from(dt)),
                 None => None,
@@ -50,12 +50,12 @@ impl From<&SiteMessage> for Site {
 impl From<&Site> for SiteMessage {
     fn from(site: &Site) -> Self {
         Self {
-            id: site.id.clone(),
-            name: site.name.clone(),
-            banner: site.banner.clone(),
-            logo: site.logo.clone(),
-            url: site.url.clone(),
-            description: site.description.clone(),
+            id: site.id,
+            name: site.name,
+            banner: site.banner,
+            logo: site.logo,
+            url: site.url,
+            description: site.description,
             studio_id: String::from(site.studio_id.as_deref().unwrap_or("")),
             network_id: String::from(site.network_id.as_deref().unwrap_or("")),
             established: SingularPtrField::from_option(match site.established.as_ref() {
@@ -68,7 +68,11 @@ impl From<&Site> for SiteMessage {
     }
 }
 
-impl Model<'_, SiteMessage> for Site {
-    const TREE_NAME: &'static str = "sites";
-    fn get_key(&self) -> &str { &self.id }
+pub struct SiteModeler;
+
+impl<'a> Modeler<'a> for SiteModeler {
+    type Model = Site;
+    type Message = SiteMessage;
+    const TREE_NAME: &'static str = "custom-fields";
+    fn get_key(model: &'a Self::Model) -> &'a str { &model.id }
 }
