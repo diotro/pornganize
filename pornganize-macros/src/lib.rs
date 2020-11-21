@@ -3,7 +3,7 @@
     deprecated_in_future,
     keyword_idents,
     trivial_casts,
-    unused_import_braces,
+    unused_import_braces
 )]
 #[macro_use]
 extern crate darling;
