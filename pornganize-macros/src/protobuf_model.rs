@@ -173,6 +173,7 @@ fn process_fields(
     })
 }
 
+#[allow(clippy::or_fun_call)]
 fn get_model_trait_path() -> TokenStream {
     let crate_name = env::var("CARGO_CRATE_NAME").unwrap_or(String::from(""));
     if crate_name == "pornganize_db" || crate_name == "pornganize-db" {
@@ -218,7 +219,7 @@ pub fn impl_protobuf_model_derive(parsed: &DeriveInput) -> TokenStream {
             fn from(#model_name: #model) -> Self {
                 Self {
                     #model2msg
-                    ..#message::defaults()
+                    ..#message::default()
                 }
             }
         }
