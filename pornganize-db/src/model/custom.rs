@@ -1,12 +1,12 @@
 use serde::{Deserialize, Serialize};
-use protobuf::{SingularPtrField, parse_from_bytes, Message};
+use protobuf::{parse_from_bytes, Message};
 use super::{
-    Modeler, Model,
+    Model,
     common::{
         DateTime,
         ApplicableTo,
         ProtobufEnumVec,
-        to_vec,
+        convert_vec,
     },
     messages::custom::CustomField as CustomFieldMessage,
 };
@@ -23,15 +23,12 @@ pub struct CustomField {
 
 impl From<CustomFieldMessage> for CustomField {
     fn from(msg: CustomFieldMessage) -> Self {
-        CustomField {
+        Self {
             id: msg.id,
             name: msg.name,
-            applicable_to: ProtobufEnumVec::from_vec(&msg.applicable_to).into(),
+            applicable_to: convert_vec(msg.applicable_to),
             description: msg.description,
-            added_on: match msg.added_on.as_ref() {
-                Some(dt) => DateTime::from(dt),
-                None => DateTime::now(),
-            },
+            added_on: DateTime::or_now(msg.added_on),
         }
     }
 }
@@ -41,9 +38,9 @@ impl From<CustomField> for CustomFieldMessage {
         Self {
             id: model.id,
             name: model.name,
-            applicable_to: to_vec(&model.applicable_to),
+            applicable_to: convert_vec(model.applicable_to),
             description: model.description,
-            added_on: (&model.added_on).into(),
+            added_on: model.added_on.into(),
             ..CustomFieldMessage::default()
         }
     }

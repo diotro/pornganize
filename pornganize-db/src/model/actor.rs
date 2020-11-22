@@ -1,32 +1,37 @@
 use serde::{Deserialize, Serialize};
 use super::{
-    Model,
     DateTime,
-    messages::studio::Studio as StudioMessage,
+    messages::actor::Actor as ActorMessage,
 };
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Images {
-    avatar: Option<String>,
-    banner: Option<String>,
-    profile1: Option<String>,
-    profile2: Option<String>,
+    pub avatar: Option<String>,
+    pub banner: Option<String>,
+    pub profile1: Option<String>,
+    pub profile2: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CareerStatus {
-    started: Option<DateTime>,
-    is_active: bool,
-    retired: Option<DateTime>,
+    pub started: Option<DateTime>,
+    pub is_active: bool,
+    pub retired: Option<DateTime>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, ProtobufModel)]
 pub struct Actor {
-    id: String,
-    name: String,
-    aliases: Vec<String>,
-    name_patterns: Vec<String>,
+    #[protobuf_model(key)]
+    pub id: String,
+    pub name: String,
+    pub aliases: Vec<String>,
+    pub name_patterns: Vec<String>,
     //gender: 'static &Gender,
-    nationality: String,
-    dob: String,
+    pub nationality: String,
+    pub dob: String,
+    #[protobuf_model(
+        msg2model("DateTime::or_now"),
+        model2msg="infer",
+    )]
+    pub added_on: DateTime,
 }

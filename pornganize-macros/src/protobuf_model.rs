@@ -11,6 +11,15 @@ use super::util;
 type Result<T> = std::result::Result<T, darling::Error>;
 
 #[derive(Debug)]
+enum FieldDataType {
+    Normal,
+    Repeated(Type),
+    Optional(Type),
+}
+impl Default for FieldDataType { fn default() -> Self { Self::Normal } }
+
+
+#[derive(Debug)]
 enum Convert {
     NoConversion,
     Infer,
@@ -28,6 +37,8 @@ impl FromMeta for Convert {
     fn from_string(value: &str) -> Result<Self> {
         if value == "infer" {
             Ok(Self::Infer)
+        } else if value == "None" {
+            Ok(Self::NoConversion)
         } else {
             Ok(Self::Item(syn::parse_str(value).unwrap()))
         }
@@ -55,7 +66,7 @@ impl FromMeta for Convert {
 #[darling(attributes(protobuf_model))]
 struct ProtobufModelField {
     ident: Option<Ident>,
-    //ty: Type,
+    ty: Type,
     #[darling(default)]
     key: bool,
     #[darling(default, rename = "msg2model")]
@@ -66,6 +77,8 @@ struct ProtobufModelField {
     rename: Option<Ident>,
     #[darling(default)]
     skip: bool,
+    #[darling(skip)]
+    data_type: FieldDataType,
 }
 
 #[allow(clippy::or_fun_call)]
@@ -111,6 +124,7 @@ struct ProtobufModelStruct {
     defaults: bool,
     data: ast::Data<Ignored, ProtobufModelField>,
 }
+
 
 fn get_key_field(fields: ast::Fields<ProtobufModelField>) -> Ident {
     let key_fields: Vec<Ident> = fields
@@ -174,16 +188,6 @@ fn process_fields(
 }
 
 #[allow(clippy::or_fun_call)]
-fn get_model_trait_path() -> TokenStream {
-    let crate_name = env::var("CARGO_CRATE_NAME").unwrap_or(String::from(""));
-    if crate_name == "pornganize_db" || crate_name == "pornganize-db" {
-        quote! { crate::model::Model }
-    } else {
-        quote! { ::pornganize_db::model::Model }
-    }
-}
-
-#[allow(clippy::or_fun_call)]
 pub fn impl_protobuf_model_derive(parsed: &DeriveInput) -> TokenStream {
     let protobuf_model = ProtobufModelStruct::from_derive_input(parsed).unwrap();
     let fields = if let ast::Data::Struct(data) = protobuf_model.data {
@@ -205,7 +209,6 @@ pub fn impl_protobuf_model_derive(parsed: &DeriveInput) -> TokenStream {
         .tree
         .unwrap_or(format!("{}", protobuf_model.ident).to_kebab_case());
     let model = protobuf_model.ident;
-    let model_trait_path = get_model_trait_path();
     quote! {
         use ::protobuf::Message as _;
         impl From<#message> for #model {
@@ -223,7 +226,7 @@ pub fn impl_protobuf_model_derive(parsed: &DeriveInput) -> TokenStream {
                 }
             }
         }
-        impl #model_trait_path for #model {
+        impl ::pornganize::db::Model for #model {
             const TREE_NAME: &'static str = #tree;
             fn get_key(&self) -> &str { &self.#key }
             fn to_bytes(self) -> Vec<u8> {

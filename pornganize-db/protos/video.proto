@@ -30,18 +30,19 @@ message VideoMetadata {
 message Video {
     string id = 1;
     string path = 2;
-    VideoMetadata metadata = 3;
+    string title = 3;
+    VideoMetadata metadata = 4;
     oneof source {
-        string studio_id = 4;
-        string network_id = 5;
-        string site_id = 6;
+        string studio_id = 5;
+        string network_id = 6;
+        string site_id = 7;
     };
-    Date released = 7;
-    string language = 8;
-    repeated string actor_ids = 9;
-    repeated string tag_ids = 10;
-    repeated CustomFieldValue custom_fields = 11;
-    repeated Marker markers = 12;
-    uint64 duration = 13;
+    Date released = 8;
+    string language = 9;
+    repeated string actor_ids = 10;
+    repeated string tag_ids = 11;
+    repeated CustomFieldValue custom_fields = 12;
+    repeated Marker markers = 13;
+    uint64 duration = 14;
     DateTime added_on = 350;
 }

@@ -3,13 +3,13 @@
     deprecated_in_future,
     keyword_idents,
     trivial_casts,
-    unused_import_braces,
+    unused_import_braces
 )]
 #[macro_use]
 extern crate log;
-extern crate serde;
-extern crate num_cpus;
 extern crate actix;
+extern crate num_cpus;
+extern crate serde;
 
 pub mod config;
 pub mod util;

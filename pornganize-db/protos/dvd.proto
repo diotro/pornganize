@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+import "common.proto";
+
+message Dvd {
+    string id = 1;
+    string title = 2;
+    Ownership own = 3;
+    oneof source {
+        string studio_id = 4;
+        string network_id = 5;
+        string site_id = 6;
+    };
+    Date released = 7;
+    string language = 8;
+    repeated string actor_ids = 9;
+    repeated string tag_ids = 10;
+    repeated CustomFieldValue custom_fields = 11;
+    uint64 duration = 13;
+    DateTime added_on = 350;
+}

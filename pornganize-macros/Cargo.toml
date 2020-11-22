@@ -13,6 +13,7 @@ proc-macro = true
 [dependencies]
 anyhow = "1.0.34"
 darling = "0.10.2"
+find-crate = "0.6.1"
 heck = "0.3.1"
 proc-macro2 = "1.0.24"
 quote = "1.0.7"

@@ -33,6 +33,20 @@ impl DateTime {
     pub fn today() -> Self {
         Self(Utc::today().and_hms(0, 0, 0))
     }
+
+    pub fn or_none(field: SingularPtrField<DateTimeMessage>) -> Option<Self> {
+        match field.into_option() {
+            Some(dt) => Some(Self::from(dt)),
+            None => None,
+        }
+    }
+
+    pub fn or_now(field: SingularPtrField<DateTimeMessage>) -> Self {
+        match field.into_option() {
+            Some(dt) => Self::from(dt),
+            None => Self::now(),
+        }
+    }
 }
 
 impl Deref for DateTime {
@@ -61,15 +75,15 @@ impl DateTimeMessage {
     }
 }
 
-impl From<&DateTimeMessage> for DateTime {
-    fn from(msg: &DateTimeMessage) -> Self {
+impl From<DateTimeMessage> for DateTime {
+    fn from(msg: DateTimeMessage) -> Self {
         DateTime(Utc.ymd(msg.year, msg.month, msg.day)
             .and_hms_milli(msg.hour, msg.minute, msg.second, msg.millisecond))
     }
 }
 
-impl From<&DateTime> for DateTimeMessage {
-    fn from(datetime: &DateTime) -> Self {
+impl From<DateTime> for DateTimeMessage {
+    fn from(datetime: DateTime) -> Self {
         Self {
             year: datetime.year(),
             month: datetime.month(),
@@ -83,14 +97,14 @@ impl From<&DateTime> for DateTimeMessage {
     }
 }
 
-impl From<&DateMessage> for DateTime {
-    fn from(msg: &DateMessage) -> Self {
+impl From<DateMessage> for DateTime {
+    fn from(msg: DateMessage) -> Self {
         DateTime(Utc.ymd(msg.year, msg.month, msg.day).and_hms(0, 0, 0))
     }
 }
 
-impl From<&DateTime> for DateMessage {
-    fn from(datetime: &DateTime) -> Self {
+impl From<DateTime> for DateMessage {
+    fn from(datetime: DateTime) -> Self {
         Self {
             year: datetime.year(),
             month: datetime.month(),
@@ -100,38 +114,38 @@ impl From<&DateTime> for DateMessage {
     }
 }
 
-impl From<&DateTime> for SingularPtrField<DateTimeMessage> {
-    fn from(datetime: &DateTime) -> Self {
+impl From<DateTime> for SingularPtrField<DateTimeMessage> {
+    fn from(datetime: DateTime) -> Self {
         SingularPtrField::some(datetime.into())
     }
 }
 
-impl From<&SingularPtrField<DateTimeMessage>> for DateTime  {
-    fn from(field: &SingularPtrField<DateTimeMessage>) -> Self {
-        Self::from(&field.clone().unwrap_or_default())
+impl From<SingularPtrField<DateTimeMessage>> for DateTime  {
+    fn from(field: SingularPtrField<DateTimeMessage>) -> Self {
+        Self::from(field.clone().unwrap_or_default())
     }
 }
 
-impl From<&DateTime> for SingularPtrField<DateMessage> {
-    fn from(datetime: &DateTime) -> Self {
+impl From<DateTime> for SingularPtrField<DateMessage> {
+    fn from(datetime: DateTime) -> Self {
         SingularPtrField::some(datetime.into())
     }
 }
 
-impl From<&SingularPtrField<DateMessage>> for DateTime  {
-    fn from(field: &SingularPtrField<DateMessage>) -> Self {
-        Self::from(&field.clone().unwrap_or_default())
+impl From<SingularPtrField<DateMessage>> for DateTime  {
+    fn from(field: SingularPtrField<DateMessage>) -> Self {
+        Self::from(field.clone().unwrap_or_default())
     }
 }
 
-impl From<&TimeMessage> for Time {
-    fn from(msg: &TimeMessage) -> Self {
+impl From<TimeMessage> for Time {
+    fn from(msg: TimeMessage) -> Self {
         Time(ChronoTime::from_hms_milli(msg.hour, msg.minute, msg.second, msg.millisecond))
     }
 }
 
-impl From<&Time> for TimeMessage {
-    fn from(time: &Time) -> Self {
+impl From<Time> for TimeMessage {
+    fn from(time: Time) -> Self {
         Self {
             hour: time.hour(),
             minute: time.minute(),
@@ -142,15 +156,14 @@ impl From<&Time> for TimeMessage {
     }
 }
 
-impl From<&Time> for SingularPtrField<TimeMessage> {
-    fn from(datetime: &Time) -> Self {
+impl From<Time> for SingularPtrField<TimeMessage> {
+    fn from(datetime: Time) -> Self {
         SingularPtrField::some(datetime.into())
     }
 }
 
-impl From<&SingularPtrField<TimeMessage>> for Time  {
-    fn from(field: &SingularPtrField<TimeMessage>) -> Self {
-        Self::from(&field.clone().unwrap_or_default())
+impl From<SingularPtrField<TimeMessage>> for Time  {
+    fn from(field: SingularPtrField<TimeMessage>) -> Self {
+        Self::from(field.clone().unwrap_or_default())
     }
 }
-

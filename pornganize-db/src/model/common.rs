@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use std::iter::FromIterator as _;
 use protobuf::{
     RepeatedField,
     SingularPtrField,
@@ -35,8 +36,8 @@ pub enum ApplicableTo {
     GameStudio = 10,
 }
 
-impl From<&ApplicableToMessage> for ApplicableTo {
-    fn from(applicable_to: &ApplicableToMessage) -> Self {
+impl From<ApplicableToMessage> for ApplicableTo {
+    fn from(applicable_to: ApplicableToMessage) -> Self {
         match applicable_to {
             ApplicableToMessage::ANY => ApplicableTo::Any,
             ApplicableToMessage::ACTOR => ApplicableTo::Actor,
@@ -53,8 +54,8 @@ impl From<&ApplicableToMessage> for ApplicableTo {
     }
 }
 
-impl From<&ApplicableTo> for ApplicableToMessage {
-    fn from(applicable_to: &ApplicableTo) -> Self {
+impl From<ApplicableTo> for ApplicableToMessage {
+    fn from(applicable_to: ApplicableTo) -> Self {
         match applicable_to {
             ApplicableTo::Any => ApplicableToMessage::ANY,
             ApplicableTo::Actor => ApplicableToMessage::ACTOR,

@@ -1,4 +1,10 @@
 use serde::{Deserialize, Serialize};
+use super::{
+    DateTime,
+    ptr_to_option,
+    option_to_ptr,
+    messages::video::Video as VideoMessage,
+};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Stream {
@@ -21,9 +27,11 @@ pub struct Resolution {
     pub width: u16,
 }
 
+//#[derive(Debug, Serialize, Deserialize, ProtobufModel)]
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Video {
-    pub id: u64,
+    //#[protobuf_model(key)]
+    pub id: String,
     pub path: String,
     pub title: String,
     pub resolution: Resolution,
@@ -32,7 +40,12 @@ pub struct Video {
     pub duration: u64,
     pub framerate: i16,
     pub markers: Vec<Marker>,
-    pub actors: Vec<u64>,
-    pub thumbnails: Vec<u64>,
-    pub tags: Vec<u64>,
+    pub actors: Vec<String>,
+    pub thumbnails: Vec<String>,
+    pub tags: Vec<String>,
+    //#[protobuf_model(
+        //msg2model("DateTime::or_now"),
+        //model2msg="infer",
+    //)]
+    pub added_on: DateTime,
 }

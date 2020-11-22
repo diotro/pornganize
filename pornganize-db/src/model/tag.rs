@@ -1,63 +1,36 @@
-use protobuf::RepeatedField;
 use serde::{Deserialize, Serialize};
-
 use super::{
-    Model,
-    common::*,
-    messages::{
-        tag::Tag as TagMessage,
-        common::{
-            DateTime as MessageDateTime,
-            ApplicableTo as MessageApplicableTo,
-        }
-    }
+    messages::tag::Tag as TagMessage,
+    DateTime,
+    to_repeated_field,
+    from_repeated_field,
+    convert_vec,
+    ApplicableTo
 };
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, ProtobufModel)]
 pub struct Tag {
+    #[protobuf_model(key)]
     pub id: String,
     pub name: String,
+    #[protobuf_model(
+        msg2model("convert_vec"),
+        model2msg("convert_vec"),
+    )]
     pub applicable_to: Vec<ApplicableTo>,
+    #[protobuf_model(
+        msg2model("from_repeated_field"),
+        model2msg("to_repeated_field"),
+    )]
     pub also_adds: Vec<String>,
+    #[protobuf_model(
+        msg2model("from_repeated_field"),
+        model2msg("to_repeated_field"),
+    )]
     pub aliases: Vec<String>,
+    #[protobuf_model(
+        msg2model("DateTime::or_now"),
+        model2msg="infer",
+    )]
     pub added_on: DateTime,
-}
-
-impl<'a> From<TagMessage> for &'a Tag {
-    fn from(msg: TagMessage) -> Self {
-        &&Tag {
-            id: msg.id,
-            name: msg.name,
-            applicable_to: ProtobufEnumVec::from_vec(&msg.applicable_to).into(),
-            also_adds: msg.also_adds.into_iter().collect(),
-            aliases: msg.aliases.into_iter().collect(),
-            added_on: match msg.added_on.as_ref() {
-                Some(dt) => DateTime::from(dt),
-                None => DateTime::now(),
-            },
-        }
-    }
-}
-
-impl From<&Tag> for TagMessage {
-    fn from(model: &Tag) -> Self {
-        Self {
-            id: model.id,
-            name: model.name,
-            applicable_to: to_vec(&model.applicable_to),
-            also_adds: to_repeated_field(&model.also_adds),
-            aliases: to_repeated_field(&model.aliases),
-            added_on: (&model.added_on).into(),
-            ..TagMessage::default()
-        }
-    }
-}
-
-pub struct TagModeler;
-
-impl<'a> Modeler<'a> for TagModeler {
-    type Model = Tag;
-    type Message = TagMessage;
-    const TREE_NAME: &'static str = "custom-fields";
-    fn get_key(model: &'a Self::Model) -> &'a str { &model.id }
 }

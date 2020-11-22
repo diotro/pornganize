@@ -745,6 +745,7 @@ pub struct Video {
     // message fields
     pub id: ::std::string::String,
     pub path: ::std::string::String,
+    pub title: ::std::string::String,
     pub metadata: ::protobuf::SingularPtrField<VideoMetadata>,
     pub released: ::protobuf::SingularPtrField<super::common::Date>,
     pub language: ::std::string::String,
@@ -796,14 +797,21 @@ impl Video {
         &self.path
     }
 
-    // .VideoMetadata metadata = 3;
+    // string title = 3;
+
+
+    pub fn get_title(&self) -> &str {
+        &self.title
+    }
+
+    // .VideoMetadata metadata = 4;
 
 
     pub fn get_metadata(&self) -> &VideoMetadata {
         self.metadata.as_ref().unwrap_or_else(|| <VideoMetadata as ::protobuf::Message>::default_instance())
     }
 
-    // string studio_id = 4;
+    // string studio_id = 5;
 
 
     pub fn get_studio_id(&self) -> &str {
@@ -813,7 +821,7 @@ impl Video {
         }
     }
 
-    // string network_id = 5;
+    // string network_id = 6;
 
 
     pub fn get_network_id(&self) -> &str {
@@ -823,7 +831,7 @@ impl Video {
         }
     }
 
-    // string site_id = 6;
+    // string site_id = 7;
 
 
     pub fn get_site_id(&self) -> &str {
@@ -833,49 +841,49 @@ impl Video {
         }
     }
 
-    // .Date released = 7;
+    // .Date released = 8;
 
 
     pub fn get_released(&self) -> &super::common::Date {
         self.released.as_ref().unwrap_or_else(|| <super::common::Date as ::protobuf::Message>::default_instance())
     }
 
-    // string language = 8;
+    // string language = 9;
 
 
     pub fn get_language(&self) -> &str {
         &self.language
     }
 
-    // repeated string actor_ids = 9;
+    // repeated string actor_ids = 10;
 
 
     pub fn get_actor_ids(&self) -> &[::std::string::String] {
         &self.actor_ids
     }
 
-    // repeated string tag_ids = 10;
+    // repeated string tag_ids = 11;
 
 
     pub fn get_tag_ids(&self) -> &[::std::string::String] {
         &self.tag_ids
     }
 
-    // repeated .CustomFieldValue custom_fields = 11;
+    // repeated .CustomFieldValue custom_fields = 12;
 
 
     pub fn get_custom_fields(&self) -> &[super::common::CustomFieldValue] {
         &self.custom_fields
     }
 
-    // repeated .Marker markers = 12;
+    // repeated .Marker markers = 13;
 
 
     pub fn get_markers(&self) -> &[Marker] {
         &self.markers
     }
 
-    // uint64 duration = 13;
+    // uint64 duration = 14;
 
 
     pub fn get_duration(&self) -> u64 {
@@ -931,45 +939,48 @@ impl ::protobuf::Message for Video {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.path)?;
                 },
                 3 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.metadata)?;
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.title)?;
                 },
                 4 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.source = ::std::option::Option::Some(Video_oneof_source::studio_id(is.read_string()?));
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.metadata)?;
                 },
                 5 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.source = ::std::option::Option::Some(Video_oneof_source::network_id(is.read_string()?));
+                    self.source = ::std::option::Option::Some(Video_oneof_source::studio_id(is.read_string()?));
                 },
                 6 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.source = ::std::option::Option::Some(Video_oneof_source::site_id(is.read_string()?));
+                    self.source = ::std::option::Option::Some(Video_oneof_source::network_id(is.read_string()?));
                 },
                 7 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.released)?;
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.source = ::std::option::Option::Some(Video_oneof_source::site_id(is.read_string()?));
                 },
                 8 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.language)?;
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.released)?;
                 },
                 9 => {
-                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.actor_ids)?;
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.language)?;
                 },
                 10 => {
-                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.tag_ids)?;
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.actor_ids)?;
                 },
                 11 => {
-                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.custom_fields)?;
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.tag_ids)?;
                 },
                 12 => {
-                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.markers)?;
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.custom_fields)?;
                 },
                 13 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.markers)?;
+                },
+                14 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
@@ -997,6 +1008,9 @@ impl ::protobuf::Message for Video {
         if !self.path.is_empty() {
             my_size += ::protobuf::rt::string_size(2, &self.path);
         }
+        if !self.title.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.title);
+        }
         if let Some(ref v) = self.metadata.as_ref() {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
@@ -1006,13 +1020,13 @@ impl ::protobuf::Message for Video {
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
         if !self.language.is_empty() {
-            my_size += ::protobuf::rt::string_size(8, &self.language);
+            my_size += ::protobuf::rt::string_size(9, &self.language);
         }
         for value in &self.actor_ids {
-            my_size += ::protobuf::rt::string_size(9, &value);
+            my_size += ::protobuf::rt::string_size(10, &value);
         };
         for value in &self.tag_ids {
-            my_size += ::protobuf::rt::string_size(10, &value);
+            my_size += ::protobuf::rt::string_size(11, &value);
         };
         for value in &self.custom_fields {
             let len = value.compute_size();
@@ -1023,7 +1037,7 @@ impl ::protobuf::Message for Video {
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
         if self.duration != 0 {
-            my_size += ::protobuf::rt::value_size(13, self.duration, ::protobuf::wire_format::WireTypeVarint);
+            my_size += ::protobuf::rt::value_size(14, self.duration, ::protobuf::wire_format::WireTypeVarint);
         }
         if let Some(ref v) = self.added_on.as_ref() {
             let len = v.compute_size();
@@ -1032,13 +1046,13 @@ impl ::protobuf::Message for Video {
         if let ::std::option::Option::Some(ref v) = self.source {
             match v {
                 &Video_oneof_source::studio_id(ref v) => {
-                    my_size += ::protobuf::rt::string_size(4, &v);
-                },
-                &Video_oneof_source::network_id(ref v) => {
                     my_size += ::protobuf::rt::string_size(5, &v);
                 },
-                &Video_oneof_source::site_id(ref v) => {
+                &Video_oneof_source::network_id(ref v) => {
                     my_size += ::protobuf::rt::string_size(6, &v);
+                },
+                &Video_oneof_source::site_id(ref v) => {
+                    my_size += ::protobuf::rt::string_size(7, &v);
                 },
             };
         }
@@ -1054,37 +1068,40 @@ impl ::protobuf::Message for Video {
         if !self.path.is_empty() {
             os.write_string(2, &self.path)?;
         }
+        if !self.title.is_empty() {
+            os.write_string(3, &self.title)?;
+        }
         if let Some(ref v) = self.metadata.as_ref() {
-            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
         if let Some(ref v) = self.released.as_ref() {
-            os.write_tag(7, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_tag(8, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
         if !self.language.is_empty() {
-            os.write_string(8, &self.language)?;
+            os.write_string(9, &self.language)?;
         }
         for v in &self.actor_ids {
-            os.write_string(9, &v)?;
-        };
-        for v in &self.tag_ids {
             os.write_string(10, &v)?;
         };
-        for v in &self.custom_fields {
-            os.write_tag(11, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
+        for v in &self.tag_ids {
+            os.write_string(11, &v)?;
         };
-        for v in &self.markers {
+        for v in &self.custom_fields {
             os.write_tag(12, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        for v in &self.markers {
+            os.write_tag(13, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
         if self.duration != 0 {
-            os.write_uint64(13, self.duration)?;
+            os.write_uint64(14, self.duration)?;
         }
         if let Some(ref v) = self.added_on.as_ref() {
             os.write_tag(350, ::protobuf::wire_format::WireTypeLengthDelimited)?;
@@ -1094,13 +1111,13 @@ impl ::protobuf::Message for Video {
         if let ::std::option::Option::Some(ref v) = self.source {
             match v {
                 &Video_oneof_source::studio_id(ref v) => {
-                    os.write_string(4, v)?;
-                },
-                &Video_oneof_source::network_id(ref v) => {
                     os.write_string(5, v)?;
                 },
-                &Video_oneof_source::site_id(ref v) => {
+                &Video_oneof_source::network_id(ref v) => {
                     os.write_string(6, v)?;
+                },
+                &Video_oneof_source::site_id(ref v) => {
+                    os.write_string(7, v)?;
                 },
             };
         }
@@ -1148,6 +1165,7 @@ impl ::protobuf::Clear for Video {
     fn clear(&mut self) {
         self.id.clear();
         self.path.clear();
+        self.title.clear();
         self.metadata.clear();
         self.source = ::std::option::Option::None;
         self.source = ::std::option::Option::None;

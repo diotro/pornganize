@@ -12,3 +12,4 @@ pub mod common;
 pub mod image;
 pub mod custom;
 pub mod manga;
+pub mod dvd;
