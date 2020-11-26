@@ -2,6 +2,7 @@
 name = 'pornganize'
 version = '0.1.0'
 authors = ['Brendan McGloin <stmonkeydoom@gmail.com>']
+description = "Organize your smut!"
 edition = '2018'
 publish = false
 license = "MIT"
@@ -14,33 +15,25 @@ path = 'src/main.rs'
 [workspace]
 members = [
     '.',
-    'pornganize-core',
-    'pornganize-db',
-    'pornganize-macros',
-    'pornganize-plugins',
-    'pornganize-web',
+    'core',
+    'macros',
+    'web',
 ]
 
 [dependencies]
-pornganize-core = { version = "0.1.0", path="pornganize-core" }
-pornganize-db = { version = "0.1.0", path="pornganize-db" }
-pornganize-macros = { version = "0.1.0", path="pornganize-macros" }
-pornganize-web = { version = "0.1.0", path="pornganize-web", optional=true }
-pornganize-plugins = { version = "0.1.0", path="pornganize-plugins", optional=true }
-ffmpeg-next = { version = '4.3.7', optional = true }
-mp4parse = { version = '0.11.4', optional = true }
+pornganize-core = { version = "0.1.0", path="core" }
+pornganize-macros = { version = "0.1.0", path="macros" }
+pornganize-web = { version = "0.1.0", path="web", optional=true }
+#ffmpeg-next = { version = '4.3.7', optional = true }
+#mp4parse = { version = '0.11.4', optional = true }
 clap = "2.33.3"
+structopt = "0.3.20"
 dotenv = "0.15.0"
 log = "0.4.11"
 pretty_env_logger = "0.4.0"
-derive_more = "0.99.11"
 derive_builder = "0.9.0"
-structopt = "0.3.20"
-serde_yaml = "0.8.14"
 cfg-if = "1.0.0"
-daemonize = "0.4.1"
-serde = { version = "1.0.117", features = ["derive"] }
-tantivy = { version = "0.13.2", features = ["lz4-compression"] }
+serde_yaml = "0.8.14"
 
 [target.'cfg(windows)'.dependencies]
 windows-service = "0.3.1"
@@ -49,7 +42,6 @@ windows-service = "0.3.1"
 daemonize = "0.4.1"
 
 [features]
-default = ["web", "plugins"]
+default = ["web"]
 web = ["pornganize-web"]
-plugins = ["pornganize-plugins"]
-video-processing = ["ffmpeg-next", "mp4parse"]
+#video-processing = ["ffmpeg-next", "mp4parse"]

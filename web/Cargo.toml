@@ -1,0 +1,15 @@
+[package]
+name = "pornganize-web"
+version = "0.1.0"
+authors = ["Brendan McGloin <stmonkeydoom@gmail.com>"]
+edition = "2018"
+workspace = '..'
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+pornganize-core = {path="../core"}
+actix = '0.10.0'
+actix-web = { version = '3.2.0', features = ['secure-cookies'] }
+serde_json = '1.0.59'
+log = "0.4.11"

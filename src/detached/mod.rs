@@ -1,5 +1,3 @@
-extern crate derive_more;
-
 cfg_if::cfg_if! {
     if #[cfg(unix)] {
         mod nix;

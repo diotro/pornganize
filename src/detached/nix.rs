@@ -2,7 +2,6 @@ use std::fs::File;
 use std::io;
 use std::path::PathBuf;
 use daemonize::{Daemonize, DaemonizeError, Group, User};
-use derive_more::{Display, Error};
 use pornganize::config::Config;
 
 #[derive(Default, Builder)]
@@ -36,10 +35,10 @@ impl From<&Config> for RunOptions {
     }
 }
 
-#[derive(Debug, Display, Error)]
+#[derive(Debug)]
 pub enum DetachError {
-    IoError(#[error(source)] io::Error),
-    DaemonizationError(#[error(source)] DaemonizeError),
+    IoError(io::Error),
+    DaemonizationError(DaemonizeError),
 }
 
 pub fn run_detached<F>(options: RunOptions, to_run: F) -> Result<(), DetachError>

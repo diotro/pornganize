@@ -26,21 +26,21 @@ sandbox/
 *.db
 
 # compiled output
-/frontend/dist
-/frontend/tmp
-/frontend/out-tsc
+dist
+tmp
+/web/frontend/out-tsc
 # Only exists if Bazel was run
-/frontend/bazel-out
+/web/frontend/bazel-out
 
 # dependencies
-/frontend/node_modules
+node_modules
 
 # profiling files
 chrome-profiler-events*.json
 speed-measure-plugin*.json
 
 # IDEs and editors
-/frontend/.idea
+.idea
 .project
 .classpath
 .c9/
@@ -57,14 +57,14 @@ speed-measure-plugin*.json
 .history/*
 
 # misc
-/frontend/.sass-cache
-/frontend/connect.lock
-/frontend/coverage
-/frontend/libpeerconnection.log
+.sass-cache
+connect.lock
+coverage
+libpeerconnection.log
 npm-debug.log
 yarn-error.log
 testem.log
-/frontend/typings
+/web/frontend/typings
 
 # System Files
 .DS_Store

@@ -9,14 +9,6 @@
 extern crate cfg_if;
 #[macro_use]
 extern crate derive_builder;
-extern crate daemonize;
-extern crate clap;
-extern crate pornganize;
-extern crate dotenv;
-extern crate log;
-extern crate pretty_env_logger;
-extern crate structopt;
-extern crate serde_yaml;
 
 mod clean;
 mod merge;
